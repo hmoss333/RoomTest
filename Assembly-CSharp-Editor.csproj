@@ -187,6 +187,12 @@
  <Reference Include="ProBuilderCore-Unity5">
  <HintPath>C:/Users/HMoss.DESKTOP-LO6F45S/Documents/GitHub/RoomTest/Assets/ProCore/ProBuilder/Classes/ProBuilderCore-Unity5.dll</HintPath>
  </Reference>
+ <Reference Include="ProBuilderMeshOps-Unity5">
+ <HintPath>C:/Users/HMoss.DESKTOP-LO6F45S/Documents/GitHub/RoomTest/Assets/ProCore/ProBuilder/Classes/ProBuilderMeshOps-Unity5.dll</HintPath>
+ </Reference>
+ <Reference Include="KdTreeLib">
+ <HintPath>C:/Users/HMoss.DESKTOP-LO6F45S/Documents/GitHub/RoomTest/Assets/ProCore/ProBuilder/Classes/ClassesLib/KdTreeLib.dll</HintPath>
+ </Reference>
  <Reference Include="pb_Stl">
  <HintPath>C:/Users/HMoss.DESKTOP-LO6F45S/Documents/GitHub/RoomTest/Assets/ProCore/ProBuilder/Classes/ClassesLib/pb_Stl.dll</HintPath>
  </Reference>
@@ -195,12 +201,6 @@
  </Reference>
  <Reference Include="ProBuilderEditor-Unity5">
  <HintPath>C:/Users/HMoss.DESKTOP-LO6F45S/Documents/GitHub/RoomTest/Assets/ProCore/ProBuilder/Editor/ProBuilderEditor-Unity5.dll</HintPath>
- </Reference>
- <Reference Include="ProBuilderMeshOps-Unity5">
- <HintPath>C:/Users/HMoss.DESKTOP-LO6F45S/Documents/GitHub/RoomTest/Assets/ProCore/ProBuilder/Classes/ProBuilderMeshOps-Unity5.dll</HintPath>
- </Reference>
- <Reference Include="KdTreeLib">
- <HintPath>C:/Users/HMoss.DESKTOP-LO6F45S/Documents/GitHub/RoomTest/Assets/ProCore/ProBuilder/Classes/ClassesLib/KdTreeLib.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
