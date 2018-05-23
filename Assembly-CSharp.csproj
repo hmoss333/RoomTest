@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\Interacts\InteractObject.cs" />
      <Compile Include="Assets\Scripts\Interacts\InteractParent.cs" />
      <Compile Include="Assets\Scripts\Interacts\InteractSetTrigger.cs" />
+     <Compile Include="Assets\Scripts\Interacts\InventoryItem.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <None Include="Assets\ProCore\ProBuilder\Shader\pb_TransparentOverlay.shader" />
      <None Include="Assets\ProCore\ProBuilder\API Examples\Icosphere FFT\README.txt" />
