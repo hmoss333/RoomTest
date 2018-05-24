@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour {
 
-    public GameObject player;       //Public variable to store a reference to the player game object
-
-
-    private Vector3 offset;         //Private variable to store the offset distance between the player and camera
+    private Player player;
 
     // Use this for initialization
     void Start()
     {
-        //Calculate and store the offset value by getting the distance between the player's position and camera's position.
-        offset = transform.position - player.transform.position;
+        player = GameObject.FindObjectOfType<Player>();
+        transform.position = player.transform.position;
     }
 
-    // LateUpdate is called after Update each frame
-    void LateUpdate()
+    private void Update()
     {
-        // Set the position of the camera's transform to be the same as the player's, but offset by the calculated offset distance.
-        transform.position = player.transform.position + offset;
+        Vector3 velocity = Vector3.zero;
+        Vector3 forward = player.transform.forward * 5f;
+        Vector3 needPos = player.transform.position - forward;
+        transform.position = Vector3.SmoothDamp(transform.position, new Vector3(needPos.x, 6f, needPos.z),
+                                                ref velocity, 0.02f);
+        transform.LookAt(player.transform);
     }
 }
