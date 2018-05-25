@@ -6,23 +6,42 @@ using UnityEngine;
 //CHANGE THE WAYPOINTTOWAYPOINTRADIUS AS NEEDED SO THE WAYPOINTS CAN FIND ITS CLOSEST WAYPOINT.
 public class WaypointManager : MonoBehaviour {
 
+    [Header("Map Settings")]
+    public int xMax;
+    public int yMax;
+    public static float scale = 1;
+    public float scaleNum;
+
+    [Header("Waypoint Controls")]
     public List<Transform> waypointNodes;         //Create a list of all the waypoints in scene( its like a array but more easy to work with)
     public int totalWaypoints = 0;                //Shows the total count of waypoints in the scene.
     public float waypointToWaypointRadius = 50f;  //a radius that each waypoint is checking for to see if another waypoint is close by
+    [Range(0f, 1f)]
+    public float eventRoomProbability;
 
-    public GameObject[] roomTypes;
-
+    [Header("Prefabs")]
+    public GameObject node;
     public GameObject player;
+    //public GameObject[] roomTypes;
+
+    public GameObject[] cornerRoomTypes;
+    public GameObject[] wallRoomTypes;
+    public GameObject[] emptyRoomTypes;
+    public GameObject[] eventRoomTypes;
 
     void Awake()
     {
+        scale = scaleNum;
+
+        GenerateNodes(node, xMax, yMax, scale);
+        
         //Start checking for the waypoints as children in gameobject and add them to the list. Also add the WayPointScript to each.
         foreach (Transform waypoint in GetComponentsInChildren<Transform>())
         {
             if (waypoint != this.transform)
             {
                 waypointNodes.Add(waypoint);
-                waypoint.gameObject.AddComponent<WaypointScript>();
+                //waypoint.gameObject.AddComponent<WaypointScript>();
             }
         }
 
@@ -37,7 +56,9 @@ public class WaypointManager : MonoBehaviour {
         //Just gets the total count of Transforms in the waypoint list.
         totalWaypoints = waypointNodes.Count;
 
-        player = Instantiate(player, new Vector3(waypointNodes[0].position.x, 1, waypointNodes[0].position.z), Quaternion.identity); //testing for now
+        int randNum = Random.Range(0, waypointNodes.Count);
+        player = Instantiate(player, new Vector3(waypointNodes[randNum].position.x, 0, waypointNodes[randNum].position.z), Quaternion.identity); //testing for now
+        player.transform.localScale = new Vector3(scale / 4, scale / 4, scale / 4);
     }
 
     //After the list is created this method is called by each waypoint and this script does all the leg work.
@@ -58,5 +79,66 @@ public class WaypointManager : MonoBehaviour {
             }
         }
         return wayPointFound;
+    }
+
+    void GenerateNodes(GameObject node, int xNum, int yNum, float scaleNum)
+    {
+        for (int i = 0; i < xNum; i++)
+        {
+            for (int j = 0; j < yNum; j++)
+            {
+                GameObject newnode = Instantiate(node, new Vector3(i * scaleNum, 0, j * scaleNum), Quaternion.identity);
+                newnode.transform.parent = GameObject.FindObjectOfType<WaypointManager>().transform;
+                WaypointScript wayPointRef = newnode.AddComponent<WaypointScript>();
+
+                if (i == 0 || i == xNum - 1)
+                {
+                    if (j == 0 || j == yNum - 1)
+                    {
+                        wayPointRef.type = WaypointScript.Type.corner;
+                        if (i == 0)
+                        {
+                            if (j == 0)
+                                wayPointRef.direction = WaypointScript.Direction.bottom;
+                            else
+                                wayPointRef.direction = WaypointScript.Direction.left;
+                        }
+                        else
+                        {
+                            if (j == 0)
+                                wayPointRef.direction = WaypointScript.Direction.right;
+                            else
+                                wayPointRef.direction = WaypointScript.Direction.top;
+                        }
+                    }
+                    else
+                    {
+                        wayPointRef.type = WaypointScript.Type.wall;
+                        if (i == 0)
+                            wayPointRef.direction = WaypointScript.Direction.left;
+                        else
+                            wayPointRef.direction = WaypointScript.Direction.right;
+                    }
+                }
+                else
+                {
+                    if (j == 0 || j == yNum - 1)
+                    {
+                        wayPointRef.type = WaypointScript.Type.wall;
+                        if (j == 0)
+                            wayPointRef.direction = WaypointScript.Direction.bottom;
+                        else
+                            wayPointRef.direction = WaypointScript.Direction.top;
+                    }
+                    else
+                    {
+                        if (Random.value < eventRoomProbability)
+                            wayPointRef.type = WaypointScript.Type.eventRoom;
+                        else
+                            wayPointRef.type = WaypointScript.Type.empty;
+                    }
+                }
+            }
+        }
     }
 }

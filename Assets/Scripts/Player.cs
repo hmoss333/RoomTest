@@ -23,6 +23,8 @@ public class Player : MonoBehaviour {
     void Start () {
         rb = gameObject.GetComponent<Rigidbody>();
         animator = gameObject.GetComponentInChildren<Animator>();
+
+        speed *= WaypointManager.scale;
     }
 	
 	// Update is called once per frame

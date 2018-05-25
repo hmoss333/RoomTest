@@ -9,7 +9,12 @@ public class WaypointScript : MonoBehaviour {
     public bool showDebugLine = true;       //By defualt this is true, but you make it false if you like, its for debugging.
     public Color debugGizmoColor = Color.red; //Same as above, just a color for the gizmo line.
 
-    public GameObject roomPrefab;
+    public enum Type { start, wall, corner, empty, eventRoom }
+    public Type type;
+    public enum Direction { top, bottom, left, right}
+    public Direction direction;
+
+    //public GameObject roomPrefab;
 
 
     //This method is called after the manager creates the list of waypoints. It just stores the manager script we passed and then
@@ -18,8 +23,9 @@ public class WaypointScript : MonoBehaviour {
     {
         wayPointManager = managerScript;
         waypointInRange = wayPointManager.GetWaypointDirection(this.transform);
-        roomPrefab = Instantiate(wayPointManager.roomTypes[0], new Vector3(transform.position.x, wayPointManager.roomTypes[0].transform.position.y, transform.position.z), Quaternion.identity);
-        roomPrefab.transform.parent = this.transform;
+        SelectRoomType(type);
+        //roomPrefab = Instantiate(wayPointManager.roomTypes[0], new Vector3(transform.position.x, wayPointManager.roomTypes[0].transform.position.y, transform.position.z), Quaternion.identity);
+        //roomPrefab.transform.parent = this.transform;
     }
 
     //This is not needed in your final build, its only used here to get an idea what waypoint connects to what.
@@ -36,6 +42,74 @@ public class WaypointScript : MonoBehaviour {
 
             }
 
+        }
+    }
+
+    void SelectRoomType(Type roomType)//, GameObject[] roomTypes)
+    {
+        GameObject roomPrefab = null;
+        GameObject[] roomTypeArray;
+
+        switch (roomType)
+        {
+            case Type.start:
+                //roomPrefab = roomTypes[0]; //this should convert from type to int, i.e. roomTypes[roomType]
+                break;
+            case Type.empty:
+                roomTypeArray = wayPointManager.emptyRoomTypes;
+                roomPrefab = SelectRandomPrefab(roomTypeArray); //this should convert from type to int, i.e. roomTypes[roomType]
+                break;
+            case Type.eventRoom:
+                roomTypeArray = wayPointManager.eventRoomTypes;
+                roomPrefab = SelectRandomPrefab(roomTypeArray); //this should convert from type to int, i.e. roomTypes[roomType]
+                break;
+            case Type.wall:
+                roomTypeArray = wayPointManager.wallRoomTypes;
+                roomPrefab = SelectRandomPrefab(roomTypeArray); //this should convert from type to int, i.e. roomTypes[roomType]
+                break;
+            case Type.corner:
+                roomTypeArray = wayPointManager.cornerRoomTypes;
+                roomPrefab = SelectRandomPrefab(roomTypeArray); //this should convert from type to int, i.e. roomTypes[roomType]
+                break;
+            default:
+                Debug.Log("Not a valid room type");
+                break;
+        }
+
+        roomPrefab = Instantiate(roomPrefab, new Vector3(transform.position.x, roomPrefab.transform.position.y, transform.position.z), Quaternion.identity);
+        roomPrefab.transform.localScale = new Vector3(WaypointManager.scale, WaypointManager.scale, WaypointManager.scale);
+
+        if (roomType == Type.wall || roomType == Type.corner)
+            RotateRoom(roomPrefab, direction);
+
+        roomPrefab.transform.parent = this.transform;
+    }
+
+    GameObject SelectRandomPrefab (GameObject[] roomTypeArray)
+    {
+        int randNum = Random.Range(0, roomTypeArray.Length);
+
+        return roomTypeArray[randNum];
+    }
+
+    void RotateRoom(GameObject roomPrefab, Direction roomDirection)
+    {
+        switch (roomDirection)
+        {
+            case Direction.top:
+                roomPrefab.transform.Rotate(new Vector3(0, 180));
+                break;
+            case Direction.bottom:
+                roomPrefab.transform.Rotate(new Vector3(0, 0));
+                break;
+            case Direction.left:
+                roomPrefab.transform.Rotate(new Vector3(0, 90));
+                break;
+            case Direction.right:
+                roomPrefab.transform.Rotate(new Vector3(0, 270));
+                break;
+            default:
+                break;
         }
     }
 }

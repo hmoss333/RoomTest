@@ -7,6 +7,8 @@ public class HideRoom : MonoBehaviour {
     public MeshRenderer[] roomMeshes;
     public bool meshesEnabled;
 
+    public List<Transform> adjactentRooms;
+
     // Use this for initialization
 	void Start () {
         roomMeshes = GetComponentsInChildren<MeshRenderer>();
@@ -17,6 +19,8 @@ public class HideRoom : MonoBehaviour {
         }
 
         meshesEnabled = false;
+
+        //FindAdjactentRooms();
 	}
 	
 	// Update is called once per frame
@@ -28,10 +32,8 @@ public class HideRoom : MonoBehaviour {
     {
         if (other.tag == "Player" && meshesEnabled == false)
         {
-            foreach (MeshRenderer mesh in roomMeshes)
-            {
-                mesh.enabled = true;
-            }
+            TurnOnMesh();
+            //TurnOnAdjactendRooms();
 
             meshesEnabled = true;
         }
@@ -44,12 +46,49 @@ public class HideRoom : MonoBehaviour {
             //Debug.Log("left room");
             //renderer.enabled = true;
 
-            foreach (MeshRenderer mesh in roomMeshes)
-            {
-                mesh.enabled = false;
-            }
+            TurnOffMesh();
+            //TurnOffAdjactendRooms();
 
             meshesEnabled = false;
         }
     }
+
+    public void TurnOnMesh()
+    {
+        foreach (MeshRenderer mesh in roomMeshes)
+        {
+            mesh.enabled = true;
+        }
+    }
+
+    public void TurnOffMesh()
+    {
+        foreach (MeshRenderer mesh in roomMeshes)
+        {
+            mesh.enabled = false;
+        }
+    }
+
+    //void FindAdjactentRooms()
+    //{
+    //    WaypointScript currentRoom = GetComponentInParent<WaypointScript>();
+
+    //    adjactentRooms = currentRoom.waypointsInRange;
+    //}
+
+    //void TurnOnAdjactendRooms()
+    //{
+    //    foreach (Transform room in adjactentRooms)
+    //    {
+    //        room.GetComponentInChildren<HideRoom>().TurnOnMesh();
+    //    }
+    //}
+
+    //void TurnOffAdjactendRooms()
+    //{
+    //    foreach (Transform room in adjactentRooms)
+    //    {
+    //        room.GetComponentInChildren<HideRoom>().TurnOffMesh();
+    //    }
+    //}
 }
