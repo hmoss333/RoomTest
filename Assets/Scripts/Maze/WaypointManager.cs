@@ -57,8 +57,8 @@ public class WaypointManager : MonoBehaviour {
         totalWaypoints = waypointNodes.Count;
 
         int randNum = Random.Range(0, waypointNodes.Count);
-        player = Instantiate(player, new Vector3(waypointNodes[randNum].position.x, 0, waypointNodes[randNum].position.z), Quaternion.identity); //testing for now
-        player.transform.localScale = new Vector3(scale / 4, scale / 4, scale / 4);
+		player = Instantiate(player, new Vector3(waypointNodes[randNum].position.x, 1 - (scale / 4), waypointNodes[randNum].position.z), Quaternion.identity); //testing for now
+        //player.transform.localScale = new Vector3(scale / 4, scale / 4, scale / 4);
     }
 
     //After the list is created this method is called by each waypoint and this script does all the leg work.
@@ -90,6 +90,8 @@ public class WaypointManager : MonoBehaviour {
                 GameObject newnode = Instantiate(node, new Vector3(i * scaleNum, 0, j * scaleNum), Quaternion.identity);
                 newnode.transform.parent = GameObject.FindObjectOfType<WaypointManager>().transform;
                 WaypointScript wayPointRef = newnode.AddComponent<WaypointScript>();
+				wayPointRef.xPos = i;
+				wayPointRef.yPos = j;
 
                 if (i == 0 || i == xNum - 1)
                 {

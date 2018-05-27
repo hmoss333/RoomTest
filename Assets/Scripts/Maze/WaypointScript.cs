@@ -6,13 +6,17 @@ public class WaypointScript : MonoBehaviour {
 
     public WaypointManager wayPointManager;  //The reference type is stored here , in this case the manager script.
     public Transform waypointInRange;       //This is the waypoint that is closest to this waypoint.
-    public bool showDebugLine = true;       //By defualt this is true, but you make it false if you like, its for debugging.
+    
+	public bool showDebugLine = true;       //By defualt this is true, but you make it false if you like, its for debugging.
     public Color debugGizmoColor = Color.red; //Same as above, just a color for the gizmo line.
 
     public enum Type { start, wall, corner, empty, eventRoom }
     public Type type;
     public enum Direction { top, bottom, left, right}
     public Direction direction;
+
+	public int xPos;
+	public int yPos;
 
     //public GameObject roomPrefab;
 

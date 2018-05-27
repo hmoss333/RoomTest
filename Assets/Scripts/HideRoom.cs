@@ -7,7 +7,7 @@ public class HideRoom : MonoBehaviour {
     public MeshRenderer[] roomMeshes;
     public bool meshesEnabled;
 
-    public List<Transform> adjactentRooms;
+	public List<WaypointScript> adjactentRooms;
 
     // Use this for initialization
 	void Start () {
@@ -20,7 +20,7 @@ public class HideRoom : MonoBehaviour {
 
         meshesEnabled = false;
 
-        //FindAdjactentRooms();
+		GetAdjacentRooms();
 	}
 	
 	// Update is called once per frame
@@ -30,10 +30,10 @@ public class HideRoom : MonoBehaviour {
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player" && meshesEnabled == false)
+		if (other.tag == "Player")// && meshesEnabled == false)
         {
             TurnOnMesh();
-            //TurnOnAdjactendRooms();
+			TurnOnAdjacentRooms (adjactentRooms);
 
             meshesEnabled = true;
         }
@@ -43,11 +43,8 @@ public class HideRoom : MonoBehaviour {
     {
         if (other.tag == "Player")
         {
-            //Debug.Log("left room");
-            //renderer.enabled = true;
-
             TurnOffMesh();
-            //TurnOffAdjactendRooms();
+			TurnOffAdjacentRooms (adjactentRooms);
 
             meshesEnabled = false;
         }
@@ -69,26 +66,41 @@ public class HideRoom : MonoBehaviour {
         }
     }
 
-    //void FindAdjactentRooms()
-    //{
-    //    WaypointScript currentRoom = GetComponentInParent<WaypointScript>();
+	void GetAdjacentRooms() 
+	{
+		WaypointScript thisNode = GetComponentInParent<WaypointScript> ();
 
-    //    adjactentRooms = currentRoom.waypointsInRange;
-    //}
+		WaypointScript[] roomList;
+		roomList = GameObject.FindObjectsOfType<WaypointScript> ();
 
-    //void TurnOnAdjactendRooms()
-    //{
-    //    foreach (Transform room in adjactentRooms)
-    //    {
-    //        room.GetComponentInChildren<HideRoom>().TurnOnMesh();
-    //    }
-    //}
+		foreach (WaypointScript room in roomList) 
+		{
+			if (room != thisNode) 
+			{	
+				if (room.xPos == thisNode.xPos || room.xPos == thisNode.xPos + 1 || room.xPos == thisNode.xPos - 1) 
+				{
+					if (room.yPos == thisNode.yPos || room.yPos == thisNode.yPos + 1 || room.yPos == thisNode.yPos - 1) 
+					{
+						adjactentRooms.Add (room);
+					}
+				}
+			}
+		}
+	}
 
-    //void TurnOffAdjactendRooms()
-    //{
-    //    foreach (Transform room in adjactentRooms)
-    //    {
-    //        room.GetComponentInChildren<HideRoom>().TurnOffMesh();
-    //    }
-    //}
+	public void TurnOnAdjacentRooms(List<WaypointScript> wayPoints) 
+	{
+		foreach (WaypointScript node in wayPoints) 
+		{
+			node.GetComponentInChildren<HideRoom> ().TurnOnMesh ();
+		}
+	}
+
+	public void TurnOffAdjacentRooms(List<WaypointScript> wayPoints) 
+	{
+		foreach (WaypointScript node in wayPoints) 
+		{
+			node.GetComponentInChildren<HideRoom> ().TurnOffMesh ();
+		}
+	}
 }
