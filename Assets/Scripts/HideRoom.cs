@@ -30,12 +30,12 @@ public class HideRoom : MonoBehaviour {
 
     private void OnTriggerStay(Collider other)
     {
-		if (other.tag == "Player")// && meshesEnabled == false)
+		if (other.tag == "Player" && meshesEnabled == false)
         {
             TurnOnMesh();
 			TurnOnAdjacentRooms (adjactentRooms);
 
-            meshesEnabled = true;
+            //meshesEnabled = true;
         }
     }
 
@@ -46,7 +46,7 @@ public class HideRoom : MonoBehaviour {
             TurnOffMesh();
 			TurnOffAdjacentRooms (adjactentRooms);
 
-            meshesEnabled = false;
+            //meshesEnabled = false;
         }
     }
 
@@ -77,13 +77,23 @@ public class HideRoom : MonoBehaviour {
 		{
 			if (room != thisNode) 
 			{	
-				if (room.xPos == thisNode.xPos || room.xPos == thisNode.xPos + 1 || room.xPos == thisNode.xPos - 1) 
-				{
-					if (room.yPos == thisNode.yPos || room.yPos == thisNode.yPos + 1 || room.yPos == thisNode.yPos - 1) 
+				//This will only include rooms immediately above/bellow/left/right of current room
+				if ((room.xPos == thisNode.xPos + 1 && room.yPos == thisNode.yPos)
+					|| (room.xPos == thisNode.xPos - 1 && room.yPos == thisNode.yPos)
+					|| (room.yPos == thisNode.yPos + 1 && room.xPos == thisNode.xPos)
+					|| (room.yPos == thisNode.yPos - 1 && room.xPos == thisNode.xPos))
 					{
 						adjactentRooms.Add (room);
 					}
-				}
+
+//				//This will include diagonally alligned rooms
+//				if (room.xPos == thisNode.xPos || room.xPos == thisNode.xPos + 1 || room.xPos == thisNode.xPos - 1) 
+//				{
+//					if (room.yPos == thisNode.yPos || room.yPos == thisNode.yPos + 1 || room.yPos == thisNode.yPos - 1) 
+//					{
+//						adjactentRooms.Add (room);
+//					}
+//				}
 			}
 		}
 	}
@@ -92,7 +102,10 @@ public class HideRoom : MonoBehaviour {
 	{
 		foreach (WaypointScript node in wayPoints) 
 		{
-			node.GetComponentInChildren<HideRoom> ().TurnOnMesh ();
+			if (node.GetComponentInChildren<HideRoom> ().meshesEnabled == false) {
+				node.GetComponentInChildren<HideRoom> ().TurnOnMesh ();
+				node.GetComponentInChildren<HideRoom> ().meshesEnabled = true;
+			}
 		}
 	}
 
@@ -101,6 +114,7 @@ public class HideRoom : MonoBehaviour {
 		foreach (WaypointScript node in wayPoints) 
 		{
 			node.GetComponentInChildren<HideRoom> ().TurnOffMesh ();
+			node.GetComponentInChildren<HideRoom> ().meshesEnabled = false;
 		}
 	}
 }
