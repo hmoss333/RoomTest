@@ -35,7 +35,7 @@ public class HideRoom : MonoBehaviour {
             TurnOnMesh();
 			TurnOnAdjacentRooms (adjactentRooms);
 
-            //meshesEnabled = true;
+            meshesEnabled = true;
         }
     }
 
@@ -46,7 +46,7 @@ public class HideRoom : MonoBehaviour {
             TurnOffMesh();
 			TurnOffAdjacentRooms (adjactentRooms);
 
-            //meshesEnabled = false;
+            meshesEnabled = false;
         }
     }
 
