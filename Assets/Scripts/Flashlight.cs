@@ -7,10 +7,13 @@ public class Flashlight : MonoBehaviour {
     Player player;
     public float rotationSpeed = 1; //
     Vector3 relativePos;
+
+    WaypointManager wpm;
     
     // Use this for initialization
 	void Start () {
         player = GameObject.FindObjectOfType<Player>();
+        wpm = GameObject.FindObjectOfType<WaypointManager>();
 	}
 	
 	// Update is called once per frame
@@ -37,5 +40,40 @@ public class Flashlight : MonoBehaviour {
         dir.y = 0; // keep the direction strictly horizontal
         Quaternion rot = Quaternion.LookRotation(dir);
         transform.rotation = Quaternion.Slerp(transform.rotation, rot, rotationSpeed * Time.deltaTime);
+
+
+        foreach (Transform node in wpm.waypointNodes)
+        {
+            HideRoom currentNode = node.GetComponentInChildren<HideRoom>();
+
+            if (currentNode.meshesEnabled)
+            {
+                WaypointScript currentRoom = currentNode.GetComponentInParent<WaypointScript>();
+
+                foreach (WaypointScript room in currentNode.adjactentRooms)
+                {
+                    if (room.yPos == currentRoom.yPos + 1 && player.direction == Player.Direction.Up)
+                    {
+                        room.GetComponentInChildren<HideRoom>().TurnOnMesh();
+                    }
+                    else if (room.yPos == currentRoom.yPos - 1 && player.direction == Player.Direction.Down)
+                    {
+                        room.GetComponentInChildren<HideRoom>().TurnOnMesh();
+                    }
+                    else if (room.xPos == currentRoom.xPos + 1 && player.direction == Player.Direction.Right)
+                    {
+                        room.GetComponentInChildren<HideRoom>().TurnOnMesh();
+                    }
+                    else if (room.xPos == currentRoom.xPos - 1 && player.direction == Player.Direction.Left)
+                    {
+                        room.GetComponentInChildren<HideRoom>().TurnOnMesh();
+                    }
+                    else
+                    {
+                        room.GetComponentInChildren<HideRoom>().TurnOffMesh();
+                    }
+                }
+            }
+        }
     }
 }

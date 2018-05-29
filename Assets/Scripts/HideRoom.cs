@@ -33,7 +33,7 @@ public class HideRoom : MonoBehaviour {
 		if (other.tag == "Player" && meshesEnabled == false)
         {
             TurnOnMesh();
-			TurnOnAdjacentRooms (adjactentRooms);
+			//TurnOnAdjacentRooms (adjactentRooms);
 
             meshesEnabled = true;
         }
@@ -44,7 +44,7 @@ public class HideRoom : MonoBehaviour {
         if (other.tag == "Player")
         {
             TurnOffMesh();
-			TurnOffAdjacentRooms (adjactentRooms);
+			//TurnOffAdjacentRooms (adjactentRooms);
 
             meshesEnabled = false;
         }
