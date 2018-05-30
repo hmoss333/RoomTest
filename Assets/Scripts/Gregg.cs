@@ -6,7 +6,7 @@ public class Gregg : MonoBehaviour {
 
     [Header("Movement Settings")]
     public float walkSpeed;
-    public float dashSpeed;
+    public float hurtSpeed;
     float speed;
     float xInput;
     float yInput;
@@ -31,13 +31,31 @@ public class Gregg : MonoBehaviour {
     public GameObject weaponPrefab;
     public float attackTime;
 
+    SpriteRenderer[] characterRenderer;
+
     // Use this for initialization
     void Start () {
-		
-	}
+        speed = walkSpeed;
+
+        characterRenderer = GetComponentsInChildren<SpriteRenderer>();
+        //foreach (SpriteRenderer mesh in characterRenderer)
+        //    mesh.enabled = false;
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    public void TurnOnMesh()
+    {
+        foreach (SpriteRenderer mesh in characterRenderer)
+            mesh.enabled = true;
+    }
+
+    public void TurnOffMesh()
+    {
+        foreach (SpriteRenderer mesh in characterRenderer)
+            mesh.enabled = false;
+    }
 }

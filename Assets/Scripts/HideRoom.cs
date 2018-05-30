@@ -7,35 +7,43 @@ public class HideRoom : MonoBehaviour {
     public MeshRenderer[] roomMeshes;
     public bool meshesEnabled;
 
+    public bool litByFlashlight;
+
 	public List<WaypointScript> adjactentRooms;
 
     // Use this for initialization
 	void Start () {
         roomMeshes = GetComponentsInChildren<MeshRenderer>();
+        litByFlashlight = false;
 
         foreach (MeshRenderer mesh in roomMeshes)
-        {
             mesh.enabled = false;
-        }
 
         meshesEnabled = false;
-
 		GetAdjacentRooms();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
-
-    private void OnTriggerStay(Collider other)
-    {
-		if (other.tag == "Player" && meshesEnabled == false)
+        if (Player.flashlightOn && litByFlashlight)
         {
             TurnOnMesh();
-			//TurnOnAdjacentRooms (adjactentRooms);
+        }
+        else if (!meshesEnabled)
+        {
+            litByFlashlight = false;
+            TurnOffMesh();
+        }
+    }
 
-            meshesEnabled = true;
+    private void OnTriggerEnter(Collider other)
+    {
+		if (other.tag == "Player" && !meshesEnabled)
+            {
+                TurnOnMesh();
+                //TurnOnAdjacentRooms (adjactentRooms);
+
+                meshesEnabled = true;
         }
     }
 
@@ -43,10 +51,10 @@ public class HideRoom : MonoBehaviour {
     {
         if (other.tag == "Player")
         {
+            meshesEnabled = false;
+
             TurnOffMesh();
 			//TurnOffAdjacentRooms (adjactentRooms);
-
-            meshesEnabled = false;
         }
     }
 
@@ -66,39 +74,40 @@ public class HideRoom : MonoBehaviour {
         }
     }
 
-	void GetAdjacentRooms() 
-	{
-		WaypointScript thisNode = GetComponentInParent<WaypointScript> ();
+    void GetAdjacentRooms()
+    {
+        WaypointScript thisNode = GetComponentInParent<WaypointScript>();
 
-		WaypointScript[] roomList;
-		roomList = GameObject.FindObjectsOfType<WaypointScript> ();
+        WaypointScript[] roomList;
+        roomList = GameObject.FindObjectsOfType<WaypointScript>();
 
-		foreach (WaypointScript room in roomList) 
-		{
-			if (room != thisNode) 
-			{	
-				//This will only include rooms immediately above/bellow/left/right of current room
-				if ((room.xPos == thisNode.xPos + 1 && room.yPos == thisNode.yPos)
-					|| (room.xPos == thisNode.xPos - 1 && room.yPos == thisNode.yPos)
-					|| (room.yPos == thisNode.yPos + 1 && room.xPos == thisNode.xPos)
-					|| (room.yPos == thisNode.yPos - 1 && room.xPos == thisNode.xPos))
-					{
-						adjactentRooms.Add (room);
-					}
+        foreach (WaypointScript room in roomList)
+        {
+            if (room != thisNode)
+            {
+                //This will only include rooms immediately above/bellow/left/right of current room
+                if ((room.xPos == thisNode.xPos + 1 && room.yPos == thisNode.yPos)
+                    || (room.xPos == thisNode.xPos - 1 && room.yPos == thisNode.yPos)
+                    || (room.yPos == thisNode.yPos + 1 && room.xPos == thisNode.xPos)
+                    || (room.yPos == thisNode.yPos - 1 && room.xPos == thisNode.xPos))
+                {
+                    adjactentRooms.Add(room);
+                }
 
-//				//This will include diagonally alligned rooms
-//				if (room.xPos == thisNode.xPos || room.xPos == thisNode.xPos + 1 || room.xPos == thisNode.xPos - 1) 
-//				{
-//					if (room.yPos == thisNode.yPos || room.yPos == thisNode.yPos + 1 || room.yPos == thisNode.yPos - 1) 
-//					{
-//						adjactentRooms.Add (room);
-//					}
-//				}
-			}
-		}
-	}
+                //				//This will include diagonally alligned rooms
+                //				if (room.xPos == thisNode.xPos || room.xPos == thisNode.xPos + 1 || room.xPos == thisNode.xPos - 1) 
+                //				{
+                //					if (room.yPos == thisNode.yPos || room.yPos == thisNode.yPos + 1 || room.yPos == thisNode.yPos - 1) 
+                //					{
+                //						adjactentRooms.Add (room);
+                //					}
+                //				}
+            }
+        }
+    }
 
-	public void TurnOnAdjacentRooms(List<WaypointScript> wayPoints) 
+    //Unused
+    public void TurnOnAdjacentRooms(List<WaypointScript> wayPoints) 
 	{
 		foreach (WaypointScript node in wayPoints) 
 		{

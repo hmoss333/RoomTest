@@ -33,8 +33,8 @@ public class Player : MonoBehaviour {
     //bool attacking;
 
     [Header("Flashlight Settings")]
-    public GameObject flashlightPrefab;
-    bool flashlightOn;
+    public Flashlight flashlightPrefab;
+    public static bool flashlightOn;
 
     // Use this for initialization
     void Start () {
@@ -43,7 +43,7 @@ public class Player : MonoBehaviour {
 
         speed = walkSpeed;
         flashlightOn = false;
-        flashlightPrefab.SetActive(flashlightOn);
+        flashlightPrefab.GetComponent<Light>().enabled = flashlightOn;
 
         state = State.Move;
     }
@@ -107,7 +107,7 @@ public class Player : MonoBehaviour {
             }
 
             //Attack with current weapon [B button]
-            if (Input.GetButtonDown("Attack"))
+            if (Input.GetButtonDown("Attack") && weaponPrefab != null)
             {
                 state = State.Attack;
                 StartCoroutine(Attack(weaponPrefab, direction, attackTime));
@@ -123,7 +123,7 @@ public class Player : MonoBehaviour {
             if (Input.GetButtonDown("Hide"))
             {
                 flashlightOn = false;
-                flashlightPrefab.SetActive(flashlightOn);
+                flashlightPrefab.GetComponent<Light>().enabled = flashlightOn;
 
                 Hide();
             }
@@ -134,7 +134,9 @@ public class Player : MonoBehaviour {
                 speed = dashSpeed;
             }
             else
+            {
                 speed = walkSpeed;
+            }
 
             speed *= WaypointManager.scale;
         }
@@ -145,6 +147,12 @@ public class Player : MonoBehaviour {
             if (Input.GetButtonDown("Hide"))
             {
                 Hide();
+            }
+
+            if (Input.GetButtonDown("Attack") && weaponPrefab != null) //Attack out of hiding
+            {
+                state = State.Attack;
+                StartCoroutine(Attack(weaponPrefab, direction, attackTime));
             }
         }
         else
@@ -201,7 +209,7 @@ public class Player : MonoBehaviour {
         state = State.Move;
     }
 
-    void Flashlight(GameObject prefab)
+    void Flashlight(Flashlight prefab)
     {
         //Keeps triggering twice
 
@@ -214,7 +222,7 @@ public class Player : MonoBehaviour {
             flashlightOn = true;
         }
 
-        prefab.SetActive(flashlightOn);
+        prefab.GetComponent<Light>().enabled = flashlightOn;
     }
 
     void Hide()

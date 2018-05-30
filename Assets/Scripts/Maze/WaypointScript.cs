@@ -18,6 +18,7 @@ public class WaypointScript : MonoBehaviour {
 	public int xPos;
 	public int yPos;
 
+    //public List<WaypointScript> adjactentRooms;
     //public GameObject roomPrefab;
 
 
@@ -49,7 +50,7 @@ public class WaypointScript : MonoBehaviour {
         }
     }
 
-    void SelectRoomType(Type roomType)//, GameObject[] roomTypes)
+    void SelectRoomType(Type roomType)
     {
         GameObject roomPrefab = null;
         GameObject[] roomTypeArray;
@@ -57,23 +58,24 @@ public class WaypointScript : MonoBehaviour {
         switch (roomType)
         {
             case Type.start:
-                //roomPrefab = roomTypes[0]; //this should convert from type to int, i.e. roomTypes[roomType]
+                roomTypeArray = wayPointManager.startRooms;
+                roomPrefab = SelectRandomPrefab(roomTypeArray);
                 break;
             case Type.empty:
                 roomTypeArray = wayPointManager.emptyRoomTypes;
-                roomPrefab = SelectRandomPrefab(roomTypeArray); //this should convert from type to int, i.e. roomTypes[roomType]
+                roomPrefab = SelectRandomPrefab(roomTypeArray);
                 break;
             case Type.eventRoom:
                 roomTypeArray = wayPointManager.eventRoomTypes;
-                roomPrefab = SelectRandomPrefab(roomTypeArray); //this should convert from type to int, i.e. roomTypes[roomType]
+                roomPrefab = SelectRandomPrefab(roomTypeArray);
                 break;
             case Type.wall:
                 roomTypeArray = wayPointManager.wallRoomTypes;
-                roomPrefab = SelectRandomPrefab(roomTypeArray); //this should convert from type to int, i.e. roomTypes[roomType]
+                roomPrefab = SelectRandomPrefab(roomTypeArray);
                 break;
             case Type.corner:
                 roomTypeArray = wayPointManager.cornerRoomTypes;
-                roomPrefab = SelectRandomPrefab(roomTypeArray); //this should convert from type to int, i.e. roomTypes[roomType]
+                roomPrefab = SelectRandomPrefab(roomTypeArray);
                 break;
             default:
                 Debug.Log("Not a valid room type");
@@ -83,7 +85,7 @@ public class WaypointScript : MonoBehaviour {
         roomPrefab = Instantiate(roomPrefab, new Vector3(transform.position.x, roomPrefab.transform.position.y, transform.position.z), Quaternion.identity);
         roomPrefab.transform.localScale = new Vector3(WaypointManager.scale, WaypointManager.scale, WaypointManager.scale);
 
-        if (roomType == Type.wall || roomType == Type.corner)
+        if (roomType == Type.wall || roomType == Type.corner || roomType == Type.start)
             RotateRoom(roomPrefab, direction);
 
         roomPrefab.transform.parent = this.transform;

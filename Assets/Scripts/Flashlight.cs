@@ -41,7 +41,12 @@ public class Flashlight : MonoBehaviour {
         Quaternion rot = Quaternion.LookRotation(dir);
         transform.rotation = Quaternion.Slerp(transform.rotation, rot, rotationSpeed * Time.deltaTime);
 
+        LookAtRoom();
+        StopLookAtRoom();
+    }
 
+    public void LookAtRoom()
+    {
         foreach (Transform node in wpm.waypointNodes)
         {
             HideRoom currentNode = node.GetComponentInChildren<HideRoom>();
@@ -54,23 +59,56 @@ public class Flashlight : MonoBehaviour {
                 {
                     if (room.yPos == currentRoom.yPos + 1 && player.direction == Player.Direction.Up)
                     {
-                        room.GetComponentInChildren<HideRoom>().TurnOnMesh();
+                        room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
                     }
                     else if (room.yPos == currentRoom.yPos - 1 && player.direction == Player.Direction.Down)
                     {
-                        room.GetComponentInChildren<HideRoom>().TurnOnMesh();
+                        room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
                     }
                     else if (room.xPos == currentRoom.xPos + 1 && player.direction == Player.Direction.Right)
                     {
-                        room.GetComponentInChildren<HideRoom>().TurnOnMesh();
+                        room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
                     }
                     else if (room.xPos == currentRoom.xPos - 1 && player.direction == Player.Direction.Left)
                     {
-                        room.GetComponentInChildren<HideRoom>().TurnOnMesh();
+                        room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
                     }
                     else
                     {
-                        room.GetComponentInChildren<HideRoom>().TurnOffMesh();
+                        room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
+                    }
+                }
+            }
+        }
+    }
+
+    public void StopLookAtRoom()
+    {
+        foreach (Transform node in wpm.waypointNodes)
+        {
+            HideRoom currentNode = node.GetComponentInChildren<HideRoom>();
+
+            if (currentNode.meshesEnabled)
+            {
+                WaypointScript currentRoom = currentNode.GetComponentInParent<WaypointScript>();
+
+                foreach (WaypointScript room in currentNode.adjactentRooms)
+                {
+                    if (room.yPos == currentRoom.yPos + 1 && player.direction != Player.Direction.Up)
+                    {
+                        room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
+                    }
+                    if (room.yPos == currentRoom.yPos - 1 && player.direction != Player.Direction.Down)
+                    {
+                        room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
+                    }
+                    if (room.xPos == currentRoom.xPos + 1 && player.direction != Player.Direction.Right)
+                    {
+                        room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
+                    }
+                    if (room.xPos == currentRoom.xPos - 1 && player.direction != Player.Direction.Left)
+                    {
+                        room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
                     }
                 }
             }
