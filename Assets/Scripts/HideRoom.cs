@@ -45,6 +45,22 @@ public class HideRoom : MonoBehaviour {
 
                 meshesEnabled = true;
         }
+
+        //Temporary solution, should probably have something to call in Gregg instead of setting directly
+        if (other.tag == "Killer")
+        {
+            other.GetComponent<Gregg>().currentRoom = this.transform;
+
+            if (other.GetComponent<Gregg>().nextRoom == null)
+            {
+                int randNum = Random.Range(0, adjactentRooms.Count);
+                other.GetComponent<Gregg>().nextRoom = adjactentRooms[randNum].transform;
+            }
+            else
+            {
+                other.GetComponent<Gregg>().SetNextRoom(adjactentRooms[0].transform);
+            }
+        }
     }
 
     private void OnTriggerExit(Collider other)
