@@ -142,4 +142,14 @@ public class HideRoom : MonoBehaviour {
 			node.GetComponentInChildren<HideRoom> ().meshesEnabled = false;
 		}
 	}
+
+    public void UpdateMeshes()
+    {
+        roomMeshes = GetComponentsInChildren<MeshRenderer>();
+
+        foreach (MeshRenderer mesh in roomMeshes)
+        {
+            mesh.enabled = false;
+        }
+    }
 }

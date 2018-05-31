@@ -67,13 +67,15 @@ public class WaypointManager : MonoBehaviour
         //Just gets the total count of Transforms in the waypoint list.
         totalWaypoints = waypointNodes.Count;
 
-        //Get the position of the starting node for instantiating players; can probably do this as a public variable so other scripts can reference, i.e. GameManager
-        Vector3 startPos = GetStartNode(waypointNodes).position;
-        player = Instantiate(player, new Vector3(startPos.x, 1 - (scale / 4), startPos.z), Quaternion.identity);//testing for now; need to move to GameManager
-        //player.transform.localScale = new Vector3(scale / 4, scale / 4, scale / 4);
+        GameManager.UpdateStep();
 
-        int randNum = Random.Range(0, waypointNodes.Count);
-        killer = Instantiate(killer, new Vector3(waypointNodes[randNum].position.x, 1 - (scale / 4), waypointNodes[randNum].position.z), Quaternion.identity); //testing for now; need to move to GameManager
+        ////Get the position of the starting node for instantiating players; can probably do this as a public variable so other scripts can reference, i.e. GameManager
+        //Vector3 startPos = GetStartNode(waypointNodes).position;
+        //player = Instantiate(player, new Vector3(startPos.x, 1 - (scale / 4), startPos.z), Quaternion.identity);//testing for now; need to move to GameManager
+        ////player.transform.localScale = new Vector3(scale / 4, scale / 4, scale / 4);
+
+        //int randNum = Random.Range(0, waypointNodes.Count);
+        //killer = Instantiate(killer, new Vector3(waypointNodes[randNum].position.x, 1 - (scale / 4), waypointNodes[randNum].position.z), Quaternion.identity); //testing for now; need to move to GameManager
     }
 
     //After the list is created this method is called by each waypoint and this script does all the leg work.

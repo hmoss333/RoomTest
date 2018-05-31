@@ -164,9 +164,9 @@ public class Player : MonoBehaviour {
     IEnumerator Interact(float interactDist, float interactTime)
     {
         foundHit = new RaycastHit();
-        Vector3 playerBase = new Vector3(transform.position.x, transform.position.y/2, transform.position.z);
-        bool test = Physics.Raycast(playerBase, lastDir, out foundHit, interactDist, 1 << LayerMask.NameToLayer("Interact"));
-        Debug.DrawRay(playerBase, lastDir, Color.green);
+        //Vector3 playerBase = new Vector3(transform.position.x, transform.position.y/2, transform.position.z);
+        bool test = Physics.Raycast(transform.position/*playerBase*/, lastDir, out foundHit, interactDist, 1 << LayerMask.NameToLayer("Interact"));
+        Debug.DrawRay(transform.position /*playerBase*/, lastDir, Color.green);
 
         if (test)
         {

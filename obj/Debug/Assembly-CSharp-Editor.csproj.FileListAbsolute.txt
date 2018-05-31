@@ -1,3 +1,4 @@
+C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSharp-Editor.csproj.CoreCompileInputs.cache
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\Assembly-CSharp-Editor.dll
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\Assembly-CSharp-Editor.pdb
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\KdTreeLib.dll
@@ -60,6 +61,5 @@ C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEdi
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEngine.VR.xml
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEditor.iOS.Extensions.Xcode.xml
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSharp-Editor.csprojResolveAssemblyReference.cache
-C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSharp-Editor.csproj.CoreCompileInputs.cache
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSharp-Editor.dll
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSharp-Editor.pdb

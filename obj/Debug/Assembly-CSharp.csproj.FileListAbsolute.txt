@@ -1,3 +1,4 @@
+C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\Assembly-CSharp.dll
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\Assembly-CSharp.pdb
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\KdTreeLib.dll
@@ -31,7 +32,5 @@ C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\nunit.fr
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEngine.Analytics.xml
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEngine.HoloLens.xml
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEngine.VR.xml
-C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSharp.dll
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSharp.pdb
-C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
