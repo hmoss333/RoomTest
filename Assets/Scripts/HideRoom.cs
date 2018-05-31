@@ -9,7 +9,7 @@ public class HideRoom : MonoBehaviour {
 
     public bool litByFlashlight;
 
-	public List<WaypointScript> adjactentRooms;
+	public List<Transform> adjactentRooms;
 
     // Use this for initialization
 	void Start () {
@@ -47,19 +47,13 @@ public class HideRoom : MonoBehaviour {
         }
 
         //Temporary solution, should probably have something to call in Gregg instead of setting directly
+        //Really need to update the logic better so that its not dependant on the room, but positioning
         if (other.tag == "Killer")
         {
-            other.GetComponent<Gregg>().currentRoom = this.transform;
-
-            if (other.GetComponent<Gregg>().nextRoom == null)
-            {
-                int randNum = Random.Range(0, adjactentRooms.Count);
-                other.GetComponent<Gregg>().nextRoom = adjactentRooms[randNum].transform;
-            }
-            else
-            {
-                other.GetComponent<Gregg>().SetNextRoom(adjactentRooms[0].transform);
-            }
+            Gregg killer = other.GetComponent<Gregg>();
+            killer.currentRoom = this.transform;
+            killer.adjacentRooms = killer.GetAdjacentRooms(this.transform);
+            killer.nextRoom = killer.SelectNextRoom(killer.adjacentRooms);
         }
     }
 
@@ -70,11 +64,10 @@ public class HideRoom : MonoBehaviour {
             meshesEnabled = false;
 
             TurnOffMesh();
-			//TurnOffAdjacentRooms (adjactentRooms);
         }
     }
 
-    public void TurnOnMesh()
+    void TurnOnMesh()
     {
         foreach (MeshRenderer mesh in roomMeshes)
         {
@@ -82,7 +75,7 @@ public class HideRoom : MonoBehaviour {
         }
     }
 
-    public void TurnOffMesh()
+    void TurnOffMesh()
     {
         foreach (MeshRenderer mesh in roomMeshes)
         {
@@ -99,7 +92,7 @@ public class HideRoom : MonoBehaviour {
 
         foreach (WaypointScript room in roomList)
         {
-            if (room != thisNode)
+            if (room != thisNode && room.zPos == thisNode.zPos)
             {
                 //This will only include rooms immediately above/bellow/left/right of current room
                 if ((room.xPos == thisNode.xPos + 1 && room.yPos == thisNode.yPos)
@@ -107,7 +100,7 @@ public class HideRoom : MonoBehaviour {
                     || (room.yPos == thisNode.yPos + 1 && room.xPos == thisNode.xPos)
                     || (room.yPos == thisNode.yPos - 1 && room.xPos == thisNode.xPos))
                 {
-                    adjactentRooms.Add(room);
+                    adjactentRooms.Add(room.transform);
                 }
 
                 //				//This will include diagonally alligned rooms
@@ -121,27 +114,6 @@ public class HideRoom : MonoBehaviour {
             }
         }
     }
-
-    //Unused
-    public void TurnOnAdjacentRooms(List<WaypointScript> wayPoints) 
-	{
-		foreach (WaypointScript node in wayPoints) 
-		{
-			if (node.GetComponentInChildren<HideRoom> ().meshesEnabled == false) {
-				node.GetComponentInChildren<HideRoom> ().TurnOnMesh ();
-				node.GetComponentInChildren<HideRoom> ().meshesEnabled = true;
-			}
-		}
-	}
-
-	public void TurnOffAdjacentRooms(List<WaypointScript> wayPoints) 
-	{
-		foreach (WaypointScript node in wayPoints) 
-		{
-			node.GetComponentInChildren<HideRoom> ().TurnOffMesh ();
-			node.GetComponentInChildren<HideRoom> ().meshesEnabled = false;
-		}
-	}
 
     public void UpdateMeshes()
     {

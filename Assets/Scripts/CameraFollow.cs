@@ -58,7 +58,7 @@ public class CameraFollow : MonoBehaviour {
             Vector3 velocity = Vector3.zero;
             Vector3 forward = player.transform.forward * WaypointManager.scale;// 5f;
             Vector3 needPos = player.transform.position - forward;
-            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(needPos.x, WaypointManager.scale * 0.75f, needPos.z), ref velocity, 0.02f);
+            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(needPos.x, player.transform.position.y + WaypointManager.scale * 0.5f, needPos.z), ref velocity, 0.02f);
             transform.LookAt(player.transform);
         }
     }

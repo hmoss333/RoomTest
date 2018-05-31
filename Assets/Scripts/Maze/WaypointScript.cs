@@ -17,6 +17,7 @@ public class WaypointScript : MonoBehaviour {
 
 	public int xPos;
 	public int yPos;
+    public int zPos;
 
     //public List<WaypointScript> adjactentRooms;
     //public GameObject roomPrefab;
@@ -82,7 +83,7 @@ public class WaypointScript : MonoBehaviour {
                 break;
         }
 
-        roomPrefab = Instantiate(roomPrefab, new Vector3(transform.position.x, roomPrefab.transform.position.y, transform.position.z), Quaternion.identity);
+        roomPrefab = Instantiate(roomPrefab, transform.position/*new Vector3(transform.position.x, roomPrefab.transform.position.y, transform.position.z)*/, Quaternion.identity);
         roomPrefab.transform.localScale = new Vector3(WaypointManager.scale, WaypointManager.scale, WaypointManager.scale);
 
         if (roomType == Type.wall || roomType == Type.corner || roomType == Type.start)

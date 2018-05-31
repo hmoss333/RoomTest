@@ -55,27 +55,31 @@ public class Flashlight : MonoBehaviour {
             {
                 WaypointScript currentRoom = currentNode.GetComponentInParent<WaypointScript>();
 
-                foreach (WaypointScript room in currentNode.adjactentRooms)
+                foreach (Transform room in currentNode.adjactentRooms)
                 {
-                    if (room.yPos == currentRoom.yPos + 1 && player.direction == Player.Direction.Up)
+                    WaypointScript roomPos = room.GetComponent<WaypointScript>();
+                    if (roomPos.zPos == currentRoom.zPos)
                     {
-                        room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
-                    }
-                    else if (room.yPos == currentRoom.yPos - 1 && player.direction == Player.Direction.Down)
-                    {
-                        room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
-                    }
-                    else if (room.xPos == currentRoom.xPos + 1 && player.direction == Player.Direction.Right)
-                    {
-                        room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
-                    }
-                    else if (room.xPos == currentRoom.xPos - 1 && player.direction == Player.Direction.Left)
-                    {
-                        room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
-                    }
-                    else
-                    {
-                        room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
+                        if (roomPos.yPos == currentRoom.yPos + 1 && player.direction == Player.Direction.Up)
+                        {
+                            room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        }
+                        else if (roomPos.yPos == currentRoom.yPos - 1 && player.direction == Player.Direction.Down)
+                        {
+                            room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        }
+                        else if (roomPos.xPos == currentRoom.xPos + 1 && player.direction == Player.Direction.Right)
+                        {
+                            room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        }
+                        else if (roomPos.xPos == currentRoom.xPos - 1 && player.direction == Player.Direction.Left)
+                        {
+                            room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        }
+                        else
+                        {
+                            room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
+                        }
                     }
                 }
             }
@@ -92,23 +96,27 @@ public class Flashlight : MonoBehaviour {
             {
                 WaypointScript currentRoom = currentNode.GetComponentInParent<WaypointScript>();
 
-                foreach (WaypointScript room in currentNode.adjactentRooms)
+                foreach (Transform room in currentNode.adjactentRooms)
                 {
-                    if (room.yPos == currentRoom.yPos + 1 && player.direction != Player.Direction.Up)
+                    WaypointScript roomPos = room.GetComponent<WaypointScript>();
+                    if (roomPos.zPos == currentRoom.zPos)
                     {
-                        room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
-                    }
-                    if (room.yPos == currentRoom.yPos - 1 && player.direction != Player.Direction.Down)
-                    {
-                        room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
-                    }
-                    if (room.xPos == currentRoom.xPos + 1 && player.direction != Player.Direction.Right)
-                    {
-                        room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
-                    }
-                    if (room.xPos == currentRoom.xPos - 1 && player.direction != Player.Direction.Left)
-                    {
-                        room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
+                        if (roomPos.yPos == currentRoom.yPos + 1 && player.direction != Player.Direction.Up)
+                        {
+                            room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
+                        }
+                        if (roomPos.yPos == currentRoom.yPos - 1 && player.direction != Player.Direction.Down)
+                        {
+                            room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
+                        }
+                        if (roomPos.xPos == currentRoom.xPos + 1 && player.direction != Player.Direction.Right)
+                        {
+                            room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
+                        }
+                        if (roomPos.xPos == currentRoom.xPos - 1 && player.direction != Player.Direction.Left)
+                        {
+                            room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
+                        }
                     }
                 }
             }
