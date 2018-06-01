@@ -10,6 +10,8 @@ public class HideRoom : MonoBehaviour {
     public bool litByFlashlight;
     public bool killerInRoom;
 
+    Color col;
+
     // Use this for initialization
 	void Start () {
         roomMeshes = GetComponentsInChildren<MeshRenderer>();
@@ -40,7 +42,6 @@ public class HideRoom : MonoBehaviour {
 		if (other.tag == "Player" && !meshesEnabled)
             {
                 TurnOnMesh();
-                //TurnOnAdjacentRooms (adjactentRooms);
 
                 meshesEnabled = true;
         }

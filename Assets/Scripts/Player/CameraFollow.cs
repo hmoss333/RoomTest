@@ -10,6 +10,7 @@ public class CameraFollow : MonoBehaviour {
     Color col;
 
     public float viewAngle;
+    public float viewDist;
     public LayerMask layersToFade;
 
     // Use this for initialization

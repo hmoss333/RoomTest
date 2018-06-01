@@ -86,8 +86,8 @@ public class WaypointScript : MonoBehaviour {
                 break;
         }
 
-        roomPrefab = Instantiate(roomPrefab, transform.position/*new Vector3(transform.position.x, roomPrefab.transform.position.y, transform.position.z)*/, Quaternion.identity);
-        roomPrefab.transform.localScale = new Vector3(WaypointManager.scale, WaypointManager.scale, WaypointManager.scale);
+        roomPrefab = Instantiate(roomPrefab, transform.position, Quaternion.identity);
+        roomPrefab.transform.localScale = new Vector3(WaypointManager.scale, roomPrefab.transform.localScale.y * WaypointManager.scale, WaypointManager.scale);
 
         if (roomType == Type.wall || roomType == Type.corner || roomType == Type.start)
             RotateRoom(roomPrefab, direction);
