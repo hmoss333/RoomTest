@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-	public static int step;
+	public static int step = 0;
 
     public GameObject[] players;
     public GameObject killer;
@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour {
 	void Start () {
         //gm = GetComponent<GameManager>();
         //wpm = FindObjectOfType<WaypointManager>();
-        step = 0;
+        //step = 0;
 	}
 	
 	// Update is called once per frame
@@ -28,9 +28,6 @@ public class GameManager : MonoBehaviour {
 
     public static void UpdateStep()
     {
-        //step++;
-        Debug.Log(step);
-
         WaypointManager wpm = FindObjectOfType<WaypointManager>();
         GameManager gm = FindObjectOfType<GameManager>();
 
@@ -40,17 +37,18 @@ public class GameManager : MonoBehaviour {
                 GameObject objectiveItem = gm.objectiveItem;
                 GameObject[] players = gm.players;
 
-                Step1(objectiveItem, players, wpm.waypointNodes);
+                Step1(players, objectiveItem, wpm.waypointNodes);
                 break;
             case 1:
                 objectiveItem = gm.crowbar;
                 GameObject killer = gm.killer;
                 
-                Step2(objectiveItem, killer, wpm.waypointNodes);
+                Step2(killer, objectiveItem, wpm.waypointNodes);
                 break;
             case 2:
                 //Players now needs key to unlock the door
                 //Spawn key item (may require players interacting with different objects to collect)
+                //Create ladder object to access second floor
                 break;
             case 3:
                 //If killer is not incapacitated, players will not be able to leave the house
@@ -67,17 +65,27 @@ public class GameManager : MonoBehaviour {
                 Debug.Log("Something broke here");
                 break;
         }
+
+        step++;
     }
 
-    static void SpawnObjectives(GameObject objectiveItem, List<Transform> roomList)
+    static void SpawnObjectives(GameObject objItem, List<Transform> roomList)
     {
         int randNum = Random.Range(0, roomList.Count);
         Transform targetRoom = roomList[randNum];
         HideRoom roomScript = targetRoom.GetComponentInChildren<HideRoom>();
 
-        objectiveItem = Instantiate(objectiveItem, new Vector3(targetRoom.position.x, 1 - (WaypointManager.scale / 4), targetRoom.position.z), Quaternion.identity) as GameObject;
-        objectiveItem.transform.parent = roomScript.gameObject.transform;
-        roomScript.UpdateMeshes();
+        if (roomScript.meshesEnabled || (roomScript.litByFlashlight && Player.flashlightOn))
+        {
+            SpawnObjectives(objItem, roomList);
+        }
+        else
+        {
+            objItem = Instantiate(objItem, new Vector3(targetRoom.position.x, 1 - (WaypointManager.scale / 4), targetRoom.position.z), Quaternion.identity) as GameObject;
+            objItem.transform.parent = roomScript.gameObject.transform;
+            roomScript.UpdateMeshes();
+            Debug.Log("Objective in Room: " + targetRoom.GetComponent<WaypointScript>().xPos + ", " + targetRoom.GetComponent<WaypointScript>().yPos);
+        }
     }
 
     static void SpawnPlayers(GameObject[] players, List<Transform> roomList)
@@ -105,18 +113,29 @@ public class GameManager : MonoBehaviour {
     static void SpawnKiller(GameObject killer, List<Transform> roomList)
     {
         int randNum = Random.Range(0, roomList.Count);
-        killer = Instantiate(killer, new Vector3(roomList[randNum].position.x, 1 - (WaypointManager.scale / 4), roomList[randNum].position.z), Quaternion.identity); //testing for now; need to move to GameManager
+        Transform targetRoom = roomList[randNum];
+        HideRoom roomScript = targetRoom.GetComponentInChildren<HideRoom>();
+
+        if (roomScript.meshesEnabled || (roomScript.litByFlashlight && Player.flashlightOn))
+        {
+            SpawnKiller(killer, roomList);
+        }
+        else
+        {
+            killer = Instantiate(killer, new Vector3(targetRoom.position.x, 1 - (WaypointManager.scale / 4), targetRoom.position.z), Quaternion.identity) as GameObject; //testing for now; need to move to GameManager
+            Debug.Log("Killer in Room: " + targetRoom.GetComponent<WaypointScript>().xPos + ", " + targetRoom.GetComponent<WaypointScript>().yPos);
+        }
     }
 
-    static void Step1(GameObject objectiveItem, GameObject[] players, List<Transform> roomList)
+    static void Step1(GameObject[] players, GameObject objItem, List<Transform> roomList)
     {
-        SpawnObjectives(objectiveItem, roomList);
         SpawnPlayers(players, roomList);
+        SpawnObjectives(objItem, roomList);
     }
 
-    static void Step2(GameObject objectiveItem, GameObject killer, List<Transform> roomList)
+    static void Step2(GameObject killer, GameObject objItem, List<Transform> roomList)
     {
-        SpawnObjectives(objectiveItem, roomList);
         SpawnKiller(killer, roomList);
+        SpawnObjectives(objItem, roomList);
     }
 }

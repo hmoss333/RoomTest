@@ -47,13 +47,12 @@ public class Player : MonoBehaviour {
 
         state = State.Move;
     }
-	
-	// Update is called once per frame
-	void FixedUpdate () {
-        //
-        //TO DO: Map to controller
-        //
 
+    //
+    //TO DO: Map inputs to controller
+    //
+    // Update is called once per frame
+    void FixedUpdate () {
         if (state == State.Move)
         {
             //Control logic
@@ -99,6 +98,27 @@ public class Player : MonoBehaviour {
                 animator.SetTrigger("Down");
             }
 
+            //Speed controls [Left trigger?]
+            if (Input.GetButton("Dash"))
+            {
+                speed = dashSpeed;
+            }
+            else
+            {
+                speed = walkSpeed;
+            }
+
+            speed *= WaypointManager.scale;
+        }
+        else
+        {
+            rb.velocity = Vector3.zero;
+        }
+    }
+    void Update()
+    {
+        if (state == State.Move)
+        {
             //Interact with objects [A button]
             if (Input.GetButtonDown("Interact"))
             {
@@ -127,18 +147,6 @@ public class Player : MonoBehaviour {
 
                 Hide();
             }
-
-            //Speed controls [Left trigger?]
-            if (Input.GetButton("Dash"))
-            {
-                speed = dashSpeed;
-            }
-            else
-            {
-                speed = walkSpeed;
-            }
-
-            speed *= WaypointManager.scale;
         }
         else if (state == State.Hide)
         {
@@ -154,10 +162,6 @@ public class Player : MonoBehaviour {
                 state = State.Attack;
                 StartCoroutine(Attack(weaponPrefab, direction, attackTime));
             }
-        }
-        else
-        {
-            rb.velocity = Vector3.zero;
         }
     }
 

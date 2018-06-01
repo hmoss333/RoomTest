@@ -19,8 +19,9 @@ public class WaypointScript : MonoBehaviour {
 	public int yPos;
     public int zPos;
 
-    //public List<WaypointScript> adjactentRooms;
-    //public GameObject roomPrefab;
+    public GameObject roomPrefab;
+
+    public List<Transform> adjactentNodes;
 
 
     //This method is called after the manager creates the list of waypoints. It just stores the manager script we passed and then
@@ -32,6 +33,8 @@ public class WaypointScript : MonoBehaviour {
         SelectRoomType(type);
         //roomPrefab = Instantiate(wayPointManager.roomTypes[0], new Vector3(transform.position.x, wayPointManager.roomTypes[0].transform.position.y, transform.position.z), Quaternion.identity);
         //roomPrefab.transform.parent = this.transform;
+
+        adjactentNodes = GetAdjacentNodes();
     }
 
     //This is not needed in your final build, its only used here to get an idea what waypoint connects to what.
@@ -118,5 +121,30 @@ public class WaypointScript : MonoBehaviour {
             default:
                 break;
         }
+    }
+
+    List<Transform> GetAdjacentNodes()
+    {
+        List<Transform> tempList = new List<Transform>();
+
+        WaypointScript[] roomList;
+        roomList = GameObject.FindObjectsOfType<WaypointScript>();
+
+        foreach (WaypointScript room in roomList)
+        {
+            if (room != this && room.zPos == this.zPos)
+            {
+                //This will only include rooms immediately above/bellow/left/right of current room
+                if ((room.xPos == this.xPos + 1 && room.yPos == this.yPos)
+                    || (room.xPos == this.xPos - 1 && room.yPos == this.yPos)
+                    || (room.yPos == this.yPos + 1 && room.xPos == this.xPos)
+                    || (room.yPos == this.yPos - 1 && room.xPos == this.xPos))
+                {
+                    tempList.Add(room.transform);
+                }
+            }
+        }
+
+        return tempList;
     }
 }

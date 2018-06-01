@@ -55,7 +55,7 @@ public class Flashlight : MonoBehaviour {
             {
                 WaypointScript currentRoom = currentNode.GetComponentInParent<WaypointScript>();
 
-                foreach (Transform room in currentNode.adjactentRooms)
+                foreach (Transform room in currentRoom.adjactentNodes)
                 {
                     WaypointScript roomPos = room.GetComponent<WaypointScript>();
                     if (roomPos.zPos == currentRoom.zPos)
@@ -96,7 +96,7 @@ public class Flashlight : MonoBehaviour {
             {
                 WaypointScript currentRoom = currentNode.GetComponentInParent<WaypointScript>();
 
-                foreach (Transform room in currentNode.adjactentRooms)
+                foreach (Transform room in currentRoom.adjactentNodes)
                 {
                     WaypointScript roomPos = room.GetComponent<WaypointScript>();
                     if (roomPos.zPos == currentRoom.zPos)

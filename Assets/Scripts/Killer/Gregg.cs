@@ -33,6 +33,7 @@ public class Gregg : MonoBehaviour {
     void Start () {
         speed = walkSpeed;
         moveToNextRoom = false;
+        characterRenderer = GetComponentsInChildren<SpriteRenderer>();
 
         //nextRoom = SelectNextRoom(GetAdjacentRooms(currentRoom)); //technically works, but just sets the current room, not actual adjactent
         StartCoroutine(MoveTimer(5f));
@@ -47,6 +48,7 @@ public class Gregg : MonoBehaviour {
         }
 	}
 
+    //This needs to be updated for actual use; currently is just always true
     IEnumerator MoveTimer(float waitTime)
     {
         //moveToNextRoom = false;
@@ -69,17 +71,17 @@ public class Gregg : MonoBehaviour {
         Destroy(this.gameObject);
     }
 
-    //public void TurnOnMesh()
-    //{
-    //    foreach (SpriteRenderer mesh in characterRenderer)
-    //        mesh.enabled = true;
-    //}
+    public void TurnOnMesh()
+    {
+        foreach (SpriteRenderer mesh in characterRenderer)
+            mesh.enabled = true;
+    }
 
-    //public void TurnOffMesh()
-    //{
-    //    foreach (SpriteRenderer mesh in characterRenderer)
-    //        mesh.enabled = false;
-    //}
+    public void TurnOffMesh()
+    {
+        foreach (SpriteRenderer mesh in characterRenderer)
+            mesh.enabled = false;
+    }
 
     public List<Transform> GetAdjacentRooms(Transform currentActiveRoom)
     {

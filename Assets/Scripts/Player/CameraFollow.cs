@@ -9,6 +9,9 @@ public class CameraFollow : MonoBehaviour {
     public RaycastHit[] hits = null;
     Color col;
 
+    public float viewAngle;
+    public LayerMask layersToFade;
+
     // Use this for initialization
     void Start()
     {
@@ -38,7 +41,7 @@ public class CameraFollow : MonoBehaviour {
                 }
             }
 
-            hits = Physics.RaycastAll(this.transform.position, (player.transform.position - this.transform.position), Vector3.Distance(this.transform.position, player.transform.position));
+            hits = Physics.RaycastAll(this.transform.position, (player.transform.position - this.transform.position), Vector3.Distance(this.transform.position, player.transform.position), layersToFade);
 
             //Hide objects between the player and the camera
             if (hits != null)
@@ -58,7 +61,7 @@ public class CameraFollow : MonoBehaviour {
             Vector3 velocity = Vector3.zero;
             Vector3 forward = player.transform.forward * WaypointManager.scale;// 5f;
             Vector3 needPos = player.transform.position - forward;
-            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(needPos.x, player.transform.position.y + WaypointManager.scale * 0.5f, needPos.z), ref velocity, 0.02f);
+            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(needPos.x, player.transform.position.y + WaypointManager.scale * viewAngle, needPos.z), ref velocity, 0.02f);
             transform.LookAt(player.transform);
         }
     }
