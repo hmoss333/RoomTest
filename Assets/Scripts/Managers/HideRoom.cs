@@ -25,14 +25,14 @@ public class HideRoom : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    { 
         if (Player.flashlightOn && litByFlashlight)
         {
             TurnOnMesh();
         }
         else if (!meshesEnabled)
         {
-            litByFlashlight = false;
             TurnOffMesh();
         }
     }
@@ -40,10 +40,9 @@ public class HideRoom : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
 		if (other.tag == "Player" && !meshesEnabled)
-            {
-                TurnOnMesh();
-
-                meshesEnabled = true;
+        {
+            TurnOnMesh();
+            meshesEnabled = true;
         }
 
         //Temporary solution, should probably have something to call in Gregg instead of setting directly
@@ -86,6 +85,7 @@ public class HideRoom : MonoBehaviour {
         if (other.tag == "Player")
         {
             meshesEnabled = false;
+            litByFlashlight = false;
 
             TurnOffMesh();
         }
@@ -111,6 +111,9 @@ public class HideRoom : MonoBehaviour {
 
     void TurnOffMesh()
     {
+        meshesEnabled = false;
+        litByFlashlight = false;
+
         foreach (MeshRenderer mesh in roomMeshes)
         {
             mesh.enabled = false;

@@ -7,7 +7,10 @@ public class InteractObjective : InteractParent {
     public override void Interact()
     {
         base.Interact();
-        GameManager.UpdateStep();
+        if (GameManager.step == 1)
+            GameManager.UpdateStep();
+
+        GameManager.objectiveCount++;
 
         //Disabling object for now, but probably want to add this to a list or something
         //Destroy(this.gameObject);

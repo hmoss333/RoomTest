@@ -17,6 +17,7 @@ public class WaypointManager : MonoBehaviour
     [Header("Waypoint Controls")]
     public List<Transform> waypointNodes;         //Create a list of all the waypoints in scene( its like a array but more easy to work with)
     public List<Transform> wallNodes;
+    public List<Transform> stairNodes;
     public int totalWaypoints = 0;                //Shows the total count of waypoints in the scene.
     public float waypointToWaypointRadius = 50f;  //a radius that each waypoint is checking for to see if another waypoint is close by
     [Range(0f, 1f)]
@@ -31,6 +32,7 @@ public class WaypointManager : MonoBehaviour
     public GameObject[] wallRoomTypes;
     public GameObject[] emptyRoomTypes;
     public GameObject[] eventRoomTypes;
+    public GameObject[] stairRoomTypes;
 
     GameManager gm;
 
@@ -54,6 +56,10 @@ public class WaypointManager : MonoBehaviour
 
         //Check available walls to generate a starting node
         GenerateStartNode(Random.Range(0, wallNodes.Count), wallNodes);
+
+        //If there are multiple levels to a map, generate entrance and exit staircase nodes
+        if (levels > 1)
+            GenerateStairNode(Random.Range(0, waypointNodes.Count), waypointNodes);
 
         //Once the creation of the list above is complete then have each waypoint check for other waypoints. Also make a reference to this manager
         //on each waypoint.
@@ -165,5 +171,33 @@ public class WaypointManager : MonoBehaviour
             nodeList[nodeValue].GetComponent<WaypointScript>().type = WaypointScript.Type.start;
         else
             GenerateStartNode(Random.Range(0, totalWaypoints), nodeList);
+    }
+
+    void GenerateStairNode(int nodeValue, List<Transform> nodeList)
+    {
+        //WaypointScript room = nodeList[nodeValue].GetComponent<WaypointScript>();
+        Debug.Log("Generate stairs");
+
+        for (int i = 0; i < levels; i++)
+        {
+            foreach (Transform node in nodeList)
+            {
+                WaypointScript room = node.GetComponent<WaypointScript>();
+
+                if (room.zPos == i)
+                {
+                    if ((room.type == WaypointScript.Type.empty || room.type == WaypointScript.Type.eventRoom))
+                    {
+                        room.type = WaypointScript.Type.stairs;
+                        Debug.Log("Room: " + room.xPos + ", " + room.yPos + ", " + room.zPos);
+                        break;
+                    }
+                    else
+                    {
+                        Debug.Log("Suitable room not found");
+                    }
+                }
+            }
+        }
     }
 }

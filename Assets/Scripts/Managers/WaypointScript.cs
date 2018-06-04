@@ -10,7 +10,7 @@ public class WaypointScript : MonoBehaviour {
 	public bool showDebugLine = true;       //By defualt this is true, but you make it false if you like, its for debugging.
     public Color debugGizmoColor = Color.red; //Same as above, just a color for the gizmo line.
 
-    public enum Type { start, wall, corner, empty, eventRoom }
+    public enum Type { start, wall, corner, empty, eventRoom, stairs }
     public Type type;
     public enum Direction { top, bottom, left, right}
     public Direction direction;
@@ -81,6 +81,10 @@ public class WaypointScript : MonoBehaviour {
                 roomTypeArray = wayPointManager.cornerRoomTypes;
                 roomPrefab = SelectRandomPrefab(roomTypeArray);
                 break;
+            case Type.stairs:
+                roomTypeArray = wayPointManager.stairRoomTypes;
+                roomPrefab = SelectRandomPrefab(roomTypeArray);
+                break;
             default:
                 Debug.Log("Not a valid room type");
                 break;
@@ -91,6 +95,8 @@ public class WaypointScript : MonoBehaviour {
 
         if (roomType == Type.wall || roomType == Type.corner || roomType == Type.start)
             RotateRoom(roomPrefab, direction);
+        else
+            RandomRotateRoom(roomPrefab);
 
         roomPrefab.transform.parent = this.transform;
     }
@@ -102,21 +108,44 @@ public class WaypointScript : MonoBehaviour {
         return roomTypeArray[randNum];
     }
 
-    void RotateRoom(GameObject roomPrefab, Direction roomDirection)
+    void RotateRoom(GameObject roomObj, Direction roomDirection)
     {
         switch (roomDirection)
         {
             case Direction.top:
-                roomPrefab.transform.Rotate(new Vector3(0, 180));
+                roomObj.transform.Rotate(new Vector3(0, 180));
                 break;
             case Direction.bottom:
-                roomPrefab.transform.Rotate(new Vector3(0, 0));
+                roomObj.transform.Rotate(new Vector3(0, 0));
                 break;
             case Direction.left:
-                roomPrefab.transform.Rotate(new Vector3(0, 90));
+                roomObj.transform.Rotate(new Vector3(0, 90));
                 break;
             case Direction.right:
-                roomPrefab.transform.Rotate(new Vector3(0, 270));
+                roomObj.transform.Rotate(new Vector3(0, 270));
+                break;
+            default:
+                break;
+        }
+    }
+
+    void RandomRotateRoom(GameObject roomObj)
+    {
+        int randNum = Random.Range(0, 4);
+
+        switch (randNum)
+        {
+            case 0:
+                roomObj.transform.Rotate(new Vector3(0, 180));
+                break;
+            case 1:
+                roomObj.transform.Rotate(new Vector3(0, 0));
+                break;
+            case 2:
+                roomObj.transform.Rotate(new Vector3(0, 90));
+                break;
+            case 3:
+                roomObj.transform.Rotate(new Vector3(0, 270));
                 break;
             default:
                 break;

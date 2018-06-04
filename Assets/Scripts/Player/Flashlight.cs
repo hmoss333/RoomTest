@@ -101,19 +101,19 @@ public class Flashlight : MonoBehaviour {
                     WaypointScript roomPos = room.GetComponent<WaypointScript>();
                     if (roomPos.zPos == currentRoom.zPos)
                     {
-                        if (roomPos.yPos == currentRoom.yPos + 1 && player.direction != Player.Direction.Up)
+                        if (roomPos.yPos == currentRoom.yPos + 1 && player.direction != Player.Direction.Up && currentNode.litByFlashlight)
                         {
                             room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
                         }
-                        if (roomPos.yPos == currentRoom.yPos - 1 && player.direction != Player.Direction.Down)
+                        if (roomPos.yPos == currentRoom.yPos - 1 && player.direction != Player.Direction.Down && currentNode.litByFlashlight)
                         {
                             room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
                         }
-                        if (roomPos.xPos == currentRoom.xPos + 1 && player.direction != Player.Direction.Right)
+                        if (roomPos.xPos == currentRoom.xPos + 1 && player.direction != Player.Direction.Right && currentNode.litByFlashlight)
                         {
                             room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
                         }
-                        if (roomPos.xPos == currentRoom.xPos - 1 && player.direction != Player.Direction.Left)
+                        if (roomPos.xPos == currentRoom.xPos - 1 && player.direction != Player.Direction.Left && currentNode.litByFlashlight)
                         {
                             room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
                         }
