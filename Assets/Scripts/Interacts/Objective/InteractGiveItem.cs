@@ -19,18 +19,19 @@ public class InteractGiveItem : InteractParent {
         base.Interact();
         //DisplayText();
 
-        GiveItem(itemToGive);
+        GiveItem(/*itemToGive*/);
     }
 
-    public void GiveItem(GameObject item)
+    public void GiveItem(/*GameObject item*/)
     {
-        if (GameManager.step == 2)
+        if (GameManager.step == 3)
         {
             float randNum = Random.value;
 
             if (randNum < chanceToDropKey)
             {
-                Debug.Log("Found " + item.name + ". Maybe this will come in handy.");
+                //Debug.Log("Found " + item.name + ". Maybe this will come in handy.");
+                Debug.Log("Found objective item");
                 GameManager.UpdateStep();
             }
         }

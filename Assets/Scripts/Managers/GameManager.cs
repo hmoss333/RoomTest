@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour {
     
     // Use this for initialization
 	void Start () {
-        
 	}
 	
 	// Update is called once per frame
@@ -41,23 +40,22 @@ public class GameManager : MonoBehaviour {
                 SpawnObjectives(gm.crowbar, wpm.waypointNodes, 2); //Just testing for now; we can use this as a way to initialize all objects as needed
                 break;
             case 1:
+                //Once the players have found the first objectives, killer will spawn and start wandering the house
                 GameObject killer = gm.killer;   
                 
                 Step2(gm.killer, wpm.waypointNodes);
                 break;
             case 2:
-                //door unlocks
-                //Teleport killer to start room
-                killer = gm.killer;
-
-                MoveKiller(gm.killer, wpm.waypointNodes);
+                //Players need to find the key in order to get out
+                //This case can actually just be removed/replaced as its only a placeholder for now
                 break;
             case 3:
-                //If killer is not incapacitated, players will not be able to leave the house
+                //Once the key is found, if killer is not incapacitated, players will not be able to leave the house
                 //Goal of this section is to hurt killer enough that he enters "stunned" mode so players can use exit (can also possibly trap killer in room; killer will not unspawn during this phase)
                 killer = gm.killer;
 
                 MoveKiller(gm.killer, wpm.waypointNodes);
+                killer.GetComponent<Gregg>().moveToNextRoom = false;
                 break;
             case 4:
                 //If players have followed clues, start triggers for secret boss fight
@@ -77,6 +75,7 @@ public class GameManager : MonoBehaviour {
 
     static void SpawnObjectives(GameObject objItem, List<Transform> roomList, int count)
     {
+        WaypointManager wpm = GameObject.FindObjectOfType<WaypointManager>();
         List<Transform> tempList = new List<Transform>();
         tempList.AddRange(roomList);
 
@@ -93,9 +92,9 @@ public class GameManager : MonoBehaviour {
             else
             {
                 Vector3 randPos = new Vector3(
-                    targetRoom.position.x + Random.Range(-WaypointManager.scale / 2, WaypointManager.scale / 2), 
-                    1 - (WaypointManager.scale / 4), 
-                    targetRoom.position.z + Random.Range(-WaypointManager.scale / 2, WaypointManager.scale / 2)
+                    targetRoom.position.x + Random.Range(-WaypointManager.scale / 3, WaypointManager.scale / 3), 
+                    targetRoom.position.y + 1 - (WaypointManager.scale / 4), 
+                    targetRoom.position.z + Random.Range(-WaypointManager.scale / 3, WaypointManager.scale / 3)
                     );
 
                 objItem = Instantiate(objItem, randPos, Quaternion.identity);
@@ -122,7 +121,7 @@ public class GameManager : MonoBehaviour {
             if (nodeData.type == WaypointScript.Type.start)
             {
                 startPos = nodeData.transform;
-                Debug.Log(nodeData.name);
+                //Debug.Log(nodeData.name);
             }
         }
 
@@ -147,7 +146,7 @@ public class GameManager : MonoBehaviour {
         }
         else
         {
-            killer = Instantiate(killer, new Vector3(targetRoom.position.x, 1 - (WaypointManager.scale / 4), targetRoom.position.z), Quaternion.identity) as GameObject; //testing for now; need to move to GameManager
+            killer = Instantiate(killer, new Vector3(targetRoom.position.x, targetRoom.position.y + 1 - (WaypointManager.scale / 4), targetRoom.position.z), Quaternion.identity) as GameObject; //testing for now; need to move to GameManager
             //Debug.Log("Killer in Room: " + targetRoom.GetComponent<WaypointScript>().xPos + ", " + targetRoom.GetComponent<WaypointScript>().yPos);
         }
     }
@@ -166,7 +165,7 @@ public class GameManager : MonoBehaviour {
             if (nodeData.type == WaypointScript.Type.start)
             {
                 startPos = nodeData.transform;
-                Debug.Log(nodeData.name);
+                //Debug.Log(nodeData.name);
             }
         }
 

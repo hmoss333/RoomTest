@@ -8,7 +8,6 @@ public class HideRoom : MonoBehaviour {
     public bool meshesEnabled;
 
     public bool litByFlashlight;
-    public bool killerInRoom;
 
     Color col;
 
@@ -16,7 +15,6 @@ public class HideRoom : MonoBehaviour {
 	void Start () {
         roomMeshes = GetComponentsInChildren<MeshRenderer>();
         litByFlashlight = false;
-        killerInRoom = false;
 
         foreach (MeshRenderer mesh in roomMeshes)
             mesh.enabled = false;
@@ -26,12 +24,12 @@ public class HideRoom : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update ()
-    { 
-        if (Player.flashlightOn && litByFlashlight)
+    {
+        if (meshesEnabled || (Player.flashlightOn && litByFlashlight))
         {
             TurnOnMesh();
         }
-        else if (!meshesEnabled)
+        else //if (!meshesEnabled)
         {
             TurnOffMesh();
         }
@@ -43,21 +41,17 @@ public class HideRoom : MonoBehaviour {
         {
             TurnOnMesh();
             meshesEnabled = true;
+            other.GetComponent<Player>().currentRoom = this.transform;
         }
 
         //Temporary solution, should probably have something to call in Gregg instead of setting directly
         //Really need to update the logic better so that its not dependant on the room, but positioning
         if (other.tag == "Killer")
         {
-            killerInRoom = true;
-
             Gregg killer = other.GetComponent<Gregg>();
             killer.currentRoom = this.transform;
             killer.adjacentRooms = killer.GetAdjacentRooms(this.transform);
             killer.nextRoom = killer.SelectNextRoom(killer.adjacentRooms);
-
-            //other.transform.parent = this.transform;
-            //UpdateMeshes();
 
             if (meshesEnabled || (litByFlashlight && Player.flashlightOn))
                 other.GetComponent<Gregg>().TurnOnMesh();
@@ -68,11 +62,13 @@ public class HideRoom : MonoBehaviour {
 
     private void OnTriggerStay(Collider other)
     {
+        if (other.tag == "Player" && other.GetComponent<Player>().currentRoom != this.transform)
+        {
+            other.GetComponent<Player>().currentRoom = this.transform;
+        }
+
         if (other.tag == "Killer")
         {
-            if (!killerInRoom)
-                killerInRoom = true;
-
             if (meshesEnabled || (litByFlashlight && Player.flashlightOn))
                 other.GetComponent<Gregg>().TurnOnMesh();
             else
@@ -92,8 +88,6 @@ public class HideRoom : MonoBehaviour {
 
         if (other.tag == "Killer")
         {
-            killerInRoom = false;
-
             if (meshesEnabled || (litByFlashlight && Player.flashlightOn))
                 other.GetComponent<Gregg>().TurnOnMesh();
             else
@@ -111,9 +105,6 @@ public class HideRoom : MonoBehaviour {
 
     void TurnOffMesh()
     {
-        meshesEnabled = false;
-        litByFlashlight = false;
-
         foreach (MeshRenderer mesh in roomMeshes)
         {
             mesh.enabled = false;

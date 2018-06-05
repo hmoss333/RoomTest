@@ -167,16 +167,16 @@ public class WaypointManager : MonoBehaviour
     {
         WaypointScript room = nodeList[nodeValue].GetComponent<WaypointScript>();
 
-        if (room.type == WaypointScript.Type.wall)
+        if (room.type == WaypointScript.Type.wall && room.zPos == 0)
             nodeList[nodeValue].GetComponent<WaypointScript>().type = WaypointScript.Type.start;
         else
             GenerateStartNode(Random.Range(0, totalWaypoints), nodeList);
     }
 
+    //TO DO: Update this function so that the position is randomized and then repeated on only the next floor; currenly only works for single position and only for 2 floors
     void GenerateStairNode(int nodeValue, List<Transform> nodeList)
     {
         //WaypointScript room = nodeList[nodeValue].GetComponent<WaypointScript>();
-        Debug.Log("Generate stairs");
 
         for (int i = 0; i < levels; i++)
         {
@@ -189,12 +189,8 @@ public class WaypointManager : MonoBehaviour
                     if ((room.type == WaypointScript.Type.empty || room.type == WaypointScript.Type.eventRoom))
                     {
                         room.type = WaypointScript.Type.stairs;
-                        Debug.Log("Room: " + room.xPos + ", " + room.yPos + ", " + room.zPos);
+                        //Debug.Log("Room: " + room.xPos + ", " + room.yPos + ", " + room.zPos);
                         break;
-                    }
-                    else
-                    {
-                        Debug.Log("Suitable room not found");
                     }
                 }
             }

@@ -18,107 +18,88 @@ public class Flashlight : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        switch (player.direction)
-        {
-            case Player.Direction.Up:
-                relativePos = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z + 1);
-                break;
-            case Player.Direction.Down:
-                relativePos = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z - 1);
-                break;
-            case Player.Direction.Left:
-                relativePos = new Vector3(player.transform.position.x - 1, player.transform.position.y, player.transform.position.z);
-                break;
-            case Player.Direction.Right:
-                relativePos = new Vector3(player.transform.position.x + 1, player.transform.position.y, player.transform.position.z);
-                break;
-            default:
-                break;
-        }
-
-        Vector3 dir = relativePos - transform.position;
-        dir.y = 0; // keep the direction strictly horizontal
-        Quaternion rot = Quaternion.LookRotation(dir);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rot, rotationSpeed * Time.deltaTime);
-
-        LookAtRoom();
         StopLookAtRoom();
+
+        if (Player.flashlightOn)
+        {
+            switch (player.direction)
+            {
+                case Player.Direction.Up:
+                    relativePos = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z + 1);
+                    break;
+                case Player.Direction.Down:
+                    relativePos = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z - 1);
+                    break;
+                case Player.Direction.Left:
+                    relativePos = new Vector3(player.transform.position.x - 1, player.transform.position.y, player.transform.position.z);
+                    break;
+                case Player.Direction.Right:
+                    relativePos = new Vector3(player.transform.position.x + 1, player.transform.position.y, player.transform.position.z);
+                    break;
+                default:
+                    break;
+            }
+
+            Vector3 dir = relativePos - transform.position;
+            dir.y = 0; // keep the direction strictly horizontal
+            Quaternion rot = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rot, rotationSpeed * Time.deltaTime);
+
+            LookAtRoom(player.currentRoom);
+        }
     }
 
-    public void LookAtRoom()
+    public void LookAtRoom(Transform roomToLookAt)
     {
-        foreach (Transform node in wpm.waypointNodes)
+        Player playerClass = GameObject.FindObjectOfType<Player>();
+        WaypointScript currentRoom = roomToLookAt.GetComponentInParent<WaypointScript>();
+
+        foreach (Transform room in currentRoom.adjactentNodes)
         {
-            HideRoom currentNode = node.GetComponentInChildren<HideRoom>();
+            room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
 
-            if (currentNode.meshesEnabled)
+            WaypointScript roomPos = room.GetComponent<WaypointScript>();
+            if (roomPos.zPos == currentRoom.zPos)
             {
-                WaypointScript currentRoom = currentNode.GetComponentInParent<WaypointScript>();
-
-                foreach (Transform room in currentRoom.adjactentNodes)
+                switch (playerClass.direction)
                 {
-                    WaypointScript roomPos = room.GetComponent<WaypointScript>();
-                    if (roomPos.zPos == currentRoom.zPos)
-                    {
-                        if (roomPos.yPos == currentRoom.yPos + 1 && player.direction == Player.Direction.Up)
-                        {
+                    case Player.Direction.Up:
+                        if (roomPos.yPos == currentRoom.yPos + 1 && roomPos.xPos == currentRoom.xPos)
                             room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
-                        }
-                        else if (roomPos.yPos == currentRoom.yPos - 1 && player.direction == Player.Direction.Down)
-                        {
+                        break;
+                    case Player.Direction.Left:
+                        if (roomPos.yPos == currentRoom.yPos && roomPos.xPos == currentRoom.xPos - 1)
                             room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
-                        }
-                        else if (roomPos.xPos == currentRoom.xPos + 1 && player.direction == Player.Direction.Right)
-                        {
+                        break;
+                    case Player.Direction.Right:
+                        if (roomPos.yPos == currentRoom.yPos && roomPos.xPos == currentRoom.xPos + 1)
                             room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
-                        }
-                        else if (roomPos.xPos == currentRoom.xPos - 1 && player.direction == Player.Direction.Left)
-                        {
+                        break;
+                    case Player.Direction.Down:
+                        if (roomPos.yPos == currentRoom.yPos - 1 && roomPos.xPos == currentRoom.xPos)
                             room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
-                        }
-                        else
-                        {
-                            room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
-                        }
-                    }
+                        break;
+                    default:
+                        room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
+                        break;
                 }
+
             }
         }
     }
 
     public void StopLookAtRoom()
     {
+        Player playerClass = GameObject.FindObjectOfType<Player>();
+        //WaypointScript currentRoom = roomToLookAt.GetComponentInParent<WaypointScript>();
+
         foreach (Transform node in wpm.waypointNodes)
         {
-            HideRoom currentNode = node.GetComponentInChildren<HideRoom>();
+            HideRoom room = node.GetComponentInChildren<HideRoom>();
 
-            if (currentNode.meshesEnabled)
+            if (room.transform != playerClass.currentRoom)
             {
-                WaypointScript currentRoom = currentNode.GetComponentInParent<WaypointScript>();
-
-                foreach (Transform room in currentRoom.adjactentNodes)
-                {
-                    WaypointScript roomPos = room.GetComponent<WaypointScript>();
-                    if (roomPos.zPos == currentRoom.zPos)
-                    {
-                        if (roomPos.yPos == currentRoom.yPos + 1 && player.direction != Player.Direction.Up && currentNode.litByFlashlight)
-                        {
-                            room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
-                        }
-                        if (roomPos.yPos == currentRoom.yPos - 1 && player.direction != Player.Direction.Down && currentNode.litByFlashlight)
-                        {
-                            room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
-                        }
-                        if (roomPos.xPos == currentRoom.xPos + 1 && player.direction != Player.Direction.Right && currentNode.litByFlashlight)
-                        {
-                            room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
-                        }
-                        if (roomPos.xPos == currentRoom.xPos - 1 && player.direction != Player.Direction.Left && currentNode.litByFlashlight)
-                        {
-                            room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
-                        }
-                    }
-                }
+                room.litByFlashlight = false;
             }
         }
     }

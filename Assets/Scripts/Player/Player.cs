@@ -17,6 +17,7 @@ public class Player : MonoBehaviour {
     public Direction direction;
     public enum State { Move, Interact, Attack, Hide, Die}
     public State state;
+    public Transform currentRoom;
 
     [Header("Interact Settings")]
     public float checkDist;

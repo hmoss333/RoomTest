@@ -44,7 +44,7 @@ public class Gregg : MonoBehaviour {
 	void FixedUpdate () {
         if (moveToNextRoom && nextRoom != null)
         {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(nextRoom.position.x, 1 - (WaypointManager.scale / 4), nextRoom.position.z), speed * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, new Vector3(nextRoom.position.x, nextRoom.position.y + 1 - (WaypointManager.scale / 4), nextRoom.position.z), speed * Time.deltaTime);
         }
 	}
 
@@ -91,7 +91,7 @@ public class Gregg : MonoBehaviour {
         WaypointScript[] roomList = GameObject.FindObjectsOfType<WaypointScript>();
         foreach (WaypointScript room in roomList)
         {
-            if (room != thisNode)
+            if (room != thisNode && room.zPos == thisNode.zPos)
             {
                 //This will only include rooms immediately above/bellow/left/right of current room
                 if ((room.xPos == thisNode.xPos + 1 && room.yPos == thisNode.yPos)
