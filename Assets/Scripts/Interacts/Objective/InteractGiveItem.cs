@@ -19,10 +19,10 @@ public class InteractGiveItem : InteractParent {
         base.Interact();
         //DisplayText();
 
-        GiveItem(/*itemToGive*/);
+        GiveItem();
     }
 
-    public void GiveItem(/*GameObject item*/)
+    public void GiveItem()
     {
         if (GameManager.step == 3)
         {
@@ -30,7 +30,6 @@ public class InteractGiveItem : InteractParent {
 
             if (randNum < chanceToDropKey)
             {
-                //Debug.Log("Found " + item.name + ". Maybe this will come in handy.");
                 Debug.Log("Found objective item");
                 GameManager.UpdateStep();
             }

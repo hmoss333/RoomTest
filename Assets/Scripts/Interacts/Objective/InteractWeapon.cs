@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractWeapon : InteractObjective {
+public class InteractWeapon : InteractObject {
 
     Player player;
 
@@ -21,6 +21,7 @@ public class InteractWeapon : InteractObjective {
     public override void Interact()
     {
         player.weaponPrefab = weapon;
+        this.gameObject.SetActive(false);
         base.Interact();
     }
 }

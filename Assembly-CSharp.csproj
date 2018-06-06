@@ -67,6 +67,7 @@
      <Compile Include="Assets\Scripts\Managers\HideRoom.cs" />
      <Compile Include="Assets\Scripts\Managers\WaypointManager.cs" />
      <Compile Include="Assets\Scripts\Managers\WaypointScript.cs" />
+     <Compile Include="Assets\Scripts\Menus\MainMenu.cs" />
      <Compile Include="Assets\Scripts\Player\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\Player\Flashlight.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
