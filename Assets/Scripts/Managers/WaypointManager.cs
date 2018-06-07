@@ -59,7 +59,7 @@ public class WaypointManager : MonoBehaviour
 
         //If there are multiple levels to a map, generate entrance and exit staircase nodes
         if (levels > 1)
-            GenerateStairNode(Random.Range(0, waypointNodes.Count), waypointNodes);
+            GenerateStairNode(levels, waypointNodes);
 
         //Once the creation of the list above is complete then have each waypoint check for other waypoints. Also make a reference to this manager
         //on each waypoint.
@@ -174,24 +174,33 @@ public class WaypointManager : MonoBehaviour
     }
 
     //TO DO: Update this function so that the position is randomized and then repeated on only the next floor; currenly only works for single position and only for 2 floors
-    void GenerateStairNode(int nodeValue, List<Transform> nodeList)
+    void GenerateStairNode(int floors, List<Transform> nodeList)
     {
-        //WaypointScript room = nodeList[nodeValue].GetComponent<WaypointScript>();
+        List<Transform> tempList = new List<Transform>();
+        tempList.AddRange(nodeList);
 
-        for (int i = 0; i < levels; i++)
+        for (int i = floors; i > 0; i--)
         {
-            foreach (Transform node in nodeList)
-            {
-                WaypointScript room = node.GetComponent<WaypointScript>();
+            int randNum = Random.Range(0, tempList.Count);
+            WaypointScript room = tempList[randNum].GetComponent<WaypointScript>();
 
-                if (room.zPos == i)
+            if (room.zPos != i - 1)
+            {
+                tempList.Remove(room.transform);
+                GenerateStairNode(i, tempList);
+                break;
+            }
+            else
+            {
+                if ((room.type == WaypointScript.Type.empty || room.type == WaypointScript.Type.eventRoom))
                 {
-                    if ((room.type == WaypointScript.Type.empty || room.type == WaypointScript.Type.eventRoom))
-                    {
-                        room.type = WaypointScript.Type.stairs;
-                        //Debug.Log("Room: " + room.xPos + ", " + room.yPos + ", " + room.zPos);
-                        break;
-                    }
+                    room.type = WaypointScript.Type.stairs;
+                }
+                else
+                {
+                    tempList.Remove(room.transform);
+                    GenerateStairNode(i, tempList);
+                    break;
                 }
             }
         }

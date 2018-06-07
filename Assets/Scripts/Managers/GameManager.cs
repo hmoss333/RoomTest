@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-	public static int step = 0;
+    public static int step = 0;
     public static int objectiveCount = 0;
+    public static int weaponCount = 0;
+    public static float objectiveScale = 1;
 
+    [Header("Actors")]
     public GameObject[] players;
     public GameObject killer;
+
+    [Header("Objective Item Settings")]
     public GameObject objectiveItem;
+    public GameObject weaponItem;
     public int objectiveItemCount;
-    public GameObject crowbar;
-    
+    public int weaponItemCount;
+    public float objectiveItemScale;
+
     // Use this for initialization
-	void Start () {
+    void Start () {
 
 	}
 	
@@ -29,7 +36,7 @@ public class GameManager : MonoBehaviour {
         GameManager gm = FindObjectOfType<GameManager>();
 
         step++;
-        Debug.Log(step);
+        Debug.Log("Step#: " + step);
 
         switch (step)
         {
@@ -38,8 +45,8 @@ public class GameManager : MonoBehaviour {
                 GameObject objectiveItem = gm.objectiveItem;
                 GameObject[] players = gm.players;
 
-                Step1(players, objectiveItem, gm.objectiveItemCount, wpm.waypointNodes);
-                SpawnObjectives(gm.crowbar, wpm.waypointNodes, 2); //Just testing for now; we can use this as a way to initialize all objects as needed
+                Step1(players, objectiveItem, gm.objectiveItemCount, gm.objectiveItemScale, wpm.waypointNodes);
+                SpawnObjectives(gm.weaponItem, wpm.waypointNodes, gm.weaponItemCount, gm.objectiveItemScale); //Just testing for now; we can use this as a way to initialize all objects as needed
                 break;
             case 2:
                 Debug.Log("Spawn killer");
@@ -72,12 +79,9 @@ public class GameManager : MonoBehaviour {
                 Debug.Log("Something broke here");
                 break;
         }
-
-        //step++;
-        //Debug.Log("Current Step: " + step);
     }
 
-    static void SpawnObjectives(GameObject objItem, List<Transform> roomList, int count)
+    static void SpawnObjectives(GameObject objItem, List<Transform> roomList, int count, float scale)
     {
         WaypointManager wpm = GameObject.FindObjectOfType<WaypointManager>();
         List<Transform> tempList = new List<Transform>();
@@ -92,25 +96,37 @@ public class GameManager : MonoBehaviour {
 
             if (roomScript.meshesEnabled || (roomScript.litByFlashlight && Player.flashlightOn) || room.type == WaypointScript.Type.stairs)
             {
-                SpawnObjectives(objItem, tempList, i);
+                tempList.Remove(targetRoom);
+                SpawnObjectives(objItem, tempList, i, scale);
+                break;
             }
             else
             {
                 //Removing the randomized positions for the time being so that I can determine a better way to populate each room
                 Vector3 randPos = new Vector3(
-                    targetRoom.position.x /*+ Random.Range(-WaypointManager.scale / 3, WaypointManager.scale / 3)*/, 
+                    targetRoom.position.x + Random.Range(-WaypointManager.scale / 3, WaypointManager.scale / 3), 
                     targetRoom.position.y + 1 - (WaypointManager.scale / 4), 
-                    targetRoom.position.z /*+ Random.Range(-WaypointManager.scale / 3, WaypointManager.scale / 3)*/
+                    targetRoom.position.z + Random.Range(-WaypointManager.scale / 3, WaypointManager.scale / 3)
                     );
 
-                objItem = Instantiate(objItem, randPos, Quaternion.identity);
-                objItem.transform.localScale = new Vector3(2, 2, 2);
-                objItem.transform.parent = roomScript.gameObject.transform;
-                roomScript.UpdateMeshes();
-                //Debug.Log("Objective in Room: " + targetRoom.GetComponent<WaypointScript>().xPos + ", " + targetRoom.GetComponent<WaypointScript>().yPos);
-            }
+                Collider[] colliders = Physics.OverlapSphere(randPos, scale/2);
+                if (colliders.Length > 1) //Room collider
+                {
+                    //Debug.Log("Objective spawn point on top of something at: " + randPos + "; Number of objects: " + colliders.Length);
+                    SpawnObjectives(objItem, tempList, i, scale);
+                    break;
+                }
+                else
+                {
+                    objItem = Instantiate(objItem, randPos, Quaternion.identity);
+                    objItem.transform.localScale = Vector3.one * scale;
+                    objItem.transform.parent = roomScript.gameObject.transform;
+                    roomScript.UpdateMeshes();
+                    //Debug.Log("Spawned objective: " + objItem.name);
 
-            tempList.Remove(targetRoom);
+                    tempList.Remove(targetRoom);
+                }
+            }
         }
     }
 
@@ -178,13 +194,13 @@ public class GameManager : MonoBehaviour {
         Destroy(GameObject.Find(killer.name + "(Clone)"));
         killer = Instantiate(killer, new Vector3(startPos.position.x, 1 - (WaypointManager.scale / 4), startPos.position.z), Quaternion.identity) as GameObject;
         killer.GetComponent<Gregg>().moveToNextRoom = false; //Leaving for now, we'll come back to all of the killer logic once we get pathfinding installed
-        Debug.Log("Killer in Start Room: " + startPos.GetComponent<WaypointScript>().xPos + ", " + startPos.GetComponent<WaypointScript>().yPos);
+        Debug.Log("Killer moved to Start Room: " + startPos.GetComponent<WaypointScript>().xPos + ", " + startPos.GetComponent<WaypointScript>().yPos);
     }
 
-    static void Step1(GameObject[] players, GameObject objItem, int objCount, List<Transform> roomList)
+    static void Step1(GameObject[] players, GameObject objItem, int objCount, float objScale, List<Transform> roomList)
     {
         SpawnPlayers(players, roomList);
-        SpawnObjectives(objItem, roomList, objCount);
+        SpawnObjectives(objItem, roomList, objCount, objScale);
     }
 
     static void Step2(GameObject killer, List<Transform> roomList)
