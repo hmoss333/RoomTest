@@ -11,7 +11,7 @@ public class Player : MonoBehaviour {
     public float xInput;
     public float yInput;
     Vector3 dir;
-    [HideInInspector]
+    //[HideInInspector]
     public Vector3 lastDir;
     bool updatelastDir = false;
     public enum Direction { Up, Down, Left, Right }
@@ -67,7 +67,7 @@ public class Player : MonoBehaviour {
 
             rb.velocity = dir;
 
-            //Store last input direction
+            //Store last input direction; may not be necessary
             if ((xInput != 0 || yInput != 0) && !updatelastDir)
             {
                 lastDir = dir;
@@ -79,22 +79,22 @@ public class Player : MonoBehaviour {
             }
 
             //Set direction animations
-            if (xInput > 0) //lastDir.x > 0)
+            if (xInput > 0)
             {
                 direction = Direction.Right;
                 animator.SetTrigger("Right");
             }
-            else if (xInput < 0) //(lastDir.x < 0)
+            else if (xInput < 0)
             {
                 direction = Direction.Left;
                 animator.SetTrigger("Left");
             }
-            else if (yInput > 0) //(lastDir.z > 0)
+            else if (yInput > 0)
             {
                 direction = Direction.Up;
                 animator.SetTrigger("Up");
             }
-            else if (yInput < 0) //(lastDir.z < 0)
+            else if (yInput < 0)
             {
                 direction = Direction.Down;
                 animator.SetTrigger("Down");
@@ -114,6 +114,7 @@ public class Player : MonoBehaviour {
         }
         else
         {
+            //If not in the move state, player cannot move
             rb.velocity = Vector3.zero;
         }
     }
@@ -168,13 +169,11 @@ public class Player : MonoBehaviour {
 
         if (Input.GetButtonDown("CamLeft"))
         {
-            transform.Rotate(0, 90, 0, Space.World);
-            updatelastDir = false;
+            RotateCamLeft(direction);
         }
         else if (Input.GetButtonDown("CamRight"))
         {
-            transform.Rotate(0, -90, 0, Space.World);
-            updatelastDir = false;
+            RotateCamRight(direction);
         }
     }
 
@@ -248,5 +247,51 @@ public class Player : MonoBehaviour {
             state = State.Hide;
         else
             state = State.Move;
+    }
+
+    void RotateCamLeft(Direction currentDirection)
+    {
+        transform.Rotate(0, 90, 0, Space.World);
+
+        switch (currentDirection)
+        {
+            case Direction.Up:
+                direction = Direction.Right;
+                break;
+            case Direction.Right:
+                direction = Direction.Down;
+                break;
+            case Direction.Down:
+                direction = Direction.Left;
+                break;
+            case Direction.Left:
+                direction = Direction.Up;
+                break;
+            default:
+                break;
+        }
+    }
+
+    void RotateCamRight(Direction currentDirection)
+    {
+        transform.Rotate(0, -90, 0, Space.World);
+
+        switch (currentDirection)
+        {
+            case Direction.Up:
+                direction = Direction.Left;
+                break;
+            case Direction.Left:
+                direction = Direction.Down;
+                break;
+            case Direction.Down:
+                direction = Direction.Right;
+                break;
+            case Direction.Right:
+                direction = Direction.Up;
+                break;
+            default:
+                break;
+        }
     }
 }

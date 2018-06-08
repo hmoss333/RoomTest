@@ -7,6 +7,7 @@ public class CameraFollow : MonoBehaviour {
     private Player player;
 
     public RaycastHit[] hits = null;
+    public RaycastHit[] wallhits = null;
     Color col;
 
     public float viewAngle;
@@ -14,6 +15,7 @@ public class CameraFollow : MonoBehaviour {
     public float turnSpeed;
     //public float viewDist;
     public LayerMask layersToFade;
+    public LayerMask outerWallLayers;
 
     WaypointManager wpm;
 
@@ -47,8 +49,22 @@ public class CameraFollow : MonoBehaviour {
                     }
                 }
             }
+            if (wallhits != null)
+            {
+                foreach (RaycastHit hit in wallhits)
+                {
+                    Renderer r = hit.collider.GetComponent<Renderer>();
+                    if (r)
+                    {
+                        col = r.material.color;
+                        col.a = 1.0f;
+                        r.material.color = col;
+                    }
+                }
+            }
 
             hits = Physics.RaycastAll(this.transform.position, (player.transform.position - this.transform.position), Vector3.Distance(this.transform.position, player.transform.position), layersToFade);
+            wallhits = Physics.RaycastAll(this.transform.position, (player.transform.position - this.transform.position), Vector3.Distance(this.transform.position, player.transform.position), outerWallLayers);
 
             //Hide objects between the player and the camera
             if (hits != null)
@@ -60,6 +76,19 @@ public class CameraFollow : MonoBehaviour {
                     {
                         col = r.material.color;
                         col.a = 0.5f;
+                        r.material.color = col;
+                    }
+                }
+            }
+            if (wallhits != null)
+            {
+                foreach (RaycastHit hit in wallhits)
+                {
+                    Renderer r = hit.collider.GetComponent<Renderer>();
+                    if (r)
+                    {
+                        col = r.material.color;
+                        col.a = 0.0f;
                         r.material.color = col;
                     }
                 }
