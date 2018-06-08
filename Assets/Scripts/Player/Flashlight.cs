@@ -22,27 +22,7 @@ public class Flashlight : MonoBehaviour {
 
         if (Player.flashlightOn)
         {
-            switch (player.direction)
-            {
-                case Player.Direction.Up:
-                    relativePos = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z + 1);
-                    break;
-                case Player.Direction.Down:
-                    relativePos = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z - 1);
-                    break;
-                case Player.Direction.Left:
-                    relativePos = new Vector3(player.transform.position.x - 1, player.transform.position.y, player.transform.position.z);
-                    break;
-                case Player.Direction.Right:
-                    relativePos = new Vector3(player.transform.position.x + 1, player.transform.position.y, player.transform.position.z);
-                    break;
-                default:
-                    break;
-            }
-
-            Vector3 dir = relativePos - transform.position;
-            dir.y = 0; // keep the direction strictly horizontal
-            Quaternion rot = Quaternion.LookRotation(dir);
+            Quaternion rot = Quaternion.LookRotation(player.lastDir, player.transform.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, rot, rotationSpeed * Time.deltaTime);
 
             LookAtRoom(player.currentRoom);
@@ -64,31 +44,104 @@ public class Flashlight : MonoBehaviour {
                 switch (playerClass.direction)
                 {
                     case Player.Direction.Up:
-                        if (roomPos.yPos == currentRoom.yPos + 1 && roomPos.xPos == currentRoom.xPos)
-                            room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        if (player.transform.rotation.eulerAngles.y == 0)
+                        {
+                            if (roomPos.yPos == currentRoom.yPos + 1 && roomPos.xPos == currentRoom.xPos)
+                                room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        }
+                        else if (player.transform.rotation.eulerAngles.y == 270)
+                        {
+                            if (roomPos.yPos == currentRoom.yPos && roomPos.xPos == currentRoom.xPos - 1)
+                                room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        }
+                        else if (player.transform.rotation.eulerAngles.y == 90)
+                        {
+                            if (roomPos.yPos == currentRoom.yPos && roomPos.xPos == currentRoom.xPos + 1)
+                                room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        }
+                        else if (player.transform.rotation.eulerAngles.y == 180)
+                        {
+                            if (roomPos.yPos == currentRoom.yPos - 1 && roomPos.xPos == currentRoom.xPos)
+                                room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        }
                         break;
                     case Player.Direction.Left:
-                        if (roomPos.yPos == currentRoom.yPos && roomPos.xPos == currentRoom.xPos - 1)
-                            room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        if (player.transform.rotation.eulerAngles.y == 0)
+                        {
+                            if (roomPos.yPos == currentRoom.yPos && roomPos.xPos == currentRoom.xPos - 1)
+                                room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        }
+                        else if (player.transform.rotation.eulerAngles.y == 270)
+                        {
+                            //if (roomPos.yPos == currentRoom.yPos && roomPos.xPos == currentRoom.xPos + 1)
+                            if (roomPos.yPos == currentRoom.yPos - 1 && roomPos.xPos == currentRoom.xPos)
+                                room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        }
+                        else if (player.transform.rotation.eulerAngles.y == 90)
+                        {
+                            //if (roomPos.yPos == currentRoom.yPos - 1 && roomPos.xPos == currentRoom.xPos)
+                            if (roomPos.yPos == currentRoom.yPos + 1 && roomPos.xPos == currentRoom.xPos)
+                                room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        }
+                        else if (player.transform.rotation.eulerAngles.y == 180)
+                        {
+                            if (roomPos.yPos == currentRoom.yPos && roomPos.xPos == currentRoom.xPos + 1)
+                                room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        }
                         break;
                     case Player.Direction.Right:
-                        if (roomPos.yPos == currentRoom.yPos && roomPos.xPos == currentRoom.xPos + 1)
-                            room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        if (player.transform.rotation.eulerAngles.y == 0)
+                        {
+                            if (roomPos.yPos == currentRoom.yPos && roomPos.xPos == currentRoom.xPos + 1)
+                                room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        }
+                        else if (player.transform.rotation.eulerAngles.y == 270)
+                        {
+                            if (roomPos.yPos == currentRoom.yPos + 1 && roomPos.xPos == currentRoom.xPos)
+                                room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        }
+                        else if (player.transform.rotation.eulerAngles.y == 90)
+                        {
+                            if (roomPos.yPos == currentRoom.yPos - 1 && roomPos.xPos == currentRoom.xPos)
+                                room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        }
+                        else if (player.transform.rotation.eulerAngles.y == 180)
+                        {
+                            if (roomPos.yPos == currentRoom.yPos && roomPos.xPos == currentRoom.xPos - 1)
+                                room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        }
                         break;
                     case Player.Direction.Down:
-                        if (roomPos.yPos == currentRoom.yPos - 1 && roomPos.xPos == currentRoom.xPos)
-                            room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        if (player.transform.rotation.eulerAngles.y == 0)
+                        {
+                            if (roomPos.yPos == currentRoom.yPos - 1 && roomPos.xPos == currentRoom.xPos)
+                                room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        }
+                        else if (player.transform.rotation.eulerAngles.y == 270)
+                        {
+                            if (roomPos.yPos == currentRoom.yPos && roomPos.xPos == currentRoom.xPos + 1)
+                                room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        }
+                        else if (player.transform.rotation.eulerAngles.y == 90)
+                        {
+                            if (roomPos.yPos == currentRoom.yPos && roomPos.xPos == currentRoom.xPos - 1)
+                                room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        }
+                        else if (player.transform.rotation.eulerAngles.y == 180)
+                        {
+                            if (roomPos.yPos == currentRoom.yPos + 1 && roomPos.xPos == currentRoom.xPos)
+                                room.GetComponentInChildren<HideRoom>().litByFlashlight = true;
+                        }
                         break;
                     default:
                         room.GetComponentInChildren<HideRoom>().litByFlashlight = false;
                         break;
                 }
-
             }
         }
     }
 
-    public void StopLookAtRoom()
+        public void StopLookAtRoom()
     {
         Player playerClass = GameObject.FindObjectOfType<Player>();
         //WaypointScript currentRoom = roomToLookAt.GetComponentInParent<WaypointScript>();

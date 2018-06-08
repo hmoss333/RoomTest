@@ -8,10 +8,11 @@ public class Player : MonoBehaviour {
     public float walkSpeed;
     public float dashSpeed;
     float speed;
-    float xInput;
-    float yInput;
+    public float xInput;
+    public float yInput;
     Vector3 dir;
-    Vector3 lastDir;
+    [HideInInspector]
+    public Vector3 lastDir;
     bool updatelastDir = false;
     public enum Direction { Up, Down, Left, Right }
     public Direction direction;
@@ -78,22 +79,22 @@ public class Player : MonoBehaviour {
             }
 
             //Set direction animations
-            if (lastDir.x > 0)
+            if (xInput > 0) //lastDir.x > 0)
             {
                 direction = Direction.Right;
                 animator.SetTrigger("Right");
             }
-            else if (lastDir.x < 0)
+            else if (xInput < 0) //(lastDir.x < 0)
             {
                 direction = Direction.Left;
                 animator.SetTrigger("Left");
             }
-            else if (lastDir.z > 0)
+            else if (yInput > 0) //(lastDir.z > 0)
             {
                 direction = Direction.Up;
                 animator.SetTrigger("Up");
             }
-            else if (lastDir.z < 0)
+            else if (yInput < 0) //(lastDir.z < 0)
             {
                 direction = Direction.Down;
                 animator.SetTrigger("Down");
@@ -163,6 +164,17 @@ public class Player : MonoBehaviour {
                 state = State.Attack;
                 StartCoroutine(Attack(weaponPrefab, direction, attackTime));
             }
+        }
+
+        if (Input.GetButtonDown("CamLeft"))
+        {
+            transform.Rotate(0, 90, 0, Space.World);
+            updatelastDir = false;
+        }
+        else if (Input.GetButtonDown("CamRight"))
+        {
+            transform.Rotate(0, -90, 0, Space.World);
+            updatelastDir = false;
         }
     }
 
