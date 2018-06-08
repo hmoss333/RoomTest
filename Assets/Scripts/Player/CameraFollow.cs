@@ -10,7 +10,9 @@ public class CameraFollow : MonoBehaviour {
     Color col;
 
     public float viewAngle;
-    public float viewDist;
+    [Range(0.01f, 0.1f)]
+    public float turnSpeed;
+    //public float viewDist;
     public LayerMask layersToFade;
 
     WaypointManager wpm;
@@ -66,7 +68,7 @@ public class CameraFollow : MonoBehaviour {
             Vector3 velocity = Vector3.zero;
             Vector3 forward = player.transform.forward * WaypointManager.scale;// 5f;
             Vector3 needPos = player.transform.position - forward;
-            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(needPos.x, player.transform.position.y + WaypointManager.scale * viewAngle + wpm.levels * WaypointManager.scale, needPos.z), ref velocity, 0.02f);
+            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(needPos.x, player.transform.position.y + WaypointManager.scale * viewAngle + wpm.levels * WaypointManager.scale, needPos.z), ref velocity, turnSpeed);
             transform.LookAt(player.transform);
         }
     }
