@@ -184,13 +184,7 @@ public class WaypointManager : MonoBehaviour
             int randNum = Random.Range(0, tempList.Count);
             WaypointScript room = tempList[randNum].GetComponent<WaypointScript>();
 
-            if (room.zPos != i - 1)
-            {
-                tempList.Remove(room.transform);
-                GenerateStairNode(i, tempList);
-                break;
-            }
-            else
+            if (room.zPos == i - 1)
             {
                 if ((room.type == WaypointScript.Type.empty || room.type == WaypointScript.Type.eventRoom))
                 {
@@ -198,10 +192,15 @@ public class WaypointManager : MonoBehaviour
                 }
                 else
                 {
-                    tempList.Remove(room.transform);
+                    //tempList.Remove(room.transform);
                     GenerateStairNode(i, tempList);
                     break;
                 }
+            }
+            else
+            {
+                GenerateStairNode(i, tempList);
+                break;
             }
         }
     }
