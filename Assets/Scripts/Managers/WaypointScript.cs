@@ -99,6 +99,11 @@ public class WaypointScript : MonoBehaviour {
             RandomRotateRoom(roomPrefab);
 
         roomPrefab.transform.parent = this.transform;
+
+        //if (roomType == Type.eventRoom)
+        //{
+        //    DoorManager doorManager = roomPrefab.AddComponent<DoorManager>();
+        //}
     }
 
     GameObject SelectRandomPrefab (GameObject[] roomTypeArray)

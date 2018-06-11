@@ -8,7 +8,7 @@ public class HideRoom : MonoBehaviour {
     public bool meshesEnabled;
 
     public bool litByFlashlight;
-
+    bool roomLit = false;
     Color col;
 
     // Use this for initialization

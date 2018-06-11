@@ -63,6 +63,7 @@
      <Compile Include="Assets\Scripts\Journal\JournalController.cs" />
      <Compile Include="Assets\Scripts\Journal\JournalInteract.cs" />
      <Compile Include="Assets\Scripts\Killer\Gregg.cs" />
+     <Compile Include="Assets\Scripts\Managers\DoorManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Managers\HideRoom.cs" />
      <Compile Include="Assets\Scripts\Managers\RotateSprite.cs" />

@@ -114,8 +114,6 @@ public class Player : MonoBehaviour {
             //If not in the move state, player cannot move
             rb.velocity = Vector3.zero;
         }
-
-        SetAnimation(direction); //Will cause issues with memory usage down the line
     }
     void Update()
     {
@@ -174,6 +172,8 @@ public class Player : MonoBehaviour {
         {
             RotateCamRight(direction);
         }
+
+        SetAnimation(direction); //Will cause issues with memory usage down the line
     }
 
     IEnumerator Interact(float interactDist, float interactTime)
@@ -226,16 +226,10 @@ public class Player : MonoBehaviour {
 
     void Flashlight(Flashlight prefab)
     {
-        //Keeps triggering twice
-
         if (flashlightOn)
-        {
             flashlightOn = false;
-        }
         else
-        {
             flashlightOn = true;
-        }
 
         prefab.GetComponent<Light>().enabled = flashlightOn;
     }
