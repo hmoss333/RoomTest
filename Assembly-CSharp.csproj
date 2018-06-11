@@ -65,13 +65,14 @@
      <Compile Include="Assets\Scripts\Killer\Gregg.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Managers\HideRoom.cs" />
+     <Compile Include="Assets\Scripts\Managers\RotateSprite.cs" />
+     <Compile Include="Assets\Scripts\Managers\Stairs.cs" />
      <Compile Include="Assets\Scripts\Managers\WaypointManager.cs" />
      <Compile Include="Assets\Scripts\Managers\WaypointScript.cs" />
      <Compile Include="Assets\Scripts\Menus\MainMenu.cs" />
      <Compile Include="Assets\Scripts\Player\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\Player\Flashlight.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
-     <Compile Include="Assets\Scripts\Stairs.cs" />
      <None Include="Assets\ProCore\ProBuilder\Shader\pb_TransparentOverlay.shader" />
      <None Include="Assets\ProCore\ProBuilder\API Examples\Icosphere FFT\README.txt" />
      <None Include="Assets\ProCore\ProBuilder\Shader\pb_SelectionPicker.shader" />

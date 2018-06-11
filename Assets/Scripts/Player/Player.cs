@@ -47,6 +47,7 @@ public class Player : MonoBehaviour {
         flashlightOn = false;
         flashlightPrefab.GetComponent<Light>().enabled = flashlightOn;
 
+        direction = Direction.Down;
         state = State.Move;
     }
 
@@ -82,22 +83,18 @@ public class Player : MonoBehaviour {
             if (xInput > 0)
             {
                 direction = Direction.Right;
-                animator.SetTrigger("Right");
             }
             else if (xInput < 0)
             {
                 direction = Direction.Left;
-                animator.SetTrigger("Left");
             }
             else if (yInput > 0)
             {
                 direction = Direction.Up;
-                animator.SetTrigger("Up");
             }
             else if (yInput < 0)
             {
                 direction = Direction.Down;
-                animator.SetTrigger("Down");
             }
 
             //Speed controls [Left trigger?]
@@ -117,6 +114,8 @@ public class Player : MonoBehaviour {
             //If not in the move state, player cannot move
             rb.velocity = Vector3.zero;
         }
+
+        SetAnimation(direction); //Will cause issues with memory usage down the line
     }
     void Update()
     {
@@ -256,16 +255,16 @@ public class Player : MonoBehaviour {
         switch (currentDirection)
         {
             case Direction.Up:
-                direction = Direction.Right;
-                break;
-            case Direction.Right:
-                direction = Direction.Down;
-                break;
-            case Direction.Down:
                 direction = Direction.Left;
                 break;
-            case Direction.Left:
+            case Direction.Right:
                 direction = Direction.Up;
+                break;
+            case Direction.Down:
+                direction = Direction.Right;
+                break;
+            case Direction.Left:
+                direction = Direction.Down;
                 break;
             default:
                 break;
@@ -279,16 +278,41 @@ public class Player : MonoBehaviour {
         switch (currentDirection)
         {
             case Direction.Up:
-                direction = Direction.Left;
+                direction = Direction.Right;
+                //animator.SetTrigger("Right");
                 break;
             case Direction.Left:
-                direction = Direction.Down;
+                direction = Direction.Up;
+                //animator.SetTrigger("Up");
                 break;
             case Direction.Down:
-                direction = Direction.Right;
+                direction = Direction.Left;
+                //animator.SetTrigger("Left");
                 break;
             case Direction.Right:
-                direction = Direction.Up;
+                direction = Direction.Down;
+                //animator.SetTrigger("Down");
+                break;
+            default:
+                break;
+        }
+    }
+
+    void SetAnimation(Direction currentDirection)
+    {
+        switch (currentDirection)
+        {
+            case Direction.Up:
+                animator.SetTrigger("Up");
+                break;
+            case Direction.Left:
+                animator.SetTrigger("Left");
+                break;
+            case Direction.Down:
+                animator.SetTrigger("Down");
+                break;
+            case Direction.Right:
+                animator.SetTrigger("Right");
                 break;
             default:
                 break;
