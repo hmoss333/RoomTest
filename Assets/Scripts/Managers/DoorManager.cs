@@ -24,14 +24,10 @@ public class DoorManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if ((roomScript.meshesEnabled || roomScript.litByFlashlight) && roomLocked == true)
+        if (roomLocked)
         {
-            LockRoom(roomScript.roomMeshes);
-        }
-
-        if (!roomLocked && connectedDoors.Count > 0)
-        {
-            DestroyDoors(connectedDoors);
+            if (roomScript.meshesEnabled || roomScript.litByFlashlight)
+                LockRoom(roomScript.roomMeshes);
         }
     }
 
@@ -43,20 +39,9 @@ public class DoorManager : MonoBehaviour {
         }
     }
 
-    //void ShowRoomObjects(MeshRenderer[] roomMeshes)
-    //{
-    //    foreach (MeshRenderer mesh in roomMeshes)
-    //    {
-    //        if (mesh.gameObject.tag != "Door")
-    //        {
-    //            mesh.enabled = true;
-    //        }
-    //    }
-    //}
-
     void CreateDoors(WaypointScript currentRoom, GameObject prefab)
     {
-        GameObject door = new GameObject();
+        GameObject door = null;
         List<Transform> roomList = currentRoom.adjactentNodes;
 
         foreach(Transform room in roomList)
@@ -101,12 +86,12 @@ public class DoorManager : MonoBehaviour {
         }
     }
 
-    void DestroyDoors(List<GameObject> doorList)
+    public void DestroyDoors(List<GameObject> doorList)
     {
         foreach (GameObject door in doorList)
         {
             door.SetActive(false);
-            doorList.Remove(door);
+            //doorList.Remove(door);
         }
     }
 }

@@ -42,7 +42,7 @@ public class Stairs : MonoBehaviour {
     {
         if (!inUse)
         {
-            other.gameObject.transform.position = new Vector3(exitTransform.position.x, exitTransform.position.y + 1 - (WaypointManager.scale / 4), exitTransform.position.z);
+            other.gameObject.transform.position = new Vector3(exitTransform.position.x, exitTransform.position.y + 1 - (WaypointManager.scale / 8), exitTransform.position.z);
             StartCoroutine(UpdatePosition(waitTime));
         }
     }

@@ -22,5 +22,6 @@ public class InteractDoor : InteractParent {
         base.Interact();
         Debug.Log("TO DO: start sigil minigame here");
         doorManager.roomLocked = false;
+        doorManager.DestroyDoors(doorManager.connectedDoors);
     }
 }
