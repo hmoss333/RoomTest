@@ -91,7 +91,7 @@ public class WaypointScript : MonoBehaviour {
         }
 
         roomPrefab = Instantiate(roomPrefab, transform.position, Quaternion.identity);
-        roomPrefab.transform.localScale = new Vector3(WaypointManager.scale, roomPrefab.transform.localScale.y * WaypointManager.scale, WaypointManager.scale);
+        roomPrefab.transform.localScale = new Vector3(WaypointManager.scale, roomPrefab.transform.localScale.y * (WaypointManager.scale / 2), WaypointManager.scale);
 
         if (roomType == Type.wall || roomType == Type.corner || roomType == Type.start)
             RotateRoom(roomPrefab, direction);
@@ -100,10 +100,10 @@ public class WaypointScript : MonoBehaviour {
 
         roomPrefab.transform.parent = this.transform;
 
-        //if (roomType == Type.eventRoom)
-        //{
-        //    DoorManager doorManager = roomPrefab.AddComponent<DoorManager>();
-        //}
+        if (roomType == Type.eventRoom)
+        {
+            DoorManager doorManager = roomPrefab.AddComponent<DoorManager>();
+        }
     }
 
     GameObject SelectRandomPrefab (GameObject[] roomTypeArray)
