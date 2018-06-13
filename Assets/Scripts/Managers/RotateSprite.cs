@@ -41,8 +41,8 @@ public class RotateSprite : MonoBehaviour {
         Vector3 test = cam.transform.rotation.eulerAngles;
 
         spriteHeight = Mathf.Sqrt(Mathf.Pow(test.x / 2, 2) + Mathf.Pow(parent.lossyScale.y * (WaypointManager.scale/2), 2));
-        Debug.Log(test.x / 2 + " -> " + Mathf.Pow(test.x / 2, 2));
-        Debug.Log(parent.lossyScale.y * (WaypointManager.scale / 2) + " -> " + Mathf.Pow(parent.lossyScale.y * (WaypointManager.scale / 2), 2));
-        Debug.Log(spriteHeight);
+        //Debug.Log(test.x / 2 + " -> " + Mathf.Pow(test.x / 2, 2));
+        //Debug.Log(parent.lossyScale.y * (WaypointManager.scale / 2) + " -> " + Mathf.Pow(parent.lossyScale.y * (WaypointManager.scale / 2), 2));
+        //Debug.Log(spriteHeight);
     }
 }
