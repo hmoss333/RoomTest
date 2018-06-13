@@ -130,7 +130,7 @@ public class Player : MonoBehaviour {
             if (Input.GetButtonDown("Attack") && weaponPrefab != null)
             {
                 state = State.Attack;
-                StartCoroutine(Attack(weaponPrefab, direction, attackTime));
+                StartCoroutine(Attack(weaponPrefab, lastDir, attackTime));
             }
 
             //Turn On/Off Flashlight [Right trigger]
@@ -160,7 +160,7 @@ public class Player : MonoBehaviour {
             if (Input.GetButtonDown("Attack") && weaponPrefab != null) //Attack out of hiding
             {
                 state = State.Attack;
-                StartCoroutine(Attack(weaponPrefab, direction, attackTime));
+                StartCoroutine(Attack(weaponPrefab, lastDir, attackTime));
             }
         }
 
@@ -179,9 +179,8 @@ public class Player : MonoBehaviour {
     IEnumerator Interact(float interactDist, float interactTime)
     {
         foundHit = new RaycastHit();
-        //Vector3 playerBase = new Vector3(transform.position.x, transform.position.y/2, transform.position.z);
-        bool test = Physics.Raycast(transform.position/*playerBase*/, lastDir, out foundHit, interactDist, 1 << LayerMask.NameToLayer("Interact"));
-        Debug.DrawRay(transform.position /*playerBase*/, lastDir, Color.green);
+        bool test = Physics.Raycast(transform.position, lastDir, out foundHit, interactDist, 1 << LayerMask.NameToLayer("Interact"));
+        Debug.DrawRay(transform.position, lastDir, Color.green);
 
         if (test)
         {
@@ -192,32 +191,12 @@ public class Player : MonoBehaviour {
         state = State.Move;
     }
 
-    IEnumerator Attack(GameObject prefab, Direction currentDirection, float attackTime)
+    IEnumerator Attack(GameObject prefab, Vector3 direction, float attackTime)
     {
         GameObject attackPrefab = null;
+        Vector3 attackDir = transform.position + (direction / (WaypointManager.scale/2));
 
-        switch (currentDirection)
-        {
-            case Direction.Up:
-                attackPrefab = Instantiate(prefab, new Vector3(transform.position.x, transform.position.y, transform.position.z + 1), Quaternion.identity);
-                attackPrefab.transform.parent = this.transform;
-                break;
-            case Direction.Down:
-                attackPrefab = Instantiate(prefab, new Vector3(transform.position.x, transform.position.y, transform.position.z - 1), Quaternion.identity);
-                attackPrefab.transform.parent = this.transform;
-                break;
-            case Direction.Left:
-                attackPrefab = Instantiate(prefab, new Vector3(transform.position.x - 1, transform.position.y, transform.position.z), Quaternion.identity);
-                attackPrefab.transform.parent = this.transform;
-                break;
-            case Direction.Right:
-                attackPrefab = Instantiate(prefab, new Vector3(transform.position.x + 1, transform.position.y, transform.position.z), Quaternion.identity);
-                attackPrefab.transform.parent = this.transform;
-                break;
-            default:
-                Debug.Log("Something went wrong");
-                break;
-        }
+        attackPrefab = Instantiate(prefab, attackDir, Quaternion.identity);
 
         yield return new WaitForSeconds(attackTime);
         Destroy(attackPrefab);

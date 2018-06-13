@@ -22,13 +22,16 @@ public class CameraFollow : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        Camera mainCam = Camera.main;
+        //mainCam.transparencySortMode = TransparencySortMode.Orthographic;
+        mainCam.opaqueSortMode = UnityEngine.Rendering.OpaqueSortMode.FrontToBack;
         player = GameObject.FindObjectOfType<Player>();
         transform.position = player.transform.position;
 
         wpm = GameObject.FindObjectOfType<WaypointManager>();
     }
 
-    private void Update()
+    private void FixedUpdate()
 	{
         if (!player)
             player = GameObject.FindObjectOfType<Player>();
@@ -46,9 +49,9 @@ public class CameraFollow : MonoBehaviour {
 
             //Hide objects between the player and the camera
             if (hits != null)
-                HideHits(hits);
+                HideHits(hits, 0.5f);
             if (wallhits != null)
-                HideHits(wallhits);
+                HideHits(wallhits, 0.0f);
 
             Vector3 velocity = Vector3.zero;
             Vector3 forward = player.transform.forward * WaypointManager.scale;// 5f;
@@ -72,7 +75,7 @@ public class CameraFollow : MonoBehaviour {
         }
     }
 
-    void HideHits(RaycastHit[] hits)
+    void HideHits(RaycastHit[] hits, float alpha)
     {
         foreach (RaycastHit hit in hits)
         {
@@ -80,7 +83,7 @@ public class CameraFollow : MonoBehaviour {
             if (r)
             {
                 col = r.material.color;
-                col.a = (r.sortingLayerName != "OutsideWall" ? col.a = 0.0f : col.a = 0.5f);
+                col.a = alpha;
                 r.material.color = col;
             }
         }
