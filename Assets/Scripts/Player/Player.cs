@@ -24,6 +24,7 @@ public class Player : MonoBehaviour {
     public float checkDist;
     public float checkTime;
     RaycastHit foundHit;
+    public TextController tc;
 
     [Header("Controls References")]
     Rigidbody rb;
@@ -40,6 +41,7 @@ public class Player : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        tc = GameObject.FindObjectOfType<TextController>();
         rb = gameObject.GetComponent<Rigidbody>();
         animator = gameObject.GetComponentInChildren<Animator>();
 

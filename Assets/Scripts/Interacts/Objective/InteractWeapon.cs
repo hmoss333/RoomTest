@@ -7,10 +7,11 @@ public class InteractWeapon : InteractObject {
     Player player;
 
     public GameObject weapon;
-    
+
     // Use this for initialization
-	void Start () {
+    public override void Start () {
         player = FindObjectOfType<Player>();
+        base.Start();
 	}
 	
 	// Update is called once per frame

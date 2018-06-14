@@ -73,14 +73,20 @@ public class Gregg : MonoBehaviour {
 
     public void TurnOnMesh()
     {
-        foreach (SpriteRenderer mesh in characterRenderer)
-            mesh.enabled = true;
+        //temporary until actual assets can be provided
+        GetComponent<MeshRenderer>().enabled = true;
+
+        //foreach (SpriteRenderer mesh in characterRenderer)
+        //    mesh.enabled = true;
     }
 
     public void TurnOffMesh()
     {
-        foreach (SpriteRenderer mesh in characterRenderer)
-            mesh.enabled = false;
+        //temporary until actual assets can be provided
+        GetComponent<MeshRenderer>().enabled = false;
+
+        //foreach (SpriteRenderer mesh in characterRenderer)
+        //    mesh.enabled = false;
     }
 
     public List<Transform> GetAdjacentRooms(Transform currentActiveRoom)

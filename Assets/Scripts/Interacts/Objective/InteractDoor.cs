@@ -6,16 +6,6 @@ public class InteractDoor : InteractParent {
 
     public DoorManager doorManager;
     //public bool unlocked = false;
-    
-    // Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public override void Interact()
     {

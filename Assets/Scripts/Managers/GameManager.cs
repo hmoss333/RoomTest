@@ -15,9 +15,10 @@ public class GameManager : MonoBehaviour {
 
     [Header("Objective Item Settings")]
     public GameObject objectiveItem;
-    public GameObject weaponItem;
     public int objectiveItemCount;
+    public GameObject weaponItem;
     public int weaponItemCount;
+    public GameObject journalItem;
     public float objectiveItemScale;
 
     // Use this for initialization
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour {
 
                 Step1(players, objectiveItem, gm.objectiveItemCount, gm.objectiveItemScale, wpm.waypointNodes);
                 SpawnObjectives(gm.weaponItem, wpm.waypointNodes, gm.weaponItemCount, gm.objectiveItemScale); //Just testing for now; we can use this as a way to initialize all objects as needed
+                SpawnObjectives(gm.journalItem, wpm.waypointNodes, GetEventRooms(wpm.waypointNodes), gm.objectiveItemScale); //spawning journal objects
                 break;
             case 2:
                 Debug.Log("Spawn killer");
@@ -79,6 +81,20 @@ public class GameManager : MonoBehaviour {
                 Debug.Log("Something broke here");
                 break;
         }
+    }
+
+    static int GetEventRooms(List<Transform> roomList)
+    {
+        int lockedRooms = 0;
+
+        foreach (Transform room in roomList)
+        {
+            if (room.GetComponent<WaypointScript>().type == WaypointScript.Type.eventRoom)
+                lockedRooms++;
+        }
+
+        Debug.Log(lockedRooms);
+        return lockedRooms;
     }
 
     static void SpawnObjectives(GameObject objItem, List<Transform> roomList, int count, float scale)

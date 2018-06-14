@@ -9,15 +9,9 @@ public class InteractGiveItem : InteractParent {
     [Range(0f, 1f)]
     public float chanceToDropKey;
 
-    private void Start()
-    {
-
-    }
-
     public override void Interact()
     {
         base.Interact();
-        //DisplayText();
 
         GiveItem();
     }

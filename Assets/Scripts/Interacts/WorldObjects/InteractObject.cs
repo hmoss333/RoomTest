@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class InteractObject : InteractParent {
 
+    public override void Start()
+    {
+        base.Start();
+    }
+
     public override void Interact()
     {
         base.Interact();

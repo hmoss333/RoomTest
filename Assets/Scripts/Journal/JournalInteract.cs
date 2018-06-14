@@ -7,7 +7,8 @@ public class JournalInteract : InteractParent {
     public bool collected;
     
     // Use this for initialization
-	void Start () {
+	public override void Start () {
+        base.Start();
         collected = false;
 	}
 	
@@ -18,11 +19,16 @@ public class JournalInteract : InteractParent {
 
     public override void Interact()
     {
-        base.Interact();
+        //base.Interact();
         if (!collected)
         {
+            base.Interact();
             JournalController.IncrementJournal();
             collected = true;
         }
+
+        //Display journal UI popup
+        //Pause gameplay until user presses a button
+        //Should re-display journal UI every time they interact with this item
     }
 }
