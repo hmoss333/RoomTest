@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour {
     [Header("Actors")]
     public GameObject[] players;
     public GameObject killer;
+    public float timeToWaitForKiller;
 
     [Header("Objective Item Settings")]
     public GameObject objectiveItem;
@@ -21,6 +22,13 @@ public class GameManager : MonoBehaviour {
     public GameObject journalItem;
     public float objectiveItemScale;
 
+    [Header("Objective Item Settings")]
+    public string startGameMessage;
+    public string spawnKillerMessage;
+    public string foundAllObjectiveItemsMessage;
+    public string escapeMessage;
+    public string hiddenEndingMessage;
+
     // Use this for initialization
     void Start () {
 
@@ -28,7 +36,11 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        if (step == 1 && Time.timeSinceLevelLoad > timeToWaitForKiller)
+        {
+            Debug.Log("Took too long");
+            UpdateStep();
+        }
     }
 
     public static void UpdateStep()
@@ -81,6 +93,43 @@ public class GameManager : MonoBehaviour {
                 Debug.Log("Something broke here");
                 break;
         }
+
+        UpdateText();
+    }
+
+    static void UpdateText()
+    {
+        GameManager gm = FindObjectOfType<GameManager>();
+        TextController tc = GameObject.FindObjectOfType<TextController>();
+        string currentMessage = null;
+
+        switch (step)
+        {
+            case 1:
+                currentMessage = gm.startGameMessage;
+                break;
+            case 2:
+                currentMessage = gm.spawnKillerMessage;
+                break;
+            case 3:
+                currentMessage = gm.foundAllObjectiveItemsMessage;
+                break;
+            //case 4:
+            //    currentMessage = TextController.textToDisplay;
+            //    break;
+            case 5:
+                currentMessage = gm.escapeMessage;
+                break;
+            case 6:
+                currentMessage = gm.hiddenEndingMessage;
+                break;
+            default:
+                currentMessage = TextController.textToDisplay;
+                break;
+        }
+
+        TextController.textToDisplay = currentMessage;
+        tc.DisplayText();
     }
 
     static int GetEventRooms(List<Transform> roomList)

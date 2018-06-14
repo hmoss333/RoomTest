@@ -7,6 +7,7 @@ public class InteractParent : MonoBehaviour {
     public enum State { Off, Fire, Wet, Electric, Trap, Destroyed, Disabled}
     public State state;
 
+    [HideInInspector]
     public TextController tc;
     public string text;
 
