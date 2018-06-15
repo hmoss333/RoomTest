@@ -37,5 +37,3 @@ C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSha
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\TextMeshPro-5.6-Editor.dll
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\TextMeshPro-5.6-Runtime.dll
-C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEditor.UI.dll
-C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEditor.UI.xml

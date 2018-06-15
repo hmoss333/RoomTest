@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class InteractObjective : InteractParent {
 
+    GameManager gm;
+
+    public override void Start()
+    {
+        base.Start();
+        gm = GameObject.FindObjectOfType<GameManager>();
+    }
+
     public override void Interact()
     {
         base.Interact();
@@ -13,7 +21,7 @@ public class InteractObjective : InteractParent {
         GameManager.objectiveCount++;
         Debug.Log("Objective Items: " + GameManager.objectiveCount);
 
-        if (GameManager.objectiveCount == 5 && GameManager.step == 2)
+        if (GameManager.objectiveCount == gm.objectiveItemCount && GameManager.step == 2)
         {
             GameManager.UpdateStep();
         }

@@ -8,11 +8,13 @@ public class InteractGiveItem : InteractParent {
 
     [Range(0f, 1f)]
     public float chanceToDropKey;
+    float randNum;
 
     public override void Start()
     {
         base.Start();
-        chanceToDropKey = Random.Range(0, 1.0f);
+        chanceToDropKey = Random.value;
+        float randNum = Random.value;
     }
 
     public override void Interact()
@@ -25,7 +27,7 @@ public class InteractGiveItem : InteractParent {
     {
         if (GameManager.step == 3)
         {
-            float randNum = Random.value;
+            //float randNum = Random.value;
 
             if (randNum < chanceToDropKey) //Need to fix; player can just keep re-trying same object to find a key (or maybe keep it but make the chance very low)
             {
