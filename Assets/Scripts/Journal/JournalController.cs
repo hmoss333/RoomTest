@@ -4,40 +4,34 @@ using UnityEngine;
 
 public class JournalController : MonoBehaviour {
 
-    public static int journalCount;
     public List<Transform> eventRooms;
     public List<Object> sigils;
+    public List<string> foundSigils;
 
     WaypointManager wpm;
-
-    //
-    //TO DO: 
-    //-Create a list of event rooms in level
-    //-Create a list of sigils equal to the number of rooms
-    //-Assign a sigil name to each room (and subsiquent doors that the room generated)
-    //
 
     // Use this for initialization
     void Start () {
         wpm = GameObject.FindObjectOfType<WaypointManager>();
-        journalCount = 0;
         eventRooms = GetEventRooms(wpm.waypointNodes);
         sigils = SelectRandomSigils(eventRooms);
         AssignSigils(eventRooms, sigils);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public static void IncrementJournal()
     {
-        journalCount++;
+        JournalController jc = GameObject.FindObjectOfType<JournalController>();
 
-        //
-        //TO DO: Add journal logic here
-        //
+        foreach (Object s in jc.sigils)
+        {
+            if (!jc.foundSigils.Contains(s.name))
+            {
+                jc.foundSigils.Add(s.name);
+                Debug.Log(s.name);
+                //show sigil image here
+                break;
+            }
+        }
     }
 
     List<Transform> GetEventRooms(List<Transform> roomList)

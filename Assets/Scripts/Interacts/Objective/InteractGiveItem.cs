@@ -9,11 +9,16 @@ public class InteractGiveItem : InteractParent {
     [Range(0f, 1f)]
     public float chanceToDropKey;
 
+    public override void Start()
+    {
+        base.Start();
+        chanceToDropKey = Random.Range(0, 1.0f);
+    }
+
     public override void Interact()
     {
-        base.Interact();
-
         GiveItem();
+        base.Interact();
     }
 
     public void GiveItem()
@@ -22,10 +27,14 @@ public class InteractGiveItem : InteractParent {
         {
             float randNum = Random.value;
 
-            if (randNum < chanceToDropKey)
+            if (randNum < chanceToDropKey) //Need to fix; player can just keep re-trying same object to find a key (or maybe keep it but make the chance very low)
             {
-                Debug.Log("Found objective item");
+                text = "I found a key in here!";
                 GameManager.UpdateStep();
+            }
+            else
+            {
+                text = "Doesn't look like there's anything in this one";
             }
         }
     }

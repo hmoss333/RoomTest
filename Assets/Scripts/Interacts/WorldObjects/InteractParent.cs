@@ -7,6 +7,8 @@ public class InteractParent : MonoBehaviour {
     public enum State { Off, Fire, Wet, Electric, Trap, Destroyed, Disabled}
     public State state;
 
+    public int durability;
+
     [HideInInspector]
     public TextController tc;
     public string text;
@@ -30,4 +32,13 @@ public class InteractParent : MonoBehaviour {
         TextController.textToDisplay = text;
         tc.DisplayText();
     }
+
+    //public virtual void Hit()
+    //{
+    //    durability--;
+    //    if (durability <= 0)
+    //    {
+    //        Destroy(this.gameObject);
+    //    }
+    //}
 }
