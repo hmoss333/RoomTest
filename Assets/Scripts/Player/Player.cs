@@ -58,7 +58,7 @@ public class Player : MonoBehaviour {
     //
     // Update is called once per frame
     void FixedUpdate () {
-        if (state == State.Move)
+        if (GameManager.gameState == GameManager.GameState.Playing && state == State.Move)
         {
             //Control logic
             xInput = Input.GetAxisRaw("Horizontal");
@@ -119,63 +119,66 @@ public class Player : MonoBehaviour {
     }
     void Update()
     {
-        if (state == State.Move)
+        if (GameManager.gameState == GameManager.GameState.Playing)
         {
-            //Interact with objects [A button]
-            if (Input.GetButtonDown("Interact"))
+            if (state == State.Move)
             {
-                state = State.Interact;
-                StartCoroutine(Interact(checkDist, checkTime));
+                //Interact with objects [A button]
+                if (Input.GetButtonDown("Interact"))
+                {
+                    state = State.Interact;
+                    StartCoroutine(Interact(checkDist, checkTime));
+                }
+
+                //Attack with current weapon [B button]
+                if (Input.GetButtonDown("Attack") && weaponPrefab != null)
+                {
+                    state = State.Attack;
+                    StartCoroutine(Attack(weaponPrefab, lastDir, attackTime));
+                }
+
+                //Turn On/Off Flashlight [Right trigger]
+                if (Input.GetButtonDown("Flashlight"))
+                {
+                    Flashlight(flashlightPrefab);
+                }
+
+                //Enter Hide mode
+                if (Input.GetButtonDown("Hide"))
+                {
+                    flashlightOn = false;
+                    flashlightPrefab.GetComponent<Light>().enabled = flashlightOn;
+
+                    Hide();
+                }
+            }
+            else if (state == State.Hide)
+            {
+                rb.velocity = Vector3.zero;
+
+                if (Input.GetButtonDown("Hide"))
+                {
+                    Hide();
+                }
+
+                if (Input.GetButtonDown("Attack") && weaponPrefab != null) //Attack out of hiding
+                {
+                    state = State.Attack;
+                    StartCoroutine(Attack(weaponPrefab, lastDir, attackTime));
+                }
             }
 
-            //Attack with current weapon [B button]
-            if (Input.GetButtonDown("Attack") && weaponPrefab != null)
+            if (Input.GetButtonDown("CamLeft"))
             {
-                state = State.Attack;
-                StartCoroutine(Attack(weaponPrefab, lastDir, attackTime));
+                RotateCamLeft(direction);
+            }
+            else if (Input.GetButtonDown("CamRight"))
+            {
+                RotateCamRight(direction);
             }
 
-            //Turn On/Off Flashlight [Right trigger]
-            if (Input.GetButtonDown("Flashlight"))
-            {
-                Flashlight(flashlightPrefab);
-            }
-
-            //Enter Hide mode
-            if (Input.GetButtonDown("Hide"))
-            {
-                flashlightOn = false;
-                flashlightPrefab.GetComponent<Light>().enabled = flashlightOn;
-
-                Hide();
-            }
+            SetAnimation(direction); //Will cause issues with memory usage down the line
         }
-        else if (state == State.Hide)
-        {
-            rb.velocity = Vector3.zero;
-
-            if (Input.GetButtonDown("Hide"))
-            {
-                Hide();
-            }
-
-            if (Input.GetButtonDown("Attack") && weaponPrefab != null) //Attack out of hiding
-            {
-                state = State.Attack;
-                StartCoroutine(Attack(weaponPrefab, lastDir, attackTime));
-            }
-        }
-
-        if (Input.GetButtonDown("CamLeft"))
-        {
-            RotateCamLeft(direction);
-        }
-        else if (Input.GetButtonDown("CamRight"))
-        {
-            RotateCamRight(direction);
-        }
-
-        SetAnimation(direction); //Will cause issues with memory usage down the line
     }
 
     IEnumerator Interact(float interactDist, float interactTime)

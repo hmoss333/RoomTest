@@ -1,60 +1,42 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class TextController : MonoBehaviour {
 
-    public GameObject textBox;
-    GameObject textPrefab = null;
+    Text textBox;
+    Player player;
+
     public float textDelay;
     public static string textToDisplay;
-    public float yOffset;
-
-    Player player;
-    
-    // Use this for initialization
-	void Start () {
-        player = GameObject.FindObjectOfType<Player>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (textPrefab != null)
-        {
-            UpdateTextBoxPosition(textPrefab);
-
-            if (textPrefab.transform.rotation != player.transform.rotation)
-                RotateTextBox(textPrefab);
-        }
-    }
 
     public void DisplayText()
     {
-        if (textPrefab)
-            Destroy(textPrefab);
+        if (player == null)
+        {
+            player = GameObject.FindObjectOfType<Player>();
+            textBox = player.GetComponentInChildren<Text>();
+        }
 
-        StartCoroutine(DisplayText(textBox, textToDisplay, textDelay));
+        Coroutine co = StartCoroutine(DisplayText(textBox, textToDisplay, textDelay));
     }
-
-    IEnumerator DisplayText(GameObject textObj, string text, float waitTime)
+    IEnumerator DisplayText(Text textObj, string text, float waitTime)
     {
-        Vector3 offsetPlayerPos = new Vector3(player.transform.position.x, player.transform.position.y + yOffset, player.transform.position.z);
-        textObj = Instantiate(textObj, offsetPlayerPos, Quaternion.identity);
-        textPrefab = textObj;
-        textPrefab.GetComponent<TextMeshPro>().text = textToDisplay;
+        textObj.color = new Color(textObj.color.r, textObj.color.g, textObj.color.b, 1);
+        textObj.text = textToDisplay;
+
         yield return new WaitForSeconds(waitTime);
-        Destroy(textObj);
+        StartCoroutine(FadeOutText(textObj, 1f));
     }
 
-    void RotateTextBox(GameObject textObj)
+    IEnumerator FadeOutText(Text textObj, float fadeRate)
     {
-        textObj.transform.rotation = player.transform.rotation;
-    }
-
-    void UpdateTextBoxPosition(GameObject textObj)
-    {
-        Vector3 offsetPlayerPos = new Vector3(player.transform.position.x, player.transform.position.y + yOffset, player.transform.position.z);
-        textObj.transform.position = offsetPlayerPos;
+        while (textObj.color.a > 0.0f)
+        {
+            textObj.color = new Color(textObj.color.r, textObj.color.g, textObj.color.b, textObj.color.a - (Time.deltaTime / fadeRate));
+            yield return null;
+        }
     }
 }

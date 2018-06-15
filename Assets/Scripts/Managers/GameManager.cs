@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour {
     public static int weaponCount = 0;
     public static float objectiveScale = 1;
 
+    public enum GameState { Playing, Paused, Interacting, Win, Lose }
+    public static GameState gameState;
+
     [Header("Actors")]
     public GameObject[] players;
     public GameObject killer;
@@ -29,14 +32,14 @@ public class GameManager : MonoBehaviour {
     public string escapeMessage;
     public string hiddenEndingMessage;
 
-    // Use this for initialization
-    void Start () {
+    private void Start()
+    {
+        gameState = GameState.Playing;
+    }
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (step == 1 && Time.timeSinceLevelLoad > timeToWaitForKiller)
+    // Update is called once per frame
+    void Update () {
+        if (gameState == GameState.Playing && step == 1 && Time.timeSinceLevelLoad > timeToWaitForKiller)
         {
             Debug.Log("Took too long");
             UpdateStep();
@@ -142,7 +145,6 @@ public class GameManager : MonoBehaviour {
                 lockedRooms++;
         }
 
-        Debug.Log(lockedRooms);
         return lockedRooms;
     }
 

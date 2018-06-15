@@ -6,6 +6,7 @@ public class DoorManager : MonoBehaviour {
 
     public GameObject doorPrefab;
     public bool roomLocked = true;
+    public string sigilWord;
 
     WaypointScript wayPoint;
     HideRoom roomScript;
@@ -80,6 +81,7 @@ public class DoorManager : MonoBehaviour {
 
             door.transform.localScale = new Vector3(0.4f, 1f, 0.05f); //need to find a better way to set object scale before coming here. will not scale properly
             door.GetComponent<InteractDoor>().doorManager = this;
+            door.GetComponent<InteractDoor>().sigilWord = sigilWord;
             roomScript.UpdateMeshes();
 
             connectedDoors.Add(door);

@@ -17,7 +17,7 @@ public class WaypointManager : MonoBehaviour
     [Header("Waypoint Controls")]
     public List<Transform> waypointNodes;         //Create a list of all the waypoints in scene( its like a array but more easy to work with)
     public List<Transform> wallNodes;
-    public List<Transform> stairNodes;
+    List<Transform> stairNodes;
     public int totalWaypoints = 0;                //Shows the total count of waypoints in the scene.
     float waypointToWaypointRadius = 1.5f * scale;  //a radius that each waypoint is checking for to see if another waypoint is close by
     [Range(0f, 1f)]
