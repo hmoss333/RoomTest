@@ -75,21 +75,33 @@ public class Gregg : MonoBehaviour {
 
     void MoveToNewRoom(List<Transform> roomList)
     {
-        if (!GetComponent<MeshRenderer>().enabled)
+        if (!GetComponent<MeshRenderer>().enabled) //If killer is currently not visible
         {
             List<Transform> tempList = new List<Transform>();
             tempList.AddRange(roomList);
 
+            //This code feels like it could be written more cleanly
             foreach (Transform node in tempList)
             {
                 RoomManager room = node.GetComponentInChildren<RoomManager>();
-                if (room.meshesEnabled)
+                if (room.meshesEnabled) //If the player is currently in this room
                 {
                     WaypointScript waypoint = node.GetComponent<WaypointScript>();
+
                     int randNum = Random.Range(0, waypoint.adjactentNodes.Count);
-                    Vector3 adjacentRoom = waypoint.adjactentNodes[randNum].position;
-                    transform.position = new Vector3(adjacentRoom.x, adjacentRoom.y + 1 - (WaypointManager.scale / 4), adjacentRoom.z);
-                    break;
+                    RoomManager rm = waypoint.adjactentNodes[randNum].GetComponentInChildren<RoomManager>();
+                    if (!rm.meshesEnabled && !rm.litByFlashlight)
+                    {
+                        Vector3 adjacentRoom = waypoint.adjactentNodes[randNum].position;
+                        transform.position = new Vector3(adjacentRoom.x, adjacentRoom.y + 1 - (WaypointManager.scale / 4), adjacentRoom.z);
+                        break;
+                    }
+                    else
+                    {
+                        tempList.Remove(waypoint.transform);
+                        MoveToNewRoom(tempList);
+                        break;
+                    }
                 }
             }
         }
@@ -98,8 +110,8 @@ public class Gregg : MonoBehaviour {
     float UpdateTeleportTimer(int totalObjectives, int objectivesCollected, float multiplier)
     {
         float newTime;
-        newTime = multiplier * ((totalObjectives + 1) - objectivesCollected); //works well for now, but we may want to try lowering the multiplier; maybe 2-3?
-        Debug.Log(newTime);
+        newTime = multiplier * ((totalObjectives + 1) - objectivesCollected);
+        //Debug.Log(newTime);
 
         return newTime;
     }

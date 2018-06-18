@@ -17,23 +17,23 @@ public class MainDoor : InteractParent{
         switch (GameManager.step)
         {
             case 1:
-                Debug.Log(step0);
+                //Debug.Log(step0);
                 TextController.textToDisplay = step0;
                 break;
             case 2:
-                Debug.Log(step1);
+                //Debug.Log(step1);
                 TextController.textToDisplay = step1;
                 break;
             case 3:
-                Debug.Log(step2);
+                //Debug.Log(step2);
                 TextController.textToDisplay = step2;
                 break;
             case 4:
-                Debug.Log(step3);
+                //Debug.Log(step3);
                 TextController.textToDisplay = step3;
                 break;
             case 5:
-                Debug.Log(step4);
+                //Debug.Log(step4);
                 TextController.textToDisplay = step4;
                 break;
             default:

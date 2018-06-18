@@ -14,8 +14,8 @@ public class CameraFollow : MonoBehaviour {
     [Range(0.01f, 0.1f)]
     public float turnSpeed;
     public float viewDist;
-    public LayerMask layersToFade;
-    public LayerMask outerWallLayers;
+    //public LayerMask layersToFade;
+    //public LayerMask outerWallLayers;
 
     WaypointManager wpm;
 
@@ -38,20 +38,20 @@ public class CameraFollow : MonoBehaviour {
 
         else
         {
-            //Set all objects to be visible
-            if (hits != null)
-                ShowAll(hits);
-            if (wallhits != null)
-                ShowAll(wallhits);
+            ////Set all objects to be visible
+            //if (hits != null)
+            //    ShowAll(hits);
+            //if (wallhits != null)
+            //    ShowAll(wallhits);
 
-            hits = Physics.RaycastAll(this.transform.position, (player.transform.position - this.transform.position), Vector3.Distance(this.transform.position, player.transform.position), layersToFade);
-            wallhits = Physics.RaycastAll(this.transform.position, (player.transform.position - this.transform.position), Vector3.Distance(this.transform.position, player.transform.position), outerWallLayers);
+            //hits = Physics.RaycastAll(this.transform.position, (player.transform.position - this.transform.position), Vector3.Distance(this.transform.position, player.transform.position), layersToFade);
+            //wallhits = Physics.RaycastAll(this.transform.position, (player.transform.position - this.transform.position), Vector3.Distance(this.transform.position, player.transform.position), outerWallLayers);
 
-            //Hide objects between the player and the camera
-            if (hits != null)
-                HideHits(hits, 0.5f);
-            if (wallhits != null)
-                HideHits(wallhits, 0.0f);
+            ////Hide objects between the player and the camera
+            //if (hits != null)
+            //    HideHits(hits, 0.5f);
+            //if (wallhits != null)
+            //    HideHits(wallhits, 0.0f);
 
             Vector3 velocity = Vector3.zero;
             Vector3 forward = player.transform.forward * WaypointManager.scale;// 5f;

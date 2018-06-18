@@ -8,13 +8,13 @@ public class InteractGiveItem : InteractParent {
 
     [Range(0f, 1f)]
     public float chanceToDropKey;
-    float randNum;
+
+    bool haveChecked = false;
 
     public override void Start()
     {
         base.Start();
         chanceToDropKey = Random.value;
-        float randNum = Random.value;
     }
 
     public override void Interact()
@@ -27,9 +27,9 @@ public class InteractGiveItem : InteractParent {
     {
         if (GameManager.step == 3)
         {
-            //float randNum = Random.value;
+            float randNum = Random.value;
 
-            if (randNum < chanceToDropKey) //Need to fix; player can just keep re-trying same object to find a key (or maybe keep it but make the chance very low)
+            if (randNum < chanceToDropKey && !haveChecked) //Need to fix; player can just keep re-trying same object to find a key (or maybe keep it but make the chance very low)
             {
                 text = "I found a key in here!";
                 GameManager.UpdateStep();
@@ -38,6 +38,8 @@ public class InteractGiveItem : InteractParent {
             {
                 text = "Doesn't look like there's anything in this one";
             }
+
+            haveChecked = true;
         }
     }
 }
