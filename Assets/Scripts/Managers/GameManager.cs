@@ -83,7 +83,6 @@ public class GameManager : MonoBehaviour {
                 killer = gm.killer;
 
                 MoveKiller(gm.killer, wpm.waypointNodes);
-                killer.GetComponent<Gregg>().moveToNextRoom = false;
                 break;
             case 5:
                 //If players have followed clues, start triggers for secret boss fight
@@ -158,7 +157,7 @@ public class GameManager : MonoBehaviour {
         {
             int randNum = Random.Range(0, tempList.Count);
             Transform targetRoom = tempList[randNum];
-            HideRoom roomScript = targetRoom.GetComponentInChildren<HideRoom>();
+            RoomManager roomScript = targetRoom.GetComponentInChildren<RoomManager>();
             WaypointScript room = targetRoom.GetComponent<WaypointScript>();
 
             if (roomScript.meshesEnabled || (roomScript.litByFlashlight && Player.flashlightOn) || room.type == WaypointScript.Type.stairs)
@@ -225,19 +224,31 @@ public class GameManager : MonoBehaviour {
         List<Transform> tempList = new List<Transform>();
         tempList.AddRange(roomList);
 
-        int randNum = Random.Range(0, tempList.Count);
-        Transform targetRoom = tempList[randNum];
-        HideRoom roomScript = targetRoom.GetComponentInChildren<HideRoom>();
+        foreach (Transform node in tempList)
+        {
+            RoomManager room = node.GetComponentInChildren<RoomManager>();
+            if (room.meshesEnabled)
+            {
+                WaypointScript waypoint = node.GetComponent<WaypointScript>();
+                int randNum = Random.Range(0, waypoint.adjactentNodes.Count);
+                Vector3 adjacentRoom = waypoint.adjactentNodes[randNum].position;
+                killer = Instantiate(killer, new Vector3(adjacentRoom.x, adjacentRoom.y + 1 - (WaypointManager.scale / 4), adjacentRoom.z), Quaternion.identity) as GameObject;
+                break;
+            }
+        }
 
-        if (roomScript.meshesEnabled || (roomScript.litByFlashlight && Player.flashlightOn))
-        {
-            SpawnKiller(killer, tempList);
-        }
-        else
-        {
-            killer = Instantiate(killer, new Vector3(targetRoom.position.x, targetRoom.position.y + 1 - (WaypointManager.scale / 4), targetRoom.position.z), Quaternion.identity) as GameObject; //testing for now; need to move to GameManager
-            //Debug.Log("Killer in Room: " + targetRoom.GetComponent<WaypointScript>().xPos + ", " + targetRoom.GetComponent<WaypointScript>().yPos);
-        }
+        //int randNum = Random.Range(0, tempList.Count);
+        //Transform targetRoom = tempList[randNum];
+        //RoomManager roomScript = targetRoom.GetComponentInChildren<RoomManager>();
+
+        //if (roomScript.meshesEnabled || (roomScript.litByFlashlight && Player.flashlightOn))
+        //{
+        //    SpawnKiller(killer, tempList);
+        //}
+        //else
+        //{
+        //    killer = Instantiate(killer, new Vector3(targetRoom.position.x, targetRoom.position.y + 1 - (WaypointManager.scale / 4), targetRoom.position.z), Quaternion.identity) as GameObject;
+        //}
     }
 
     //Debating using this at the moment; will leave for now, but probably can design a gameplay reason to be unable to leave without moving the killer to the ext
@@ -260,7 +271,7 @@ public class GameManager : MonoBehaviour {
 
         Destroy(GameObject.Find(killer.name + "(Clone)"));
         killer = Instantiate(killer, new Vector3(startPos.position.x, 1 - (WaypointManager.scale / 4), startPos.position.z), Quaternion.identity) as GameObject;
-        killer.GetComponent<Gregg>().moveToNextRoom = false; //Leaving for now, we'll come back to all of the killer logic once we get pathfinding installed
+        //killer.GetComponent<Gregg>().moveToNextRoom = false; //Leaving for now, we'll come back to all of the killer logic once we get pathfinding installed
         Debug.Log("Killer moved to Start Room: " + startPos.GetComponent<WaypointScript>().xPos + ", " + startPos.GetComponent<WaypointScript>().yPos);
     }
 

@@ -1,3 +1,4 @@
+C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\Assembly-CSharp.dll
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\Assembly-CSharp.pdb
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\KdTreeLib.dll
@@ -6,6 +7,8 @@ C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\pb_Stl.d
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\Poly2Tri.dll
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\ProBuilderCore-Unity5.dll
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\ProBuilderMeshOps-Unity5.dll
+C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\TextMeshPro-5.6-Editor.dll
+C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\TextMeshPro-5.6-Runtime.dll
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEditor.dll
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEngine.Analytics.dll
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEngine.dll
@@ -31,9 +34,8 @@ C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\nunit.fr
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEngine.Analytics.xml
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEngine.HoloLens.xml
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEngine.VR.xml
-C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
+C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSharp.dll
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSharp.pdb
-C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
-C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\TextMeshPro-5.6-Editor.dll
-C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\TextMeshPro-5.6-Runtime.dll
+C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEditor.UI.dll
+C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEditor.UI.xml

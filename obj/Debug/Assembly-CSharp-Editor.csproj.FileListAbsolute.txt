@@ -1,3 +1,4 @@
+C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSharp-Editor.csproj.CoreCompileInputs.cache
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\Assembly-CSharp-Editor.dll
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\Assembly-CSharp-Editor.pdb
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\KdTreeLib.dll
@@ -7,6 +8,8 @@ C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\Poly2Tri
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\ProBuilderCore-Unity5.dll
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\ProBuilderEditor-Unity5.dll
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\ProBuilderMeshOps-Unity5.dll
+C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\TextMeshPro-5.6-Editor.dll
+C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\TextMeshPro-5.6-Runtime.dll
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEditor.Advertisements.dll
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEditor.Analytics.dll
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEditor.Android.Extensions.dll
@@ -39,6 +42,7 @@ C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEdi
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\Mono.Cecil.Mdb.dll
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\Unity.CecilTools.dll
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\Mono.Cecil.Pdb.dll
+C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\Assembly-CSharp.pdb
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEngine.xml
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEditor.xml
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEditor.Advertisements.xml
@@ -59,9 +63,5 @@ C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEdi
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEngine.VR.xml
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\UnityEditor.iOS.Extensions.Xcode.xml
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSharp-Editor.csprojResolveAssemblyReference.cache
-C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSharp-Editor.csproj.CoreCompileInputs.cache
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSharp-Editor.dll
 C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\obj\Debug\Assembly-CSharp-Editor.pdb
-C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\Assembly-CSharp.pdb
-C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\TextMeshPro-5.6-Editor.dll
-C:\Users\HMoss.DESKTOP-LO6F45S\Documents\GitHub\RoomTest\Temp\bin\Debug\TextMeshPro-5.6-Runtime.dll

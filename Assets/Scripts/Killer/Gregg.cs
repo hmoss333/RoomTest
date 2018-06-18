@@ -5,14 +5,11 @@ using UnityEngine;
 public class Gregg : MonoBehaviour {
 
     [Header("Movement Settings")]
-    public float walkSpeed;
-    public float hurtSpeed;
+    public float speed;
     public float attackSpeed;
-    float speed;
-    public Transform currentRoom;
-    public Transform nextRoom;
-    public bool moveToNextRoom;
-    public List<Transform> adjacentRooms;
+    float teleportTime;
+    public float footprintSpacing = 2.0f; // distance between each footprint
+    Vector3 lastPos;
 
     [Header("Interact Settings")]
     public float checkDist;
@@ -29,96 +26,103 @@ public class Gregg : MonoBehaviour {
 
     SpriteRenderer[] characterRenderer;
 
+    WaypointManager wpm;
+    GameManager gm;
+    Player player;
+    Footprints footprints;
+
     // Use this for initialization
     void Start () {
-        speed = walkSpeed;
-        moveToNextRoom = false;
-        characterRenderer = GetComponentsInChildren<SpriteRenderer>();
+        wpm = GameObject.FindObjectOfType<WaypointManager>();
+        gm = GameObject.FindObjectOfType<GameManager>();
+        player = GameObject.FindObjectOfType<Player>();
 
-        //nextRoom = SelectNextRoom(GetAdjacentRooms(currentRoom)); //technically works, but just sets the current room, not actual adjactent
-        StartCoroutine(MoveTimer(5f));
-        //StartCoroutine(DisapearTimer(45f));
+        lastPos = transform.position;
+
+        if (!footprints)
+        {
+            footprints = GameObject.FindObjectOfType<Footprints>();
+        }
+
+        teleportTime = UpdateTeleportTimer(gm.objectiveItemCount, GameManager.objectiveCount, 3f);
+        StartCoroutine(TeleportTimer(teleportTime));
     }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        if (moveToNextRoom && nextRoom != null)
+        transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z), speed * Time.deltaTime);
+
+        float distFromLastFootprint = (lastPos - transform.position).sqrMagnitude;
+        if (distFromLastFootprint > footprintSpacing * footprintSpacing)
         {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(nextRoom.position.x, nextRoom.position.y + 1 - (WaypointManager.scale / 4), nextRoom.position.z), speed * Time.deltaTime);
+            footprints.AddFootprint(transform.position, transform.forward, transform.right, Random.Range(0, 4));
+
+            lastPos = transform.position;
         }
-	}
 
-    //This needs to be updated for actual use; currently is just always true
-    IEnumerator MoveTimer(float waitTime)
-    {
-        //moveToNextRoom = false;
-
-        //yield return new WaitForSeconds(waitTime);
-
-        moveToNextRoom = true;
-
-        yield return new WaitForSeconds(waitTime);
-
-        moveToNextRoom = false;
-
-        StartCoroutine(MoveTimer(waitTime));
+        if (footprints.transform.position.y != transform.position.y)
+            footprints.transform.position = new Vector3(0, transform.position.y - 10, 0);
     }
 
-    IEnumerator DisapearTimer(float deathTime)
+    IEnumerator TeleportTimer(float time)
     {
-        yield return new WaitForSeconds(deathTime);
-        //TO DO: send message to GameManager to start respawn timer
-        Destroy(this.gameObject);
+        yield return new WaitForSeconds(time);
+
+        MoveToNewRoom(wpm.waypointNodes);
+        teleportTime = UpdateTeleportTimer(gm.objectiveItemCount, GameManager.objectiveCount, 3f);
+        StartCoroutine(TeleportTimer(teleportTime));
+    }
+
+    void MoveToNewRoom(List<Transform> roomList)
+    {
+        if (!GetComponent<MeshRenderer>().enabled)
+        {
+            List<Transform> tempList = new List<Transform>();
+            tempList.AddRange(roomList);
+
+            foreach (Transform node in tempList)
+            {
+                RoomManager room = node.GetComponentInChildren<RoomManager>();
+                if (room.meshesEnabled)
+                {
+                    WaypointScript waypoint = node.GetComponent<WaypointScript>();
+                    int randNum = Random.Range(0, waypoint.adjactentNodes.Count);
+                    Vector3 adjacentRoom = waypoint.adjactentNodes[randNum].position;
+                    transform.position = new Vector3(adjacentRoom.x, adjacentRoom.y + 1 - (WaypointManager.scale / 4), adjacentRoom.z);
+                    break;
+                }
+            }
+        }
+    }
+
+    float UpdateTeleportTimer(int totalObjectives, int objectivesCollected, float multiplier)
+    {
+        float newTime;
+        newTime = multiplier * ((totalObjectives + 1) - objectivesCollected); //works well for now, but we may want to try lowering the multiplier; maybe 2-3?
+        Debug.Log(newTime);
+
+        return newTime;
     }
 
     public void TurnOnMesh()
     {
-        //temporary until actual assets can be provided
         GetComponent<MeshRenderer>().enabled = true;
 
-        //foreach (SpriteRenderer mesh in characterRenderer)
-        //    mesh.enabled = true;
+        footprints.TurnOnMesh();
     }
 
     public void TurnOffMesh()
     {
-        //temporary until actual assets can be provided
         GetComponent<MeshRenderer>().enabled = false;
 
-        //foreach (SpriteRenderer mesh in characterRenderer)
-        //    mesh.enabled = false;
+        footprints.TurnOffMesh();
     }
 
-    public List<Transform> GetAdjacentRooms(Transform currentActiveRoom)
+    private void OnCollisionEnter(Collision collision)
     {
-        List<Transform> tempRoomList = new List<Transform>();
-
-        WaypointScript thisNode = currentActiveRoom.GetComponentInParent<WaypointScript>();
-        WaypointScript[] roomList = GameObject.FindObjectsOfType<WaypointScript>();
-        foreach (WaypointScript room in roomList)
+        if (collision.transform.tag == "Player")
         {
-            if (room != thisNode && room.zPos == thisNode.zPos)
-            {
-                //This will only include rooms immediately above/bellow/left/right of current room
-                if ((room.xPos == thisNode.xPos + 1 && room.yPos == thisNode.yPos)
-                    || (room.xPos == thisNode.xPos - 1 && room.yPos == thisNode.yPos)
-                    || (room.yPos == thisNode.yPos + 1 && room.xPos == thisNode.xPos)
-                    || (room.yPos == thisNode.yPos - 1 && room.xPos == thisNode.xPos))
-                {
-                    tempRoomList.Add(room.transform);
-                }
-            }
+            Debug.Log("You died");
         }
-
-        return tempRoomList;
-    }
-
-    public Transform SelectNextRoom(List<Transform> roomList)
-    {
-        Transform targetRoom;
-        int randNum = Random.Range(0, roomList.Count);
-
-        targetRoom = roomList[randNum];
-        return targetRoom;
     }
 }

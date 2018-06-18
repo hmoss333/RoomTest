@@ -152,7 +152,7 @@ public class Flashlight : MonoBehaviour {
 
         if (test)
         {
-            foundHit.transform.GetComponent<HideRoom>().litByFlashlight = true;
+            foundHit.transform.GetComponent<RoomManager>().litByFlashlight = true;
         }
     }
 
@@ -162,7 +162,7 @@ public class Flashlight : MonoBehaviour {
 
         foreach (Transform node in wpm.waypointNodes)
         {
-            HideRoom room = node.GetComponentInChildren<HideRoom>();
+            RoomManager room = node.GetComponentInChildren<RoomManager>();
 
             if (room.transform != playerClass.currentRoom)
             {

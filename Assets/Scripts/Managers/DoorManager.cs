@@ -9,14 +9,14 @@ public class DoorManager : MonoBehaviour {
     public string sigilWord;
 
     WaypointScript wayPoint;
-    HideRoom roomScript;
+    RoomManager roomScript;
     public LayerMask layerMask;
 
     public List<GameObject> connectedDoors = new List<GameObject>();
     
     // Use this for initialization
 	void Start () {
-        roomScript = GetComponent<HideRoom>();
+        roomScript = GetComponent<RoomManager>();
         wayPoint = GetComponentInParent<WaypointScript>();
         doorPrefab = Resources.Load("Door") as GameObject;
 
@@ -48,7 +48,7 @@ public class DoorManager : MonoBehaviour {
         foreach(Transform room in roomList)
         {
             WaypointScript wayPoint = room.GetComponentInParent<WaypointScript>();
-            HideRoom roomScript = room.GetComponentInChildren<HideRoom>();
+            RoomManager roomScript = room.GetComponentInChildren<RoomManager>();
 
             if (currentRoom.xPos == wayPoint.xPos && currentRoom.yPos == wayPoint.yPos + 1)
             {

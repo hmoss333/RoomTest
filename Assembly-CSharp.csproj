@@ -63,10 +63,11 @@
      <Compile Include="Assets\Scripts\Interacts\WorldObjects\InteractSetTrigger.cs" />
      <Compile Include="Assets\Scripts\Journal\JournalController.cs" />
      <Compile Include="Assets\Scripts\Journal\JournalInteract.cs" />
+     <Compile Include="Assets\Scripts\Killer\Footprints.cs" />
      <Compile Include="Assets\Scripts\Killer\Gregg.cs" />
      <Compile Include="Assets\Scripts\Managers\DoorManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
-     <Compile Include="Assets\Scripts\Managers\HideRoom.cs" />
+     <Compile Include="Assets\Scripts\Managers\RoomManager.cs" />
      <Compile Include="Assets\Scripts\Managers\RotateSprite.cs" />
      <Compile Include="Assets\Scripts\Managers\Stairs.cs" />
      <Compile Include="Assets\Scripts\Managers\WaypointManager.cs" />
