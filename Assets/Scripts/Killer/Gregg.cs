@@ -30,6 +30,7 @@ public class Gregg : MonoBehaviour {
     GameManager gm;
     Player player;
     Footprints footprints;
+    public RoomManager currentRoom;
 
     // Use this for initialization
     void Start () {
@@ -50,7 +51,12 @@ public class Gregg : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z), speed * Time.deltaTime);
+        //If the room contains an active interact && the player is not currently in the room/shining a light in the room
+        //The killer will then target the nearest interact
+        if (currentRoom && currentRoom.hasActiveInteracts && (!currentRoom.meshesEnabled || !currentRoom.litByFlashlight))
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(currentRoom.interacts[Random.Range(0, currentRoom.interacts.Length)].transform.position.x, transform.position.y, currentRoom.interacts[Random.Range(0, currentRoom.interacts.Length)].transform.position.z), speed * Time.deltaTime);
+        else
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z), speed * Time.deltaTime);
 
         float distFromLastFootprint = (lastPos - transform.position).sqrMagnitude;
         if (distFromLastFootprint > footprintSpacing * footprintSpacing)
@@ -84,7 +90,7 @@ public class Gregg : MonoBehaviour {
             foreach (Transform node in tempList)
             {
                 RoomManager room = node.GetComponentInChildren<RoomManager>();
-                if (room.meshesEnabled) //If the player is currently in this room
+                if (room.hasActiveInteracts || room.meshesEnabled) //If the player is currently in this room
                 {
                     WaypointScript waypoint = node.GetComponent<WaypointScript>();
 
@@ -135,6 +141,12 @@ public class Gregg : MonoBehaviour {
         if (collision.transform.tag == "Player")
         {
             Debug.Log("You died");
+        }
+        if (collision.transform.tag == "Interact")
+        {
+            InteractSetTrigger trigger = collision.transform.GetComponent<InteractSetTrigger>();
+            if (currentRoom.hasActiveInteracts && trigger.state != InteractParent.State.Destroyed)
+                trigger.state = InteractParent.State.Destroyed;
         }
     }
 }

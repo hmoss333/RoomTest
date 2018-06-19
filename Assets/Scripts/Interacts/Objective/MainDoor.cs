@@ -17,30 +17,23 @@ public class MainDoor : InteractParent{
         switch (GameManager.step)
         {
             case 1:
-                //Debug.Log(step0);
-                TextController.textToDisplay = step0;
+                tc.DisplayText(step0);
                 break;
             case 2:
-                //Debug.Log(step1);
-                TextController.textToDisplay = step1;
+                tc.DisplayText(step1);
                 break;
             case 3:
-                //Debug.Log(step2);
-                TextController.textToDisplay = step2;
+                tc.DisplayText(step2);
                 break;
             case 4:
-                //Debug.Log(step3);
-                TextController.textToDisplay = step3;
+                tc.DisplayText(step3);
                 break;
             case 5:
-                //Debug.Log(step4);
-                TextController.textToDisplay = step4;
+                tc.DisplayText(step4);
                 break;
             default:
                 Debug.Log("Something went wrong");
                 break;
         }
-
-        tc.DisplayText();
     }
 }

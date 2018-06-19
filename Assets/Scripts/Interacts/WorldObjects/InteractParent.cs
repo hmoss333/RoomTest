@@ -29,8 +29,7 @@ public class InteractParent : MonoBehaviour {
     {
         //TO DO: general interact logic can go here
 
-        TextController.textToDisplay = text;
-        tc.DisplayText();
+        tc.DisplayText(text);
     }
 
     //public virtual void Hit()

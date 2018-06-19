@@ -18,11 +18,11 @@ public class GameManager : MonoBehaviour {
     public float timeToWaitForKiller;
 
     [Header("Objective Item Settings")]
-    public GameObject objectiveItem;
+    public GameObject[] objectiveItems;
     public int objectiveItemCount;
-    public GameObject weaponItem;
+    public GameObject[] weaponItems;
     public int weaponItemCount;
-    public GameObject journalItem;
+    public GameObject[] journalItems;
     public float objectiveItemScale;
 
     [Header("Objective Item Settings")]
@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour {
     public string spawnKillerMessage;
     public string foundAllObjectiveItemsMessage;
     public string escapeMessage;
+    public string somethingChangedMessage;
     public string hiddenEndingMessage;
 
     private void Start()
@@ -58,12 +59,12 @@ public class GameManager : MonoBehaviour {
         {
             case 1:
                 Debug.Log("Spawn Player & Objectives");
-                GameObject objectiveItem = gm.objectiveItem;
+                GameObject[] objectiveItems = gm.objectiveItems;
                 GameObject[] players = gm.players;
 
-                Step1(players, objectiveItem, gm.objectiveItemCount, gm.objectiveItemScale, wpm.waypointNodes);
-                SpawnObjectives(gm.weaponItem, wpm.waypointNodes, gm.weaponItemCount, gm.objectiveItemScale); //Just testing for now; we can use this as a way to initialize all objects as needed
-                SpawnObjectives(gm.journalItem, wpm.waypointNodes, GetEventRooms(wpm.waypointNodes), gm.objectiveItemScale); //spawning journal objects
+                Step1(players, objectiveItems, gm.objectiveItemCount, gm.objectiveItemScale, wpm.waypointNodes);
+                SpawnObjectives(gm.weaponItems, wpm.waypointNodes, gm.weaponItemCount, gm.objectiveItemScale); //Just testing for now; we can use this as a way to initialize all objects as needed
+                SpawnObjectives(gm.journalItems, wpm.waypointNodes, GetEventRooms(wpm.waypointNodes), gm.objectiveItemScale); //spawning journal objects
                 break;
             case 2:
                 Debug.Log("Spawn killer");
@@ -76,20 +77,19 @@ public class GameManager : MonoBehaviour {
                 Debug.Log("Spawn Key");
                 //Players need to find the key in order to get out
                 //This case can actually just be removed/replaced as its only a placeholder for now
+                
+                //Maybe make the key optional; add an outdoors area where the player has to "fix" the car (minigame)
                 break;
             case 4:
-                //Once the key is found, if killer is not incapacitated, players will not be able to leave the house
-                //Goal of this section is to hurt killer enough that he enters "stunned" mode so players can use exit (can also possibly trap killer in room; killer will not unspawn during this phase)
-                killer = gm.killer;
-
-                MoveKiller(gm.killer, wpm.waypointNodes);
+                //If player has collected the key, found all 5 journals and unlocked every door, fixed the car but not left
+                //Give notice that something weird seems to be going on in the house
+                //Progresses when the player re-enters the house
                 break;
             case 5:
-                //If players have followed clues, start triggers for secret boss fight
-                //Next trigger for secret boss fight
+                //If players have followed clues, spawn entrance to secret boss fight area
                 break;
             case 6:
-                //Spawn entrance to secret boss fight area
+                //Secret ending; become the killer
                 break;
             default:
                 Debug.Log("Something broke here");
@@ -116,22 +116,20 @@ public class GameManager : MonoBehaviour {
             case 3:
                 currentMessage = gm.foundAllObjectiveItemsMessage;
                 break;
-            //case 4:
-            //    currentMessage = TextController.textToDisplay;
-            //    break;
-            case 5:
+            case 4:
                 currentMessage = gm.escapeMessage;
+                break;
+            case 5:
+                currentMessage = gm.somethingChangedMessage;
                 break;
             case 6:
                 currentMessage = gm.hiddenEndingMessage;
                 break;
             default:
-                currentMessage = TextController.textToDisplay;
                 break;
         }
 
-        TextController.textToDisplay = currentMessage;
-        tc.DisplayText();
+        tc.DisplayText(currentMessage);
     }
 
     static int GetEventRooms(List<Transform> roomList)
@@ -147,7 +145,7 @@ public class GameManager : MonoBehaviour {
         return lockedRooms;
     }
 
-    static void SpawnObjectives(GameObject objItem, List<Transform> roomList, int count, float scale)
+    static void SpawnObjectives(GameObject[] objItem, List<Transform> roomList, int count, float scale)
     {
         WaypointManager wpm = GameObject.FindObjectOfType<WaypointManager>();
         List<Transform> tempList = new List<Transform>();
@@ -178,17 +176,24 @@ public class GameManager : MonoBehaviour {
                 Collider[] colliders = Physics.OverlapSphere(randPos, scale/2);
                 if (colliders.Length > 1) //Room collider
                 {
-                    //Debug.Log("Objective spawn point on top of something at: " + randPos + "; Number of objects: " + colliders.Length);
                     SpawnObjectives(objItem, tempList, i, scale);
                     break;
                 }
                 else
                 {
-                    objItem = Instantiate(objItem, randPos, Quaternion.identity);
-                    objItem.transform.localScale = Vector3.one * scale;
-                    objItem.transform.parent = roomScript.gameObject.transform;
+                    GameObject objPrefab;
+                    try
+                    {
+                        objPrefab = Instantiate(objItem[i], randPos, Quaternion.identity);
+                    }
+                    catch
+                    {
+                        objPrefab = Instantiate(objItem[0], randPos, Quaternion.identity);
+                        //Debug.Log("Item list out of range");
+                    }
+                    objPrefab.transform.localScale = Vector3.one * scale;
+                    objPrefab.transform.parent = roomScript.gameObject.transform;
                     roomScript.UpdateMeshes();
-                    //Debug.Log("Spawned objective: " + objItem.name);
 
                     tempList.Remove(targetRoom);
                 }
@@ -251,34 +256,10 @@ public class GameManager : MonoBehaviour {
         //}
     }
 
-    //Debating using this at the moment; will leave for now, but probably can design a gameplay reason to be unable to leave without moving the killer to the ext
-    static void MoveKiller(GameObject killer, List<Transform> roomList)
-    {
-        List<Transform> tempList = new List<Transform>();
-        tempList.AddRange(roomList);
-
-        Transform startPos = null;
-        foreach (Transform currentNode in tempList)
-        {
-            WaypointScript nodeData = currentNode.GetComponentInChildren<WaypointScript>();
-
-            if (nodeData.type == WaypointScript.Type.start)
-            {
-                startPos = nodeData.transform;
-                //Debug.Log(nodeData.name);
-            }
-        }
-
-        Destroy(GameObject.Find(killer.name + "(Clone)"));
-        killer = Instantiate(killer, new Vector3(startPos.position.x, 1 - (WaypointManager.scale / 4), startPos.position.z), Quaternion.identity) as GameObject;
-        //killer.GetComponent<Gregg>().moveToNextRoom = false; //Leaving for now, we'll come back to all of the killer logic once we get pathfinding installed
-        Debug.Log("Killer moved to Start Room: " + startPos.GetComponent<WaypointScript>().xPos + ", " + startPos.GetComponent<WaypointScript>().yPos);
-    }
-
-    static void Step1(GameObject[] players, GameObject objItem, int objCount, float objScale, List<Transform> roomList)
+    static void Step1(GameObject[] players, GameObject[] objItems, int objCount, float objScale, List<Transform> roomList)
     {
         SpawnPlayers(players, roomList);
-        SpawnObjectives(objItem, roomList, objCount, objScale);
+        SpawnObjectives(objItems, roomList, objCount, objScale);
     }
 
     static void Step2(GameObject killer, List<Transform> roomList)

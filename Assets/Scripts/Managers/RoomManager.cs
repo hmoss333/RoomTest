@@ -8,19 +8,24 @@ public class RoomManager : MonoBehaviour {
     public bool meshesEnabled;
 
     public bool litByFlashlight;
-    bool roomLit = false;
     Color col;
+
+    public InteractSetTrigger[] interacts;
+    public bool hasActiveInteracts;
 
     // Use this for initialization
     void Start()
     {
         roomMeshes = GetComponentsInChildren<MeshRenderer>();
         litByFlashlight = false;
+        hasActiveInteracts = false;
 
         foreach (MeshRenderer mesh in roomMeshes)
             mesh.enabled = false;
 
         meshesEnabled = false;
+
+        interacts = gameObject.GetComponentsInChildren<InteractSetTrigger>();
     }
 
     // Update is called once per frame
@@ -34,6 +39,9 @@ public class RoomManager : MonoBehaviour {
         {
             TurnOffMesh();
         }
+
+        if (hasActiveInteracts)
+            hasActiveInteracts = GetDestroyedInteracts(interacts);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -50,14 +58,21 @@ public class RoomManager : MonoBehaviour {
         if (other.tag == "Killer")
         {
             Gregg killer = other.GetComponent<Gregg>();
-            //killer.currentRoom = this.transform;
-            //killer.adjacentRooms = killer.GetAdjacentRooms(this.transform);
-            //killer.nextRoom = killer.SelectNextRoom(killer.adjacentRooms);
+            killer.currentRoom = this;
 
             if (meshesEnabled || (litByFlashlight && Player.flashlightOn))
                 killer.TurnOnMesh();
             else
                 killer.TurnOffMesh();
+
+            //if (hasActiveInteracts)
+            //{
+            //    foreach (InteractSetTrigger trigger in interacts)
+            //    {
+            //        trigger.state = InteractParent.State.Disabled;
+            //        hasActiveInteracts = false;
+            //    }
+            //}
         }
     }
 
@@ -120,5 +135,16 @@ public class RoomManager : MonoBehaviour {
         {
             mesh.enabled = false;
         }
+    }
+
+    bool GetDestroyedInteracts (InteractSetTrigger[] interactList)
+    {
+        for (int i = 0; i < interactList.Length; i++)
+        {
+            if (interactList[i].state == InteractParent.State.Destroyed)
+                return false;
+        }
+
+        return true;
     }
 }
