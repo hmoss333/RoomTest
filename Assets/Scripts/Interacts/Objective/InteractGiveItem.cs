@@ -25,14 +25,14 @@ public class InteractGiveItem : InteractParent {
 
     public void GiveItem()
     {
-        if (GameManager.step == 3)
+        if (!GameManager.foundKey) //GameManager.step == 3)
         {
             float randNum = Random.value;
 
-            if (randNum < chanceToDropKey && !haveChecked) //Need to fix; player can just keep re-trying same object to find a key (or maybe keep it but make the chance very low)
+            if (randNum < chanceToDropKey && !haveChecked)
             {
                 text = "I found a key in here!";
-                GameManager.UpdateStep();
+                GameManager.foundKey = true;
             }
             else
             {

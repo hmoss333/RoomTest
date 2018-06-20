@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class JournalController : MonoBehaviour {
 
+    public static bool foundAllJournals = false;
     public List<Transform> eventRooms;
     public List<Object> sigils;
     public List<string> foundSigils;
@@ -15,23 +16,27 @@ public class JournalController : MonoBehaviour {
         wpm = GameObject.FindObjectOfType<WaypointManager>();
         eventRooms = GetEventRooms(wpm.waypointNodes);
         sigils = SelectRandomSigils(eventRooms);
-        AssignSigils(eventRooms, sigils);
+        AssignDoorSigils(eventRooms, sigils);
+        AssignJournalSigils(GetJournals(), sigils);
 	}
 
-    public static void IncrementJournal()
+    public static void IncrementJournal(string sigilName)
     {
         JournalController jc = GameObject.FindObjectOfType<JournalController>();
 
         foreach (Object s in jc.sigils)
         {
-            if (!jc.foundSigils.Contains(s.name))
+            if (!jc.foundSigils.Contains(sigilName))//s.name))
             {
-                jc.foundSigils.Add(s.name);
-                Debug.Log(s.name);
+                jc.foundSigils.Add(sigilName);//s.name);
+                Debug.Log(sigilName);//s.name);
                 //show sigil image here
                 break;
             }
         }
+
+        if (!foundAllJournals && jc.foundSigils.Count == jc.sigils.Count)
+            foundAllJournals = true;
     }
 
     List<Transform> GetEventRooms(List<Transform> roomList)
@@ -46,6 +51,19 @@ public class JournalController : MonoBehaviour {
         }
 
         return availableRooms;
+    }
+
+    List<JournalInteract> GetJournals()
+    {
+        List<JournalInteract> availableJournals = new List<JournalInteract>();
+        JournalInteract[] activeJournals = GameObject.FindObjectsOfType<JournalInteract>();
+
+        for (int i = 0; i < activeJournals.Length; i++)
+        {
+            availableJournals.Add(activeJournals[i]);
+        }
+
+        return availableJournals;
     }
 
     List<Object> SelectRandomSigils(List<Transform> roomList)
@@ -63,7 +81,7 @@ public class JournalController : MonoBehaviour {
         return sigilsToUse;
     }
 
-    void AssignSigils(List<Transform> roomList, List<Object> sigilList)
+    void AssignDoorSigils(List<Transform> roomList, List<Object> sigilList)
     {
         for (int i = 0; i < roomList.Count; i++)
         {
@@ -71,6 +89,40 @@ public class JournalController : MonoBehaviour {
             int randNum = Random.Range(0, sigilList.Count);
 
             dm.sigilWord = sigilList[randNum].name;
+        }
+    }
+
+    void AssignJournalSigils(List<JournalInteract> journalList, List<Object> sigilList)
+    {
+        //TO DO:
+        //for each journal, assign a sigilword that has been assigned to a room
+        //if that sigil has already been used, re-roll
+
+        List<JournalInteract> tempJournals = new List<JournalInteract>();
+        tempJournals = journalList;
+        Debug.Log("Journals: " + tempJournals.Count);
+        List<Object> sigils = new List<Object>();
+        sigils = sigilList;
+        Debug.Log("Sigils: " + sigils.Count);
+
+        foreach (Object sigil in sigils)
+        {
+            foreach (JournalInteract journal in tempJournals)
+            {
+                Debug.Log("Sigil: " + sigil.name + ", Journal: " + journal.sigilWord);
+                if (journal.sigilWord == sigil.name)
+                {
+                    tempJournals.Remove(journal);
+                    sigils.Remove(sigil);
+                    AssignJournalSigils(tempJournals, sigils);
+                    break;
+                }
+                else
+                {
+                    journal.sigilWord = sigil.name;
+                    break;
+                }
+            }
         }
     }
 }

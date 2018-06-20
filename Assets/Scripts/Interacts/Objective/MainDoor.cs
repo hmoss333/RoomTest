@@ -12,8 +12,7 @@ public class MainDoor : InteractParent{
 
     public override void Interact()
     {
-        //base.Interact();
-
+        //Placeholder; interacting with the main door should load the outdoors area
         switch (GameManager.step)
         {
             case 1:
@@ -23,7 +22,8 @@ public class MainDoor : InteractParent{
                 tc.DisplayText(step1);
                 break;
             case 3:
-                tc.DisplayText(step2);
+                GameManager.UpdateStep();
+                //tc.DisplayText(step2);
                 break;
             case 4:
                 tc.DisplayText(step3);

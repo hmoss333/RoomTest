@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class DoorManager : MonoBehaviour {
 
+    public string sigilWord;
     public GameObject doorPrefab;
     public bool roomLocked = true;
-    public string sigilWord;
 
     WaypointScript wayPoint;
     RoomManager roomScript;

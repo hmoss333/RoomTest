@@ -10,6 +10,8 @@ public class Gregg : MonoBehaviour {
     float teleportTime;
     public float footprintSpacing = 2.0f; // distance between each footprint
     Vector3 lastPos;
+    public bool stunned = false;
+    public float stunTimer;
 
     [Header("Interact Settings")]
     public float checkDist;
@@ -53,11 +55,15 @@ public class Gregg : MonoBehaviour {
 	void FixedUpdate () {
         //If the room contains an active interact && the player is not currently in the room/shining a light in the room
         //The killer will then target the nearest interact
-        if (currentRoom && currentRoom.hasActiveInteracts && (!currentRoom.meshesEnabled || !currentRoom.litByFlashlight))
-            transform.position = Vector3.MoveTowards(transform.position, new Vector3(currentRoom.interacts[Random.Range(0, currentRoom.interacts.Length)].transform.position.x, transform.position.y, currentRoom.interacts[Random.Range(0, currentRoom.interacts.Length)].transform.position.z), speed * Time.deltaTime);
-        else
-            transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z), speed * Time.deltaTime);
+        if (!stunned)
+        {
+            if (currentRoom && currentRoom.hasActiveInteracts && (!currentRoom.meshesEnabled || !currentRoom.litByFlashlight))
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(currentRoom.interacts[Random.Range(0, currentRoom.interacts.Length)].transform.position.x, transform.position.y, currentRoom.interacts[Random.Range(0, currentRoom.interacts.Length)].transform.position.z), speed * Time.deltaTime);
+            else
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z), speed * Time.deltaTime);
+        }
 
+        //Footprint logic
         float distFromLastFootprint = (lastPos - transform.position).sqrMagnitude;
         if (distFromLastFootprint > footprintSpacing * footprintSpacing)
         {
@@ -120,6 +126,17 @@ public class Gregg : MonoBehaviour {
         //Debug.Log(newTime);
 
         return newTime;
+    }
+
+    public void StartStunTimer()
+    {
+        StartCoroutine(StunTimer(stunTimer));
+    }
+    IEnumerator StunTimer(float stunTime)
+    {
+        stunned = true;
+        yield return new WaitForSeconds(stunTime);
+        stunned = false;
     }
 
     public void TurnOnMesh()

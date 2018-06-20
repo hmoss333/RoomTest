@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
     public static int objectiveCount = 0;
     public static int weaponCount = 0;
     public static float objectiveScale = 1;
+    public static bool foundKey = false;
 
     public enum GameState { Playing, Paused, Interacting, Win, Lose }
     public static GameState gameState;
@@ -74,16 +75,16 @@ public class GameManager : MonoBehaviour {
                 Step2(gm.killer, wpm.waypointNodes);
                 break;
             case 3:
-                Debug.Log("Spawn Key");
-                //Players need to find the key in order to get out
-                //This case can actually just be removed/replaced as its only a placeholder for now
-                
-                //Maybe make the key optional; add an outdoors area where the player has to "fix" the car (minigame)
+                Debug.Log("Get to the exit"); 
+                //Player can now leave the house/fix the Van in order to escape
+                //Key is now optional; add an outdoors area where the player has to "fix" the car (minigame)
                 break;
             case 4:
                 //If player has collected the key, found all 5 journals and unlocked every door, fixed the car but not left
                 //Give notice that something weird seems to be going on in the house
                 //Progresses when the player re-enters the house
+                if (foundKey && JournalController.foundAllJournals)
+                    Debug.Log("Unlock cool stuff here");
                 break;
             case 5:
                 //If players have followed clues, spawn entrance to secret boss fight area
@@ -117,6 +118,7 @@ public class GameManager : MonoBehaviour {
                 currentMessage = gm.foundAllObjectiveItemsMessage;
                 break;
             case 4:
+                //Placeholder; interacting with the main door should load the outdoors area
                 currentMessage = gm.escapeMessage;
                 break;
             case 5:
