@@ -94,35 +94,28 @@ public class JournalController : MonoBehaviour {
 
     void AssignJournalSigils(List<JournalInteract> journalList, List<Object> sigilList)
     {
-        //TO DO:
-        //for each journal, assign a sigilword that has been assigned to a room
-        //if that sigil has already been used, re-roll
-
         List<JournalInteract> tempJournals = new List<JournalInteract>();
         tempJournals = journalList;
-        Debug.Log("Journals: " + tempJournals.Count);
-        List<Object> sigils = new List<Object>();
-        sigils = sigilList;
-        Debug.Log("Sigils: " + sigils.Count);
+        List<Object> tempSigils = new List<Object>();
+        tempSigils = sigilList;
 
-        foreach (Object sigil in sigils)
+        for (int i = 0; i < tempSigils.Count; i++)
         {
-            foreach (JournalInteract journal in tempJournals)
+            for (int j = 0; j < tempJournals.Count; j++)
             {
-                Debug.Log("Sigil: " + sigil.name + ", Journal: " + journal.sigilWord);
-                if (journal.sigilWord == sigil.name)
+                if (tempJournals[j].sigilWord != tempSigils[i].name) //if the current journal does not have the current sigil
                 {
-                    tempJournals.Remove(journal);
-                    sigils.Remove(sigil);
-                    AssignJournalSigils(tempJournals, sigils);
-                    break;
-                }
-                else
-                {
-                    journal.sigilWord = sigil.name;
+                    tempJournals[j].sigilWord = tempSigils[i].name;
+                    tempJournals.Remove(tempJournals[j]);
                     break;
                 }
             }
+        }
+
+        foreach (JournalInteract journal in tempJournals)
+        {
+            if (journal.sigilWord == "") //if any sigils are left unnassigned after first-pass, run again
+                AssignJournalSigils(tempJournals, tempSigils);
         }
     }
 }

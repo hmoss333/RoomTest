@@ -98,6 +98,7 @@ public class GameManager : MonoBehaviour {
         }
 
         UpdateText();
+        Resources.UnloadUnusedAssets();
     }
 
     static void UpdateText()
