@@ -51,11 +51,10 @@ public class JournalInteract : InteractParent {
         {
             yield return null;
 
-            player.state = Player.State.Interact; //sloppy, but it works for now
+            player.state = Player.State.Interact; //sloppy, but it works for now; calling every frame to overwrite Player class
 
             if (Input.GetButtonDown("Interact"))
             {
-                Debug.Log("End interact");
                 player.state = Player.State.Move;
                 journalUI.GetComponent<CanvasGroup>().alpha = 0f;
                 interacting = false;

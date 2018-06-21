@@ -26,26 +26,10 @@ public class InteractDoor : InteractParent {
 
     public override void Interact()
     {
-        Debug.Log("TO DO: start sigil minigame here");
-
         journalUI.sprite = sigilImage;
         journalUI.GetComponent<CanvasGroup>().alpha = 1f;
         interacting = true;
         StartCoroutine(WaitForConfirm());
-
-
-        //if (jc.foundSigils.Contains(sigilWord))
-        //{
-        //    doorManager.roomLocked = false;
-        //    doorManager.DestroyDoors(doorManager.connectedDoors);
-        //    text = "The symbol from the journal unlocked the door";
-        //}
-        //else
-        //{
-        //    text = "I don't see anywhere for a key, just a weird symbol...";
-        //}
-
-        //base.Interact();
     }
 
     IEnumerator WaitForConfirm()
@@ -58,7 +42,6 @@ public class InteractDoor : InteractParent {
 
             if (Input.GetButtonDown("Interact"))
             {
-                Debug.Log("End interact");
                 if (jc.foundSigils.Contains(sigilWord))
                 {
                     doorManager.roomLocked = false;

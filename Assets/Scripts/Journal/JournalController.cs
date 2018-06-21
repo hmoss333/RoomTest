@@ -24,16 +24,15 @@ public class JournalController : MonoBehaviour {
     {
         JournalController jc = GameObject.FindObjectOfType<JournalController>();
 
-        foreach (Object s in jc.sigils)
-        {
-            if (!jc.foundSigils.Contains(sigilName))//s.name))
+        //foreach (Object s in jc.sigils)
+        //{
+            if (!jc.foundSigils.Contains(sigilName))
             {
-                jc.foundSigils.Add(sigilName);//s.name);
-                Debug.Log(sigilName);//s.name);
-                //show sigil image here
-                break;
+                jc.foundSigils.Add(sigilName);
+                Debug.Log(sigilName);
+                //break;
             }
-        }
+        //}
 
         if (!foundAllJournals && jc.foundSigils.Count == jc.sigils.Count)
             foundAllJournals = true;
@@ -89,6 +88,7 @@ public class JournalController : MonoBehaviour {
             int randNum = Random.Range(0, sigilList.Count);
 
             dm.sigilWord = sigilList[randNum].name;
+            dm.sigilImage = Resources.Load<Sprite>("SigilImages/" + sigilList[randNum].name);
         }
     }
 
@@ -106,6 +106,7 @@ public class JournalController : MonoBehaviour {
                 if (tempJournals[j].sigilWord != tempSigils[i].name) //if the current journal does not have the current sigil
                 {
                     tempJournals[j].sigilWord = tempSigils[i].name;
+                    tempJournals[j].sigilImage = Resources.Load<Sprite>("SigilImages/" + tempSigils[i].name) as Sprite;
                     tempJournals.Remove(tempJournals[j]);
                     break;
                 }
@@ -117,5 +118,10 @@ public class JournalController : MonoBehaviour {
             if (journal.sigilWord == "") //if any sigils are left unnassigned after first-pass, run again
                 AssignJournalSigils(tempJournals, tempSigils);
         }
+    }
+
+    void AssignSigilImages(List<Transform> objectList, List<Object> sigilList)
+    {
+
     }
 }

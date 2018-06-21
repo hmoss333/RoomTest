@@ -75,7 +75,8 @@ public class GameManager : MonoBehaviour {
                 Step2(gm.killer, wpm.waypointNodes);
                 break;
             case 3:
-                Debug.Log("Get to the exit"); 
+                Debug.Log("Get to the exit");
+                Step3(gm.killer, wpm.waypointNodes);
                 //Player can now leave the house/fix the Van in order to escape
                 //Key is now optional; add an outdoors area where the player has to "fix" the car (minigame)
                 break;
@@ -259,6 +260,26 @@ public class GameManager : MonoBehaviour {
         //}
     }
 
+    static void MoveKillerToStart(GameObject killer, List<Transform> roomList)
+    {
+        List<Transform> tempList = new List<Transform>();
+        tempList.AddRange(roomList);
+
+        Transform startPos = null;
+        foreach (Transform currentNode in tempList)
+        {
+            WaypointScript nodeData = currentNode.GetComponentInChildren<WaypointScript>();
+
+            if (nodeData.type == WaypointScript.Type.start)
+            {
+                startPos = nodeData.transform;
+                //Debug.Log(nodeData.name);
+            }
+        }
+
+        killer.transform.position = new Vector3(startPos.position.x, 1 - (WaypointManager.scale / 4), startPos.position.z);
+    }
+
     static void Step1(GameObject[] players, GameObject[] objItems, int objCount, float objScale, List<Transform> roomList)
     {
         SpawnPlayers(players, roomList);
@@ -268,5 +289,10 @@ public class GameManager : MonoBehaviour {
     static void Step2(GameObject killer, List<Transform> roomList)
     {
         SpawnKiller(killer, roomList);
+    }
+
+    static void Step3(GameObject killer, List<Transform> roomList)
+    {
+        MoveKillerToStart(killer, roomList);
     }
 }

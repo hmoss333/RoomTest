@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//CREATE A EMPTY GAMEOBJECT AND ATTACH THIS SCRIPT TO IT. THEN ADD WAYPOINTS TO THIS GAMEOBJECT AS CHILDREN. 
-//CHANGE THE WAYPOINTTOWAYPOINTRADIUS AS NEEDED SO THE WAYPOINTS CAN FIND ITS CLOSEST WAYPOINT.
 public class WaypointManager : MonoBehaviour
 {
 
@@ -15,10 +13,10 @@ public class WaypointManager : MonoBehaviour
     public float scaleNum;
 
     [Header("Waypoint Controls")]
-    public List<Transform> waypointNodes;         //Create a list of all the waypoints in scene( its like a array but more easy to work with)
+    public List<Transform> waypointNodes; //Create a list of all the waypoints in scene( its like a array but more easy to work with)
     public List<Transform> wallNodes;
     List<Transform> stairNodes;
-    public int totalWaypoints = 0;                //Shows the total count of waypoints in the scene.
+    public int totalWaypoints = 0; //Shows the total count of waypoints in the scene.
     float waypointToWaypointRadius = 1.5f * scale;  //a radius that each waypoint is checking for to see if another waypoint is close by
     [Range(0f, 1f)]
     public float eventRoomProbability;
