@@ -25,8 +25,9 @@ public class GameManager : MonoBehaviour {
     public int weaponItemCount;
     public GameObject[] journalItems;
     public float objectiveItemScale;
+    public GameObject basementDoor;
 
-    [Header("Objective Item Settings")]
+    [Header("Game Messages")]
     public string startGameMessage;
     public string spawnKillerMessage;
     public string foundAllObjectiveItemsMessage;
@@ -76,7 +77,7 @@ public class GameManager : MonoBehaviour {
                 break;
             case 3:
                 Debug.Log("Get to the exit");
-                Step3(gm.killer, wpm.waypointNodes);
+                //Step3(gm.killer, wpm.waypointNodes);
                 //Player can now leave the house/fix the Van in order to escape
                 //Key is now optional; add an outdoors area where the player has to "fix" the car (minigame)
                 break;
@@ -85,7 +86,10 @@ public class GameManager : MonoBehaviour {
                 //Give notice that something weird seems to be going on in the house
                 //Progresses when the player re-enters the house
                 if (foundKey && JournalController.foundAllJournals)
+                {
                     Debug.Log("Unlock cool stuff here");
+                    Step4(gm.basementDoor, wpm.waypointNodes);
+                }
                 break;
             case 5:
                 //If players have followed clues, spawn entrance to secret boss fight area
@@ -280,6 +284,37 @@ public class GameManager : MonoBehaviour {
         killer.transform.position = new Vector3(startPos.position.x, 1 - (WaypointManager.scale / 4), startPos.position.z);
     }
 
+    static void SpawnBasementDoor(GameObject basementDoor, List<Transform> roomList)
+    {
+        List<Transform> tempRooms = new List<Transform>();
+        tempRooms = roomList;
+
+        int randNum = Random.Range(0, roomList.Count);
+        RoomManager rm = roomList[randNum].GetComponentInChildren<RoomManager>();
+        WaypointScript ws = roomList[randNum].GetComponent<WaypointScript>();
+
+        if (ws.yPos == 1)
+        {
+            if (ws.type != WaypointScript.Type.start && ws.type != WaypointScript.Type.stairs)
+            {
+                basementDoor = Instantiate(basementDoor, new Vector3(roomList[randNum].position.x, roomList[randNum].position.y + 1 - (WaypointManager.scale / 4), roomList[randNum].position.z), Quaternion.identity) as GameObject;
+                basementDoor.transform.localScale = Vector3.one * WaypointManager.scale / 3;
+                basementDoor.transform.parent = rm.gameObject.transform;
+                rm.UpdateMeshes();
+            }
+            else
+            {
+                tempRooms.Remove(roomList[randNum]);
+                SpawnBasementDoor(basementDoor, tempRooms);
+            }
+        }
+        else
+        {
+            tempRooms.Remove(roomList[randNum]);
+            SpawnBasementDoor(basementDoor, tempRooms);
+        }
+    }
+
     static void Step1(GameObject[] players, GameObject[] objItems, int objCount, float objScale, List<Transform> roomList)
     {
         SpawnPlayers(players, roomList);
@@ -294,5 +329,10 @@ public class GameManager : MonoBehaviour {
     static void Step3(GameObject killer, List<Transform> roomList)
     {
         MoveKillerToStart(killer, roomList);
+    }
+
+    static void Step4(GameObject basementDoor, List<Transform> roomList)
+    {
+        SpawnBasementDoor(basementDoor, roomList);
     }
 }

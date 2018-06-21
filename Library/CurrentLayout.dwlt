@@ -109,7 +109,7 @@ MonoBehaviour:
   m_MinSize: {x: 917, y: 463}
   m_MaxSize: {x: 22012, y: 14042}
   vertical: 1
-  controlID: 82
+  controlID: 81
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -135,7 +135,7 @@ MonoBehaviour:
   m_MinSize: {x: 917, y: 342}
   m_MaxSize: {x: 22012, y: 10021}
   vertical: 0
-  controlID: 83
+  controlID: 82
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -184,7 +184,7 @@ MonoBehaviour:
   m_MinSize: {x: 204, y: 342}
   m_MaxSize: {x: 4004, y: 8042}
   vertical: 1
-  controlID: 84
+  controlID: 83
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -419,23 +419,23 @@ MonoBehaviour:
     height: 616
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
-    m_LastClickedID: 0
-    m_ExpandedIDs: e4fef8ffdafff8ff1002f9ff104cf9ffdec8f9ff2eeafaffc4f7faff92fbfaffdefbffff00000000
+    m_SelectedIDs: d0fbffff
+    m_LastClickedID: -1072
+    m_ExpandedIDs: c20ffffffc0fffff7810ffffec10ffff6011ffff9a11ffff9c12ffff1037ffff6e39ffffa090ffffc69cffffdce7ffffd0fbffffdefbffff000000000c2e0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: JournalItem(Clone)
+      m_OriginalName: JournalItem(Clone)
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: -65506
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 0
       m_ClientGUIView: {fileID: 7}
     m_SearchString: 
@@ -471,14 +471,14 @@ MonoBehaviour:
     width: 809
     height: 334
   m_SceneLighting: 1
-  lastFramingTime: 1839.2692843058396
+  lastFramingTime: 2298.816833251869
   m_2DMode: 0
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0, y: 3, z: -4}
+    m_Target: {x: 12, y: -2, z: 12}
     speed: 2
-    m_Value: {x: 0, y: 3, z: -4}
+    m_Value: {x: 12, y: -2, z: 12}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -489,25 +489,25 @@ MonoBehaviour:
     showImageEffects: 1
   grid:
     xGrid:
-      m_Target: 0
-      speed: 2
-      m_Value: 0
-    yGrid:
       m_Target: 1
       speed: 2
       m_Value: 1
+    yGrid:
+      m_Target: 0
+      speed: 2
+      m_Value: 0
     zGrid:
       m_Target: 0
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+    m_Target: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
     speed: 2
-    m_Value: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+    m_Value: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
   m_Size:
-    m_Target: 71.69895
+    m_Target: 11.431535
     speed: 2
-    m_Value: 71.69895
+    m_Value: 11.431535
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -658,7 +658,7 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Scenes
+    - Assets/Prefabs
   m_ViewMode: 0
   m_StartGridSize: 53
   m_LastFolders: []
@@ -669,7 +669,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: ac9c0000
     m_LastClickedID: 40108
-    m_ExpandedIDs: 00000000a8260000d42600002228000028280000522800006a28000072280000dc280000502900008229000094290000a2290000602a00009e2a0000ec2b0000f02b00009c2c0000ba2c0000d02c00008432000086320000
+    m_ExpandedIDs: 00000000a4260000d026000026280000502800006e280000b4280000d82800004c2900007e2900009e290000482a00005e2a0000a02a0000f22b0000c02c0000d22c00004e2d00008632000088320000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -694,10 +694,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 110}
+    scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000a8260000d4260000282800005228000072280000b8280000dc2800005029000082290000a22900004a2a0000602a00009e2a0000f02b0000ba2c0000d02c00004e2d00008432000086320000
+    m_ExpandedIDs: 00000000a4260000d02600002028000026280000502800006e280000d82800004c2900007e2900009e290000482a00005e2a0000a02a0000f22b0000c02c0000d22c00004e2d00008632000088320000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
