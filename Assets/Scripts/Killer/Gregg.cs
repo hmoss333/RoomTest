@@ -6,7 +6,6 @@ public class Gregg : MonoBehaviour {
 
     [Header("Movement Settings")]
     public float speed;
-    public float attackSpeed;
     float teleportTime;
     public float footprintSpacing = 2.0f; // distance between each footprint
     Vector3 lastPos;
@@ -25,6 +24,8 @@ public class Gregg : MonoBehaviour {
     [Header("Attack Settings")]
     public GameObject weaponPrefab;
     public float attackTime;
+    public float attackDist;
+    bool attacking = false;
 
     SpriteRenderer[] characterRenderer;
 
@@ -40,6 +41,7 @@ public class Gregg : MonoBehaviour {
         gm = GameObject.FindObjectOfType<GameManager>();
         player = GameObject.FindObjectOfType<Player>();
 
+        attackDist = WaypointManager.scale / 8;
         lastPos = transform.position;
 
         if (!footprints)
@@ -55,13 +57,16 @@ public class Gregg : MonoBehaviour {
 	void FixedUpdate () {
         //If the room contains an active interact && the player is not currently in the room/shining a light in the room
         //The killer will then target the nearest interact
-        if (!stunned)
+        if (!stunned && !attacking)
         {
             if (currentRoom && currentRoom.hasActiveInteracts && (!currentRoom.meshesEnabled || !currentRoom.litByFlashlight))
                 transform.position = Vector3.MoveTowards(transform.position, new Vector3(currentRoom.interacts[Random.Range(0, currentRoom.interacts.Length)].transform.position.x, transform.position.y, currentRoom.interacts[Random.Range(0, currentRoom.interacts.Length)].transform.position.z), speed * Time.deltaTime);
             else
                 transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z), speed * Time.deltaTime);
         }
+
+        if (!attacking && Vector3.Distance(transform.position, player.transform.position) <= attackDist)
+            StartCoroutine(Attack(attackTime));
 
         //Footprint logic
         float distFromLastFootprint = (lastPos - transform.position).sqrMagnitude;
@@ -165,5 +170,15 @@ public class Gregg : MonoBehaviour {
             if (currentRoom.hasActiveInteracts && trigger.state != InteractParent.State.Destroyed)
                 trigger.state = InteractParent.State.Destroyed;
         }
+    }
+
+    IEnumerator Attack(float attackTime)
+    {
+        attacking = true;
+        Debug.Log("Start attack");
+        yield return new WaitForSeconds(attackTime);
+        //attack logic here
+        Debug.Log("Done attacking");
+        attacking = false;
     }
 }
