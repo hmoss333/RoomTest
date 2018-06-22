@@ -293,7 +293,7 @@ public class GameManager : MonoBehaviour {
         RoomManager rm = roomList[randNum].GetComponentInChildren<RoomManager>();
         WaypointScript ws = roomList[randNum].GetComponent<WaypointScript>();
 
-        if (ws.yPos == 1)
+        if (ws.zPos == 0)
         {
             if (ws.type != WaypointScript.Type.start && ws.type != WaypointScript.Type.stairs)
             {
