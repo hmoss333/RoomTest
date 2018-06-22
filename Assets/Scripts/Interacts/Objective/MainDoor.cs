@@ -26,7 +26,7 @@ public class MainDoor : InteractParent{
                 //tc.DisplayText(step2);
                 break;
             case 4:
-                tc.DisplayText(step3);
+                //tc.DisplayText(step3);
                 break;
             case 5:
                 tc.DisplayText(step4);

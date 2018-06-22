@@ -52,8 +52,8 @@
      <Compile Include="Assets\ProCore\ProBuilder\API Examples\Procedural Mesh\ExtrudeRandomEdges.cs" />
      <Compile Include="Assets\ProCore\ProBuilder\API Examples\Runtime Editing\RuntimeEdit.cs" />
      <Compile Include="Assets\ProCore\ProBuilder\API Examples\Vertex Colors\HighlightNearestFace.cs" />
-     <Compile Include="Assets\Scripts\BasementDoor.cs" />
      <Compile Include="Assets\Scripts\Interacts\InventoryItem.cs" />
+     <Compile Include="Assets\Scripts\Interacts\Objective\InteractAltar.cs" />
      <Compile Include="Assets\Scripts\Interacts\Objective\InteractDoor.cs" />
      <Compile Include="Assets\Scripts\Interacts\Objective\InteractGiveItem.cs" />
      <Compile Include="Assets\Scripts\Interacts\Objective\InteractObjective.cs" />
@@ -66,6 +66,7 @@
      <Compile Include="Assets\Scripts\Journal\JournalInteract.cs" />
      <Compile Include="Assets\Scripts\Killer\Footprints.cs" />
      <Compile Include="Assets\Scripts\Killer\Gregg.cs" />
+     <Compile Include="Assets\Scripts\Managers\BasementDoor.cs" />
      <Compile Include="Assets\Scripts\Managers\DoorManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Managers\RoomManager.cs" />

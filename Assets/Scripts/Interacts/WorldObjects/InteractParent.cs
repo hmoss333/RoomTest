@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class InteractParent : MonoBehaviour {
 
-    public enum State { Off, Fire, Wet, Electric, Trap, Destroyed, Disabled}
+    public enum State { Off, Destroyed, Disabled}
     public State state;
 
-    public int durability;
+    //public int durability;
 
     [HideInInspector]
     public TextController tc;

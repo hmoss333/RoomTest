@@ -46,7 +46,7 @@ public class InteractDoor : InteractParent {
                 {
                     doorManager.roomLocked = false;
                     doorManager.DestroyDoors(doorManager.connectedDoors);
-                    text = "The symbol from the journal unlocked the door";
+                    text = "The door unlocked when I used the symbol from the journal";
                 }
                 else
                 {

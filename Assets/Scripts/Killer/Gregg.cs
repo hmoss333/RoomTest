@@ -146,9 +146,29 @@ public class Gregg : MonoBehaviour {
 
     public void TurnOnMesh()
     {
-        GetComponent<MeshRenderer>().enabled = true;
+        DoorManager dm = currentRoom.GetComponent<DoorManager>();
 
-        footprints.TurnOnMesh();
+        if (dm)
+        {
+            if (!dm.roomLocked)
+            {
+                GetComponent<MeshRenderer>().enabled = true;
+
+                footprints.TurnOnMesh();
+            }
+            else
+            {
+                GetComponent<MeshRenderer>().enabled = false;
+
+                footprints.TurnOffMesh();
+            }
+        }
+        else
+        {
+            GetComponent<MeshRenderer>().enabled = true;
+
+            footprints.TurnOnMesh();
+        }
     }
 
     public void TurnOffMesh()
@@ -178,7 +198,10 @@ public class Gregg : MonoBehaviour {
         Debug.Log("Start attack");
         yield return new WaitForSeconds(attackTime);
         //attack logic here
-        Debug.Log("Done attacking");
+        if (Vector3.Distance(transform.position, player.transform.position) <= attackDist)
+            Debug.Log("Hit player");
+        else
+            Debug.Log("Missed player");
         attacking = false;
     }
 }

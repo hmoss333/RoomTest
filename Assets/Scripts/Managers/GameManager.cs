@@ -125,7 +125,14 @@ public class GameManager : MonoBehaviour {
                 break;
             case 4:
                 //Placeholder; interacting with the main door should load the outdoors area
-                currentMessage = gm.escapeMessage;
+                if (foundKey && JournalController.foundAllJournals)
+                {
+                    currentMessage = gm.somethingChangedMessage;
+                }
+                else
+                {
+                    currentMessage = gm.escapeMessage;
+                }
                 break;
             case 5:
                 currentMessage = gm.somethingChangedMessage;
