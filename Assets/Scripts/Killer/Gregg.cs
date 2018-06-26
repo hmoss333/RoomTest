@@ -82,6 +82,15 @@ public class Gregg : MonoBehaviour {
             if (footprints.transform.position.y != transform.position.y)
                 footprints.transform.position = new Vector3(0, transform.position.y - 10, 0);
         }
+        else if (GameManager.gameState == GameManager.GameState.Win)
+        {
+            Debug.Log("Play death animation");
+            if (GameManager.step == 6)
+            {
+                Debug.Log("Drop Mask object");
+                Destroy(this.gameObject);
+            }
+        }
     }
 
     IEnumerator TeleportTimer(float time)

@@ -3,17 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class InteractAltar : InteractParent {
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    Player player;
+    Gregg killer;
+
+    Transform basementExit;
+
+    public float killerSpawnTime;
+    bool killerTeleported = false;
+    public GameObject weapon;
+
+    public override void Start()
+    {
+        player = FindObjectOfType<Player>();
+        basementExit = GameObject.Find("BasementExit").transform;
+        base.Start();
+    }
 
     public override void Interact()
     {
-        base.Interact();
-        //TO DO: killer fight logic here
-        GameManager.gameState = GameManager.GameState.Win;
-        Debug.Log("Do secret ending here");
+        if (!killerTeleported)
+        {
+            killer = GameObject.FindObjectOfType<Gregg>();
+
+            player.weaponPrefab = weapon;
+
+            base.Interact();
+            //TO DO: killer fight logic here
+            Debug.Log("Do secret ending here");
+            StartCoroutine(TeleportKiller(killerSpawnTime));
+        }
+    }
+
+    IEnumerator TeleportKiller(float teleportTime)
+    {
+        yield return new WaitForSeconds(teleportTime);
+        killer.transform.position = new Vector3(basementExit.position.x, basementExit.position.y - (WaypointManager.scale / 8), basementExit.position.z);
+        killerTeleported = true;
     }
 }

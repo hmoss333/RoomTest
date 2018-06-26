@@ -4,21 +4,24 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour {
 
+    public bool isMachette = false;
+
     private void OnTriggerEnter(Collider other)
     {
-        //Destroy interacts
-        //if (other.tag == "Interact")
-        //{
-        //    Debug.Log("Hit an interact object"); //this requires a rigidbody in order to register
-        //}
-
-        //Stun the killer
         if (other.tag == "Killer")
         {
-            //Debug.Log("Hit the killer");
             Gregg killer = other.GetComponent<Gregg>();
-            if (!killer.stunned)
-                killer.StartStunTimer();
+            //Debug.Log("Hit the killer");
+            if (!isMachette)
+            {
+                if (!killer.stunned)
+                    killer.StartStunTimer();
+            }
+            else
+            {
+                GameManager.gameState = GameManager.GameState.Win;
+                GameManager.UpdateStep();
+            }
         }
     }
 }
