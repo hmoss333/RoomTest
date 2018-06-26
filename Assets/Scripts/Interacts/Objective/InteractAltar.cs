@@ -13,5 +13,7 @@ public class InteractAltar : InteractParent {
     {
         base.Interact();
         //TO DO: killer fight logic here
+        GameManager.gameState = GameManager.GameState.Win;
+        Debug.Log("Do secret ending here");
     }
 }

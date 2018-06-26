@@ -57,28 +57,31 @@ public class Gregg : MonoBehaviour {
 	void FixedUpdate () {
         //If the room contains an active interact && the player is not currently in the room/shining a light in the room
         //The killer will then target the nearest interact
-        if (!stunned && !attacking)
+        if (GameManager.gameState == GameManager.GameState.Playing)
         {
-            if (currentRoom && currentRoom.hasActiveInteracts && (!currentRoom.meshesEnabled || !currentRoom.litByFlashlight))
-                transform.position = Vector3.MoveTowards(transform.position, new Vector3(currentRoom.interacts[Random.Range(0, currentRoom.interacts.Length)].transform.position.x, transform.position.y, currentRoom.interacts[Random.Range(0, currentRoom.interacts.Length)].transform.position.z), speed * Time.deltaTime);
-            else
-                transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z), speed * Time.deltaTime);
+            if (!stunned && !attacking)
+            {
+                if (currentRoom && currentRoom.hasActiveInteracts && (!currentRoom.meshesEnabled || !currentRoom.litByFlashlight))
+                    transform.position = Vector3.MoveTowards(transform.position, new Vector3(currentRoom.interacts[Random.Range(0, currentRoom.interacts.Length)].transform.position.x, transform.position.y, currentRoom.interacts[Random.Range(0, currentRoom.interacts.Length)].transform.position.z), speed * Time.deltaTime);
+                else
+                    transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z), speed * Time.deltaTime);
+            }
+
+            if (!attacking && Vector3.Distance(transform.position, player.transform.position) <= attackDist)
+                StartCoroutine(Attack(attackTime));
+
+            //Footprint logic
+            float distFromLastFootprint = (lastPos - transform.position).sqrMagnitude;
+            if (distFromLastFootprint > footprintSpacing * footprintSpacing)
+            {
+                footprints.AddFootprint(transform.position, transform.forward, transform.right, Random.Range(0, 4));
+
+                lastPos = transform.position;
+            }
+
+            if (footprints.transform.position.y != transform.position.y)
+                footprints.transform.position = new Vector3(0, transform.position.y - 10, 0);
         }
-
-        if (!attacking && Vector3.Distance(transform.position, player.transform.position) <= attackDist)
-            StartCoroutine(Attack(attackTime));
-
-        //Footprint logic
-        float distFromLastFootprint = (lastPos - transform.position).sqrMagnitude;
-        if (distFromLastFootprint > footprintSpacing * footprintSpacing)
-        {
-            footprints.AddFootprint(transform.position, transform.forward, transform.right, Random.Range(0, 4));
-
-            lastPos = transform.position;
-        }
-
-        if (footprints.transform.position.y != transform.position.y)
-            footprints.transform.position = new Vector3(0, transform.position.y - 10, 0);
     }
 
     IEnumerator TeleportTimer(float time)
@@ -180,10 +183,6 @@ public class Gregg : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.tag == "Player")
-        {
-            Debug.Log("You died");
-        }
         if (collision.transform.tag == "Interact")
         {
             InteractSetTrigger trigger = collision.transform.GetComponent<InteractSetTrigger>();
@@ -199,9 +198,14 @@ public class Gregg : MonoBehaviour {
         yield return new WaitForSeconds(attackTime);
         //attack logic here
         if (Vector3.Distance(transform.position, player.transform.position) <= attackDist)
+        {
             Debug.Log("Hit player");
+            GameManager.gameState = GameManager.GameState.Lose;
+        }
         else
+        {
             Debug.Log("Missed player");
+        }
         attacking = false;
     }
 }

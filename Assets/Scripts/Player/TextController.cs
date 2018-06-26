@@ -11,6 +11,8 @@ public class TextController : MonoBehaviour {
 
     public float textDelay;
 
+    Coroutine co;
+
     public void DisplayText(string text)
     {
         if (player == null)
@@ -19,7 +21,10 @@ public class TextController : MonoBehaviour {
             textBox = player.GetComponentInChildren<Text>();
         }
 
-        Coroutine co = StartCoroutine(DisplayText(textBox, text, textDelay));
+        if (co != null)
+            StopCoroutine(co);
+
+        co = StartCoroutine(DisplayText(textBox, text, textDelay));
     }
     IEnumerator DisplayText(Text textObj, string text, float waitTime)
     {
@@ -27,7 +32,7 @@ public class TextController : MonoBehaviour {
         textObj.text = text;
 
         yield return new WaitForSeconds(waitTime);
-        StartCoroutine(FadeOutText(textObj, 1f));
+        co = StartCoroutine(FadeOutText(textObj, 1f));
     }
 
     IEnumerator FadeOutText(Text textObj, float fadeRate)

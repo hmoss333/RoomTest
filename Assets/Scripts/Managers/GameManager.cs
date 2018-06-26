@@ -42,10 +42,19 @@ public class GameManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (gameState == GameState.Playing && step == 1 && Time.timeSinceLevelLoad > timeToWaitForKiller)
+        if (gameState == GameState.Playing)
         {
-            Debug.Log("Took too long");
-            UpdateStep();
+            if (step == 1 && Time.timeSinceLevelLoad > timeToWaitForKiller)
+            {
+                Debug.Log("Took too long");
+                UpdateStep();
+            }
+
+            if (step == 3 && foundKey && JournalController.foundAllJournals)
+            {
+                Debug.Log("Found all the secrets");
+                StartCoroutine(SomethingChanged());
+            }
         }
     }
 
@@ -82,17 +91,11 @@ public class GameManager : MonoBehaviour {
                 //Key is now optional; add an outdoors area where the player has to "fix" the car (minigame)
                 break;
             case 4:
-                //If player has collected the key, found all 5 journals and unlocked every door, fixed the car but not left
-                //Give notice that something weird seems to be going on in the house
-                //Progresses when the player re-enters the house
-                if (foundKey && JournalController.foundAllJournals)
-                {
-                    Debug.Log("Unlock cool stuff here");
-                    Step4(gm.basementDoor, wpm.waypointNodes);
-                }
+                //Player has used the main door to escape
+                gameState = GameState.Win;
                 break;
             case 5:
-                //If players have followed clues, spawn entrance to secret boss fight area
+                //Player has spawned door to basement somewhere on the first floor
                 break;
             case 6:
                 //Secret ending; become the killer
@@ -124,18 +127,10 @@ public class GameManager : MonoBehaviour {
                 currentMessage = gm.foundAllObjectiveItemsMessage;
                 break;
             case 4:
-                //Placeholder; interacting with the main door should load the outdoors area
-                if (foundKey && JournalController.foundAllJournals)
-                {
-                    currentMessage = gm.somethingChangedMessage;
-                }
-                else
-                {
-                    currentMessage = gm.escapeMessage;
-                }
+                currentMessage = gm.escapeMessage;
                 break;
             case 5:
-                currentMessage = gm.somethingChangedMessage;
+                //currentMessage = gm.somethingChangedMessage;
                 break;
             case 6:
                 currentMessage = gm.hiddenEndingMessage;
@@ -341,5 +336,17 @@ public class GameManager : MonoBehaviour {
     static void Step4(GameObject basementDoor, List<Transform> roomList)
     {
         SpawnBasementDoor(basementDoor, roomList);
+    }
+
+    IEnumerator SomethingChanged()
+    {
+        WaypointManager wpm = FindObjectOfType<WaypointManager>();
+        TextController tc = GameObject.FindObjectOfType<TextController>();
+
+        step = 5;
+        yield return new WaitForSeconds(10);
+        Debug.Log("Unlock cool stuff here");
+        Step4(basementDoor, wpm.waypointNodes);
+        tc.DisplayText(somethingChangedMessage);
     }
 }
