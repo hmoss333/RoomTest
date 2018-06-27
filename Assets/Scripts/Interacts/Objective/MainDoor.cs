@@ -7,8 +7,8 @@ public class MainDoor : InteractParent{
     public string step0;
     public string step1;
     public string step2;
-    public string step3;
-    public string step4;
+    //public string step3;
+    //public string step4;
 
     public override void Interact()
     {
@@ -29,7 +29,7 @@ public class MainDoor : InteractParent{
                 //tc.DisplayText(step3);
                 break;
             case 5:
-                tc.DisplayText(step4);
+                //tc.DisplayText(step4);
                 break;
             default:
                 Debug.Log("Something went wrong");

@@ -11,7 +11,7 @@ public class JournalInteract : InteractParent {
 
     Player player;
 
-    public bool collected;
+    //public bool collected;
     bool interacting = false;
     
     // Use this for initialization
@@ -20,7 +20,7 @@ public class JournalInteract : InteractParent {
         player = GameObject.FindObjectOfType<Player>();
         journalUI = GameObject.Find("journalUI").GetComponent<Image>();
         journalUI.GetComponent<CanvasGroup>().alpha = 0f;
-        collected = false;
+        //collected = false;
 	}
 	
 	// Update is called once per frame
@@ -33,12 +33,6 @@ public class JournalInteract : InteractParent {
         //Display journal UI popup
         //Pause gameplay until user presses interact button, again
         //Should re-display journal UI every time they interact with this item
-        if (!collected)
-        {
-            JournalController.IncrementJournal(sigilWord);
-            collected = true;
-        }
-
         journalUI.sprite = sigilImage;
         journalUI.GetComponent<CanvasGroup>().alpha = 1f;
         interacting = true;
@@ -58,6 +52,13 @@ public class JournalInteract : InteractParent {
                 player.state = Player.State.Move;
                 journalUI.GetComponent<CanvasGroup>().alpha = 0f;
                 interacting = false;
+                //if (!collected)
+                //{
+                    JournalController.IncrementJournal(sigilWord);
+                    base.Interact();
+                //    collected = true;
+                //}
+                this.gameObject.SetActive(false);
             }
         }
     }

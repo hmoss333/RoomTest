@@ -88,8 +88,8 @@ public class Gregg : MonoBehaviour {
             if (GameManager.step == 6)
             {
                 Debug.Log("Drop Mask object");
-                Destroy(this.gameObject);
             }
+            Destroy(this.gameObject);
         }
     }
 

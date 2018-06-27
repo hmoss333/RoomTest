@@ -345,7 +345,6 @@ public class GameManager : MonoBehaviour {
 
         step = 5;
         yield return new WaitForSeconds(10);
-        Debug.Log("Unlock cool stuff here");
         Step4(basementDoor, wpm.waypointNodes);
         tc.DisplayText(somethingChangedMessage);
     }
