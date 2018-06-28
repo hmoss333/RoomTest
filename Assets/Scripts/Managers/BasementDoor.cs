@@ -20,6 +20,7 @@ public class BasementDoor : MonoBehaviour {
     {
         if (other.tag == "Player")
         {
+            GameManager.step = 5;
             Vector3 targetPos = new Vector3(basementExit.position.x, basementExit.position.y - (WaypointManager.scale / 8), basementExit.position.z);
 
             other.transform.position = targetPos;

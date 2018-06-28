@@ -109,7 +109,7 @@ MonoBehaviour:
   m_MinSize: {x: 917, y: 463}
   m_MaxSize: {x: 22012, y: 14042}
   vertical: 1
-  controlID: 11
+  controlID: 35
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -135,7 +135,7 @@ MonoBehaviour:
   m_MinSize: {x: 917, y: 342}
   m_MaxSize: {x: 22012, y: 10021}
   vertical: 0
-  controlID: 12
+  controlID: 36
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -184,7 +184,7 @@ MonoBehaviour:
   m_MinSize: {x: 204, y: 342}
   m_MaxSize: {x: 4004, y: 8042}
   vertical: 1
-  controlID: 13
+  controlID: 37
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -231,8 +231,8 @@ MonoBehaviour:
     y: 354
     width: 812
     height: 282
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 104, y: 121}
+  m_MaxSize: {x: 4004, y: 4021}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -419,20 +419,20 @@ MonoBehaviour:
     height: 615
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 6ef4faff
-    m_LastClickedID: -330642
-    m_ExpandedIDs: 6ef4faff2201fbffba49fbffe006fdff180cfdff6262fdff4887fdffd287fdff5c88fdff48cffdff5212feff8e13feff1c15feff225ffeffce64feff988afeff128bfeff9404ffff54fbffffdefbffff00000000
+    m_SelectedIDs: aa38feff
+    m_LastClickedID: -116566
+    m_ExpandedIDs: 5c42feffbe51feff9228fffffa2cffffea47ffffa853ffff9a7dffffa87fffff8690ffff1492ffff48b4ffff54fbffffdefbffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Bookshelf
-      m_OriginalName: Bookshelf
+      m_Name: Node(Clone)
+      m_OriginalName: Node(Clone)
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: -72696
+      m_UserData: -32844
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
       m_OriginalEventType: 0
@@ -471,14 +471,14 @@ MonoBehaviour:
     width: 808
     height: 333
   m_SceneLighting: 1
-  lastFramingTime: 12461.424342607454
+  lastFramingTime: 4716.157616734725
   m_2DMode: 0
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0, y: 12, z: 12}
+    m_Target: {x: 30.205502, y: 5.8155513, z: 18}
     speed: 2
-    m_Value: {x: 0, y: 12, z: 12}
+    m_Value: {x: 30.205502, y: 5.8155513, z: 18}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -505,9 +505,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
   m_Size:
-    m_Target: 81.28555
+    m_Target: 146.6212
     speed: 2
-    m_Value: 81.28555
+    m_Value: 146.6212
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -658,7 +658,7 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Prefabs/Pickups/Journals
+    - Assets/Prefabs/RoomPrefabs/StartRooms
   m_ViewMode: 0
   m_StartGridSize: 53
   m_LastFolders: []
@@ -669,7 +669,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: ac9c0000
     m_LastClickedID: 40108
-    m_ExpandedIDs: 00000000a8260000d42600003827000024280000b8280000c4280000a2290000f62900004e2a0000642a0000a62a0000902b0000f82b00006e2d0000283300002a330000
+    m_ExpandedIDs: 00000000a82600004c2700005a2700000e2800003e2800005c280000d6280000e0280000ac290000582a0000842a0000c62a00009e2b0000922d00005634000058340000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -694,10 +694,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 371}
+    scrollPos: {x: 0, y: 395}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000a826000058270000242800005428000072280000c4280000ce280000a22900004e2a0000642a0000a62a0000902b00006e2d0000283300002a330000ac360000
+    m_ExpandedIDs: 00000000a82600002c2700004c2700005c280000d6280000e028000076290000ac290000002a0000582a0000842a0000c62a00009e2b0000922d00005634000058340000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

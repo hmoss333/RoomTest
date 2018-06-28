@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour {
     public GameObject[] journalItems;
     public float objectiveItemScale;
     public GameObject basementDoor;
+    static bool spawnedBasementDoor = false;
 
     [Header("Game Messages")]
     public string startGameMessage;
@@ -50,7 +51,7 @@ public class GameManager : MonoBehaviour {
                 UpdateStep();
             }
 
-            if (step == 3 && foundKey && JournalController.foundAllJournals)
+            if (step == 3 && foundKey && JournalController.foundAllJournals && !spawnedBasementDoor)
             {
                 Debug.Log("Found all the secrets");
                 StartCoroutine(SomethingChanged());
@@ -343,7 +344,7 @@ public class GameManager : MonoBehaviour {
         WaypointManager wpm = FindObjectOfType<WaypointManager>();
         TextController tc = GameObject.FindObjectOfType<TextController>();
 
-        step = 5;
+        spawnedBasementDoor = true;
         yield return new WaitForSeconds(10);
         Step4(basementDoor, wpm.waypointNodes);
         tc.DisplayText(somethingChangedMessage);
