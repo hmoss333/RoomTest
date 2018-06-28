@@ -16,7 +16,7 @@ public class RotateSprite : MonoBehaviour {
         mainCam = Camera.main;
         sprite = GetComponentInChildren<SpriteRenderer>();
 
-        CalculateSpriteHeight(mainCam, this.transform);
+        //spriteHeight = CalculateSpriteHeight(mainCam, this.transform); //used for updating sprite size with a dynamic camera
     }
 	
 	// Update is called once per frame
@@ -32,17 +32,17 @@ public class RotateSprite : MonoBehaviour {
         //sprite.transform.rotation = Quaternion.RotateTowards(sprite.transform.rotation, mainCam.transform.rotation, 90);
 
         //Scaling/Positioning Logic
-        sprite.transform.localScale = new Vector3(sprite.transform.localScale.x, spriteHeight, sprite.transform.localScale.z);
-        sprite.transform.position = new Vector3(sprite.transform.position.x, transform.position.y + 0.25f, sprite.transform.position.z);
+        sprite.transform.localScale = new Vector3(sprite.transform.localScale.x, WaypointManager.scale, sprite.transform.localScale.z);
+        sprite.transform.position = new Vector3(sprite.transform.position.x, transform.position.y /*+ 0.25f*/, sprite.transform.position.z);
     }
 
-    void CalculateSpriteHeight(Camera cam, Transform parent)
+    float CalculateSpriteHeight(Camera cam, Transform parent)
     {
         Vector3 test = cam.transform.rotation.eulerAngles;
+        float tempHeight = 0;
 
-        spriteHeight = Mathf.Sqrt(Mathf.Pow(test.x / 2, 2) + Mathf.Pow(parent.lossyScale.y * (WaypointManager.scale/2), 2));
-        //Debug.Log(test.x / 2 + " -> " + Mathf.Pow(test.x / 2, 2));
-        //Debug.Log(parent.lossyScale.y * (WaypointManager.scale / 2) + " -> " + Mathf.Pow(parent.lossyScale.y * (WaypointManager.scale / 2), 2));
-        //Debug.Log(spriteHeight);
+        tempHeight = Mathf.Sqrt(Mathf.Pow(test.x / 2, 2) + Mathf.Pow(parent.lossyScale.y / (WaypointManager.scale / 2), 2));
+
+        return tempHeight;
     }
 }

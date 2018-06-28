@@ -5,9 +5,11 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     [Header("Movement Settings")]
+    float speed;
     public float walkSpeed;
     public float dashSpeed;
-    float speed;
+    float dashTime;
+    bool tired = false;
     public float xInput;
     public float yInput;
     Vector3 dir;
@@ -100,13 +102,24 @@ public class Player : MonoBehaviour {
             }
 
             //Speed controls [Left trigger?]
-            if (Input.GetButton("Dash"))
+            if (Input.GetButton("Dash") && !tired)
             {
                 speed = dashSpeed;
+                if (dashTime > 0.0f)
+                {
+                    dashTime -= Time.deltaTime;
+                }
+                else
+                    tired = true;
             }
             else
             {
                 speed = walkSpeed;
+                if (!Input.GetButton("Dash") && dashTime < 1.0f)
+                {
+                    dashTime += Time.deltaTime;
+                    tired = false;
+                }
             }
 
             speed *= WaypointManager.scale;
