@@ -298,7 +298,7 @@ public class GameManager : MonoBehaviour {
 
         if (ws.zPos == 0)
         {
-            if (ws.type != WaypointScript.Type.start && ws.type != WaypointScript.Type.stairs)
+            if (ws.type == WaypointScript.Type.empty || ws.type == WaypointScript.Type.wall || ws.type == WaypointScript.Type.corner)
             {
                 basementDoor = Instantiate(basementDoor, new Vector3(roomList[randNum].position.x, roomList[randNum].position.y + 1 - (WaypointManager.scale / 4), roomList[randNum].position.z), Quaternion.identity) as GameObject;
                 basementDoor.transform.localScale = Vector3.one * WaypointManager.scale / 3;
@@ -345,8 +345,9 @@ public class GameManager : MonoBehaviour {
         TextController tc = GameObject.FindObjectOfType<TextController>();
 
         spawnedBasementDoor = true;
-        yield return new WaitForSeconds(10);
         Step4(basementDoor, wpm.waypointNodes);
+        yield return new WaitForSeconds(10);
+        //Step4(basementDoor, wpm.waypointNodes);
         tc.DisplayText(somethingChangedMessage);
     }
 }
