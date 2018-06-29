@@ -7,6 +7,7 @@ public class JournalInteract : InteractParent {
 
     public Sprite sigilImage;
     Image journalUI;
+    Image sigilUI;
     public string sigilWord;
 
     Player player;
@@ -19,6 +20,7 @@ public class JournalInteract : InteractParent {
         base.Start();
         player = GameObject.FindObjectOfType<Player>();
         journalUI = GameObject.Find("journalUI").GetComponent<Image>();
+        sigilUI = GameObject.Find("sigilUI").GetComponent<Image>();
         journalUI.GetComponent<CanvasGroup>().alpha = 0f;
         //collected = false;
 	}
@@ -33,7 +35,7 @@ public class JournalInteract : InteractParent {
         //Display journal UI popup
         //Pause gameplay until user presses interact button, again
         //Should re-display journal UI every time they interact with this item
-        journalUI.sprite = sigilImage;
+        sigilUI.GetComponent<Image>().sprite = sigilImage;
         journalUI.GetComponent<CanvasGroup>().alpha = 1f;
         interacting = true;
         StartCoroutine(WaitForConfirm());

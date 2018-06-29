@@ -8,6 +8,7 @@ public class InteractDoor : InteractParent {
     public DoorManager doorManager;
     public Sprite sigilImage;
     Image journalUI;
+    Image sigilUI;
     public string sigilWord;
     bool interacting = false;
     //public bool unlocked = false;
@@ -21,12 +22,13 @@ public class InteractDoor : InteractParent {
         jc = GameObject.FindObjectOfType<JournalController>();
         player = GameObject.FindObjectOfType<Player>();
         journalUI = GameObject.Find("journalUI").GetComponent<Image>();
+        sigilUI = GameObject.Find("sigilUI").GetComponent<Image>();
         journalUI.GetComponent<CanvasGroup>().alpha = 0f;
     }
 
     public override void Interact()
     {
-        journalUI.sprite = sigilImage;
+        sigilUI.sprite = sigilImage;
         journalUI.GetComponent<CanvasGroup>().alpha = 1f;
         interacting = true;
         StartCoroutine(WaitForConfirm());

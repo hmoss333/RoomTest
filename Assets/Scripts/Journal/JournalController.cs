@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class JournalController : MonoBehaviour {
+
+    public Image background;
 
     public static bool foundAllJournals = false;
     public List<Transform> eventRooms;
