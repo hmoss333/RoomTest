@@ -72,6 +72,7 @@
      <Compile Include="Assets\Scripts\Managers\RoomManager.cs" />
      <Compile Include="Assets\Scripts\Managers\RotateSprite.cs" />
      <Compile Include="Assets\Scripts\Managers\Stairs.cs" />
+     <Compile Include="Assets\Scripts\Managers\UIManager.cs" />
      <Compile Include="Assets\Scripts\Managers\WaypointManager.cs" />
      <Compile Include="Assets\Scripts\Managers\WaypointScript.cs" />
      <Compile Include="Assets\Scripts\Menus\MainMenu.cs" />

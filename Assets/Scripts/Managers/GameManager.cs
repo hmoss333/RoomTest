@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -9,9 +10,12 @@ public class GameManager : MonoBehaviour {
     public static int weaponCount = 0;
     public static float objectiveScale = 1;
     public static bool foundKey = false;
+    bool gameOver = false;
 
     public enum GameState { Playing, Paused, Interacting, Win, Lose }
     public static GameState gameState;
+
+    UIManager uim;
 
     [Header("Actors")]
     public GameObject[] players;
@@ -38,6 +42,8 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
+        uim = GameObject.FindObjectOfType<UIManager>();
+
         gameState = GameState.Playing;
     }
 
@@ -56,6 +62,44 @@ public class GameManager : MonoBehaviour {
                 Debug.Log("Found all the secrets");
                 StartCoroutine(SomethingChanged());
             }
+
+            if (Input.GetButtonDown("Pause"))
+            {
+                Time.timeScale = 0f;
+                gameState = GameState.Paused;
+                uim.PauseMenu();
+            }
+        }
+        else if (gameState == GameState.Paused)
+        {
+            if (Input.GetButtonDown("Pause"))
+            {
+                Time.timeScale = 1f;
+                gameState = GameState.Playing;
+                uim.PauseMenu();
+            }
+        }
+        else if (gameState == GameState.Win)
+        {
+            if (!gameOver)
+            {
+                uim.WinMenu();
+                gameOver = true;
+            }
+
+            if (Input.GetButtonDown("Pause"))
+                SceneManager.LoadSceneAsync("MainMenu");
+        }
+        else if (gameState == GameState.Lose)
+        {
+            if (!gameOver)
+            {
+                uim.LoseMenu();
+                gameOver = true;
+            }
+
+            if (Input.GetButtonDown("Pause"))
+                SceneManager.LoadSceneAsync("MainMenu");
         }
     }
 

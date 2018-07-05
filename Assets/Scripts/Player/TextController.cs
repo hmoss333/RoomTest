@@ -6,7 +6,8 @@ using TMPro;
 
 public class TextController : MonoBehaviour {
 
-    Text textBox;
+    [HideInInspector]
+    public Text textBox;
     Player player;
 
     public float textDelay;
@@ -35,7 +36,7 @@ public class TextController : MonoBehaviour {
         co = StartCoroutine(FadeOutText(textObj, 1f));
     }
 
-    IEnumerator FadeOutText(Text textObj, float fadeRate)
+    public IEnumerator FadeOutText(Text textObj, float fadeRate)
     {
         while (textObj.color.a > 0.0f)
         {
