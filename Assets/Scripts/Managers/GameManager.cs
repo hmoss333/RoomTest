@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour {
                 gameOver = true;
             }
 
-            if (Input.GetButtonDown("Pause"))
+            if (Input.anyKeyDown)
                 SceneManager.LoadSceneAsync("MainMenu");
         }
         else if (gameState == GameState.Lose)
@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour {
                 gameOver = true;
             }
 
-            if (Input.GetButtonDown("Pause"))
+            if (Input.anyKeyDown)
                 SceneManager.LoadSceneAsync("MainMenu");
         }
     }
