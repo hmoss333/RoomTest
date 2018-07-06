@@ -52,6 +52,7 @@
      <Compile Include="Assets\ProCore\ProBuilder\API Examples\Procedural Mesh\ExtrudeRandomEdges.cs" />
      <Compile Include="Assets\ProCore\ProBuilder\API Examples\Runtime Editing\RuntimeEdit.cs" />
      <Compile Include="Assets\ProCore\ProBuilder\API Examples\Vertex Colors\HighlightNearestFace.cs" />
+     <Compile Include="Assets\Scripts\Interacts\FlickerLight.cs" />
      <Compile Include="Assets\Scripts\Interacts\InventoryItem.cs" />
      <Compile Include="Assets\Scripts\Interacts\Objective\InteractAltar.cs" />
      <Compile Include="Assets\Scripts\Interacts\Objective\InteractDoor.cs" />
@@ -72,6 +73,7 @@
      <Compile Include="Assets\Scripts\Managers\RoomManager.cs" />
      <Compile Include="Assets\Scripts\Managers\RotateSprite.cs" />
      <Compile Include="Assets\Scripts\Managers\Stairs.cs" />
+     <Compile Include="Assets\Scripts\Managers\TextController.cs" />
      <Compile Include="Assets\Scripts\Managers\UIManager.cs" />
      <Compile Include="Assets\Scripts\Managers\WaypointManager.cs" />
      <Compile Include="Assets\Scripts\Managers\WaypointScript.cs" />
@@ -79,7 +81,6 @@
      <Compile Include="Assets\Scripts\Player\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\Player\Flashlight.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
-     <Compile Include="Assets\Scripts\Player\TextController.cs" />
      <Compile Include="Assets\Scripts\Player\Weapon.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />

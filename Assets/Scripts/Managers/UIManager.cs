@@ -10,7 +10,8 @@ public class UIManager : MonoBehaviour {
     Image loseUI;
 
     TextController tc;
-    Color currentTextColor;
+    //Color currentTextColor;
+    float currentAlpha;
 
     // Use this for initialization
     void Start () {
@@ -31,18 +32,23 @@ public class UIManager : MonoBehaviour {
 
     public void PauseMenu()
     {
-        Color tempColor = tc.textBox.color;
+        //Color tempColor = tc.textBox.color;
+        float tempAlpha = tc.textBox.GetComponent<CanvasGroup>().alpha;
 
         if (GameManager.gameState == GameManager.GameState.Paused)
         {
             pauseUI.GetComponent<CanvasGroup>().alpha = 1f;
-            currentTextColor = tempColor;
-            tc.textBox.color = new Color(tempColor.r, tempColor.g, tempColor.b, 0f);
+            //currentTextColor = tempColor;
+            //tc.textBox.color = new Color(tempColor.r, tempColor.g, tempColor.b, 0f);
+            currentAlpha = tempAlpha;
+            tc.textBox.GetComponent<CanvasGroup>().alpha = 0f;
         }
         else
         {
             pauseUI.GetComponent<CanvasGroup>().alpha = 0f;
-            tc.textBox.color = currentTextColor;
+            //tc.textBox.GetComponent<CanvasGroup>().alpha = currentTextColor.a;
+            //tc.textBox.color = currentTextColor;
+            tc.textBox.GetComponent<CanvasGroup>().alpha = currentAlpha;
             tc.StartCoroutine(tc.FadeOutText(tc.textBox, tc.textDelay));
         }
     }
@@ -52,7 +58,8 @@ public class UIManager : MonoBehaviour {
         Color tempColor = tc.textBox.color;
 
         winUI.GetComponent<CanvasGroup>().alpha = 1f;
-        tc.textBox.color = new Color(tempColor.r, tempColor.g, tempColor.b, 0f);
+        tc.textBox.GetComponent<CanvasGroup>().alpha = 0f;
+        //tc.textBox.color = new Color(tempColor.r, tempColor.g, tempColor.b, 0f);
     }
 
     public void LoseMenu()
@@ -60,6 +67,7 @@ public class UIManager : MonoBehaviour {
         Color tempColor = tc.textBox.color;
 
         loseUI.GetComponent<CanvasGroup>().alpha = 1f;
-        tc.textBox.color = new Color(tempColor.r, tempColor.g, tempColor.b, 0f);
+        tc.textBox.GetComponent<CanvasGroup>().alpha = 0f;
+        //tc.textBox.color = new Color(tempColor.r, tempColor.g, tempColor.b, 0f);
     }
 }

@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour {
     public enum GameState { Playing, Paused, Interacting, Win, Lose }
     public static GameState gameState;
 
+    //WaypointManager wpm;
     UIManager uim;
 
     [Header("Actors")]
@@ -42,9 +43,11 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
+        //wpm = GameObject.FindObjectOfType<WaypointManager>();
         uim = GameObject.FindObjectOfType<UIManager>();
 
         gameState = GameState.Playing;
+        //SpawnPlayers(players, wpm.waypointNodes);
     }
 
     // Update is called once per frame
