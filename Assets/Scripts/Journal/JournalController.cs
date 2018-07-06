@@ -27,15 +27,8 @@ public class JournalController : MonoBehaviour {
     {
         JournalController jc = GameObject.FindObjectOfType<JournalController>();
 
-        //foreach (Object s in jc.sigils)
-        //{
-            if (!jc.foundSigils.Contains(sigilName))
-            {
-                jc.foundSigils.Add(sigilName);
-                Debug.Log(sigilName);
-                //break;
-            }
-        //}
+        if (!jc.foundSigils.Contains(sigilName))
+            jc.foundSigils.Add(sigilName);
 
         if (!foundAllJournals && jc.foundSigils.Count == jc.sigils.Count)
             foundAllJournals = true;

@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 69ac4407ece195c4493c37780adcd7a4
+timeCreated: 1530900708
+licenseType: Pro
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: HandiSkript
+  fontNames:
+  - HandiSkript
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
