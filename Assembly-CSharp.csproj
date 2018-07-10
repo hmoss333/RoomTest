@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\Interacts\Objective\InteractAltar.cs" />
      <Compile Include="Assets\Scripts\Interacts\Objective\InteractDoor.cs" />
      <Compile Include="Assets\Scripts\Interacts\Objective\InteractGiveItem.cs" />
+     <Compile Include="Assets\Scripts\Interacts\Objective\InteractMask.cs" />
      <Compile Include="Assets\Scripts\Interacts\Objective\InteractObjective.cs" />
      <Compile Include="Assets\Scripts\Interacts\Objective\InteractWeapon.cs" />
      <Compile Include="Assets\Scripts\Interacts\Objective\MainDoor.cs" />

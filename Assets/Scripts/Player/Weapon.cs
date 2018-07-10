@@ -19,8 +19,13 @@ public class Weapon : MonoBehaviour {
             }
             else
             {
-                GameManager.gameState = GameManager.GameState.Win;
-                GameManager.UpdateStep();
+                //GameManager.gameState = GameManager.GameState.Win;
+                //GameManager.UpdateStep();
+
+                if (!killer.stunned)
+                    killer.StartStunTimer();
+
+                killer.health--;
             }
         }
     }

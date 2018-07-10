@@ -13,6 +13,8 @@ public class UIManager : MonoBehaviour {
     //Color currentTextColor;
     float currentAlpha;
 
+    public bool collectedMask = false;
+
     // Use this for initialization
     void Start () {
         tc = GameObject.FindObjectOfType<TextController>();

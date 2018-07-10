@@ -11,6 +11,7 @@ public class Gregg : MonoBehaviour {
     Vector3 lastPos;
     public bool stunned = false;
     public float stunTimer;
+    public int health = 3;
 
     [Header("Interact Settings")]
     public float checkDist;
@@ -34,6 +35,7 @@ public class Gregg : MonoBehaviour {
     Player player;
     Footprints footprints;
     public RoomManager currentRoom;
+    public GameObject maskPrefab;
 
     // Use this for initialization
     void Start () {
@@ -55,9 +57,7 @@ public class Gregg : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        //If the room contains an active interact && the player is not currently in the room/shining a light in the room
-        //The killer will then target the nearest interact
-        if (GameManager.gameState == GameManager.GameState.Playing)
+        if (GameManager.gameState == GameManager.GameState.Playing && health > 0)
         {
             if (!stunned && !attacking)
             {
@@ -82,12 +82,14 @@ public class Gregg : MonoBehaviour {
             if (footprints.transform.position.y != transform.position.y)
                 footprints.transform.position = new Vector3(0, transform.position.y - 10, 0);
         }
-        else if (GameManager.gameState == GameManager.GameState.Win)
+
+        if (health <= 0)
         {
             Debug.Log("Play death animation");
             if (GameManager.step == 6)
             {
                 Debug.Log("Drop Mask object");
+                maskPrefab = Instantiate(maskPrefab, transform.position, Quaternion.identity);
             }
             Destroy(this.gameObject);
         }

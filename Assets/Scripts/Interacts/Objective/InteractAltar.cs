@@ -27,6 +27,7 @@ public class InteractAltar : InteractParent {
             killer = GameObject.FindObjectOfType<Gregg>();
 
             player.weaponPrefab = weapon;
+            GameManager.UpdateStep();
 
             base.Interact();
             //TO DO: killer fight logic here
