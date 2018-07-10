@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class JournalInteract : InteractParent {
 
     public Sprite sigilImage;
+    public Sprite journalBackground;
     Image journalUI;
     Image sigilUI;
     //Text sigilText;
@@ -34,11 +35,10 @@ public class JournalInteract : InteractParent {
 
     public override void Interact()
     {
-        //Display journal UI popup
-        //Pause gameplay until user presses interact button, again
-        //Should re-display journal UI every time they interact with this item
-        sigilUI.GetComponent<Image>().sprite = sigilImage;
-        //sigilText.text = sigilWord;
+        tc.textBoxBackground.GetComponent<CanvasGroup>().alpha = 0f;
+
+        sigilUI.sprite = sigilImage;
+        journalUI.sprite = journalBackground;
         journalUI.GetComponent<CanvasGroup>().alpha = 1f;
         interacting = true;
         StartCoroutine(WaitForConfirm());
@@ -57,12 +57,12 @@ public class JournalInteract : InteractParent {
                 player.state = Player.State.Move;
                 journalUI.GetComponent<CanvasGroup>().alpha = 0f;
                 interacting = false;
-                //if (!collected)
-                //{
-                    JournalController.IncrementJournal(sigilWord);
-                    base.Interact();
-                //    collected = true;
-                //}
+                JournalController.IncrementJournal(sigilWord);
+
+                tc.textBoxBackground.GetComponent<CanvasGroup>().alpha = 1f;
+                tc.StartCoroutine(tc.FadeOutText(tc.textBoxBackground, tc.textDelay));
+
+                base.Interact();
                 this.gameObject.SetActive(false);
             }
         }

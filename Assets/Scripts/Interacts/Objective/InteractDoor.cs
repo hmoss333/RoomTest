@@ -7,6 +7,7 @@ public class InteractDoor : InteractParent {
 
     public DoorManager doorManager;
     public Sprite sigilImage;
+    public Sprite doorBackground;
     Image journalUI;
     Image sigilUI;
     //Text sigilText;
@@ -30,8 +31,10 @@ public class InteractDoor : InteractParent {
 
     public override void Interact()
     {
+        tc.textBoxBackground.GetComponent<CanvasGroup>().alpha = 0f;
+
         sigilUI.sprite = sigilImage;
-        //sigilText.text = sigilWord;
+        journalUI.sprite = doorBackground;
         journalUI.GetComponent<CanvasGroup>().alpha = 1f;
         interacting = true;
         StartCoroutine(WaitForConfirm());
@@ -60,6 +63,10 @@ public class InteractDoor : InteractParent {
                 journalUI.GetComponent<CanvasGroup>().alpha = 0f;
                 player.state = Player.State.Move;
                 interacting = false;
+
+                tc.textBoxBackground.GetComponent<CanvasGroup>().alpha = 1f;
+                tc.StartCoroutine(tc.FadeOutText(tc.textBoxBackground, tc.textDelay));
+
                 base.Interact();
             }
         }

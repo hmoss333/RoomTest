@@ -7,7 +7,8 @@ using TMPro;
 public class TextController : MonoBehaviour {
 
     [HideInInspector]
-    public Text textBox;
+    public Image textBoxBackground;
+    Text textBox;
     Player player;
 
     public float textDelay;
@@ -24,27 +25,28 @@ public class TextController : MonoBehaviour {
         if (player == null)
         {
             player = GameObject.FindObjectOfType<Player>();
-            textBox = player.GetComponentInChildren<Text>();
+            textBoxBackground = player.GetComponentInChildren<Image>();
+            textBox = textBoxBackground.GetComponentInChildren<Text>();
         }
 
         if (co != null)
             StopCoroutine(co);
 
-        co = StartCoroutine(DisplayText(textBox, text, textDelay));
+        co = StartCoroutine(DisplayText(textBoxBackground, textBox, text, textDelay));
     }
-    IEnumerator DisplayText(Text textObj, string text, float waitTime)
+    IEnumerator DisplayText(Image background, Text textObj, string text, float waitTime)
     {
         //textObj.color = new Color(textObj.color.r, textObj.color.g, textObj.color.b, 1);
-        textObj.GetComponent<CanvasGroup>().alpha = 1f;
+        background.GetComponent<CanvasGroup>().alpha = 1f;
         textObj.text = text;
 
         yield return new WaitForSeconds(waitTime);
-        co = StartCoroutine(FadeOutText(textObj, 1f));
+        co = StartCoroutine(FadeOutText(background, 1f));
     }
 
-    public IEnumerator FadeOutText(Text textObj, float fadeRate)
+    public IEnumerator FadeOutText(Image background, float fadeRate)
     {
-        CanvasGroup textCanv = textObj.GetComponent<CanvasGroup>();
+        CanvasGroup textCanv = background.GetComponent<CanvasGroup>();
 
         while (textCanv.alpha > 0.0f)//textObj.color.a > 0.0f)
         {

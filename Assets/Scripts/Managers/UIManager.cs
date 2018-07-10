@@ -33,7 +33,7 @@ public class UIManager : MonoBehaviour {
     public void PauseMenu()
     {
         //Color tempColor = tc.textBox.color;
-        float tempAlpha = tc.textBox.GetComponent<CanvasGroup>().alpha;
+        float tempAlpha = tc.textBoxBackground.GetComponent<CanvasGroup>().alpha;
 
         if (GameManager.gameState == GameManager.GameState.Paused)
         {
@@ -41,33 +41,33 @@ public class UIManager : MonoBehaviour {
             //currentTextColor = tempColor;
             //tc.textBox.color = new Color(tempColor.r, tempColor.g, tempColor.b, 0f);
             currentAlpha = tempAlpha;
-            tc.textBox.GetComponent<CanvasGroup>().alpha = 0f;
+            tc.textBoxBackground.GetComponent<CanvasGroup>().alpha = 0f;
         }
         else
         {
             pauseUI.GetComponent<CanvasGroup>().alpha = 0f;
             //tc.textBox.GetComponent<CanvasGroup>().alpha = currentTextColor.a;
             //tc.textBox.color = currentTextColor;
-            tc.textBox.GetComponent<CanvasGroup>().alpha = currentAlpha;
-            tc.StartCoroutine(tc.FadeOutText(tc.textBox, tc.textDelay));
+            tc.textBoxBackground.GetComponent<CanvasGroup>().alpha = currentAlpha;
+            tc.StartCoroutine(tc.FadeOutText(tc.textBoxBackground, tc.textDelay));
         }
     }
 
     public void WinMenu()
     {
-        Color tempColor = tc.textBox.color;
+        Color tempColor = tc.textBoxBackground.color;
 
         winUI.GetComponent<CanvasGroup>().alpha = 1f;
-        tc.textBox.GetComponent<CanvasGroup>().alpha = 0f;
+        tc.textBoxBackground.GetComponent<CanvasGroup>().alpha = 0f;
         //tc.textBox.color = new Color(tempColor.r, tempColor.g, tempColor.b, 0f);
     }
 
     public void LoseMenu()
     {
-        Color tempColor = tc.textBox.color;
+        Color tempColor = tc.textBoxBackground.color;
 
         loseUI.GetComponent<CanvasGroup>().alpha = 1f;
-        tc.textBox.GetComponent<CanvasGroup>().alpha = 0f;
+        tc.textBoxBackground.GetComponent<CanvasGroup>().alpha = 0f;
         //tc.textBox.color = new Color(tempColor.r, tempColor.g, tempColor.b, 0f);
     }
 }

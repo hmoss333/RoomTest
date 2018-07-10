@@ -28,12 +28,10 @@ public class RotateSprite : MonoBehaviour {
     {
         //Rotation Logic
         sprite.transform.rotation = player.transform.rotation; //works on the y axis, but not X or Z
-        //sprite.transform.LookAt(mainCam.transform); //swaps left and right animations
-        //sprite.transform.rotation = Quaternion.RotateTowards(sprite.transform.rotation, mainCam.transform.rotation, 90);
 
         //Scaling/Positioning Logic
-        sprite.transform.localScale = new Vector3(sprite.transform.localScale.x, WaypointManager.scale, sprite.transform.localScale.z);
-        sprite.transform.position = new Vector3(sprite.transform.position.x, transform.position.y /*+ 0.25f*/, sprite.transform.position.z);
+        //sprite.transform.localScale = new Vector3(sprite.transform.localScale.x, WaypointManager.scale, sprite.transform.localScale.z);
+        //sprite.transform.position = new Vector3(sprite.transform.position.x, transform.position.y /*+ 0.25f*/, sprite.transform.position.z);
     }
 
     float CalculateSpriteHeight(Camera cam, Transform parent)

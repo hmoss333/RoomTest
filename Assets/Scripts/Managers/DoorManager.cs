@@ -37,7 +37,10 @@ public class DoorManager : MonoBehaviour {
     {
         foreach (MeshRenderer mesh in roomMeshes)
         {
-            mesh.enabled = false;
+            if (mesh.tag == "Journal" || mesh.tag == "Objective")
+                mesh.GetComponentInChildren<SpriteRenderer>().enabled = false;
+            else
+                mesh.enabled = false;
         }
     }
 

@@ -20,8 +20,7 @@ public class RoomManager : MonoBehaviour {
         litByFlashlight = false;
         hasActiveInteracts = false;
 
-        foreach (MeshRenderer mesh in roomMeshes)
-            mesh.enabled = false;
+        TurnOffMesh();
 
         meshesEnabled = false;
 
@@ -115,7 +114,10 @@ public class RoomManager : MonoBehaviour {
     {
         foreach (MeshRenderer mesh in roomMeshes)
         {
-            mesh.enabled = true;
+            if (mesh.tag == "Journal" || mesh.tag == "Objective")
+                mesh.GetComponentInChildren<SpriteRenderer>().enabled = true;
+            else
+                mesh.enabled = true;
         }
     }
 
@@ -123,7 +125,10 @@ public class RoomManager : MonoBehaviour {
     {
         foreach (MeshRenderer mesh in roomMeshes)
         {
-            mesh.enabled = false;
+            if (mesh.tag == "Journal" || mesh.tag == "Objective")
+                mesh.GetComponentInChildren<SpriteRenderer>().enabled = false;
+            else
+                mesh.enabled = false;
         }
     }
 
