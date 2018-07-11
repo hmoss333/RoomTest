@@ -12,19 +12,11 @@ public class Weapon : MonoBehaviour {
         {
             Gregg killer = other.GetComponent<Gregg>();
             //Debug.Log("Hit the killer");
-            if (!isMachette)
-            {
-                if (!killer.stunned)
-                    killer.StartStunTimer();
-            }
-            else
-            {
-                //GameManager.gameState = GameManager.GameState.Win;
-                //GameManager.UpdateStep();
+            if (!killer.stunned)
+                killer.StartStunTimer();
 
-                if (!killer.stunned)
-                    killer.StartStunTimer();
-
+            if (isMachette)
+            {
                 killer.health--;
             }
         }

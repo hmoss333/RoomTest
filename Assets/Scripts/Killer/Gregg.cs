@@ -208,7 +208,7 @@ public class Gregg : MonoBehaviour {
         Debug.Log("Start attack");
         yield return new WaitForSeconds(attackTime);
         //attack logic here
-        if (Vector3.Distance(transform.position, player.transform.position) <= attackDist)
+        if (Vector3.Distance(transform.position, player.transform.position) <= attackDist && !stunned)
         {
             Debug.Log("Hit player");
             GameManager.gameState = GameManager.GameState.Lose;

@@ -7,7 +7,8 @@ public class InteractMask : InteractParent
     UIManager uim;
 
 	// Use this for initialization
-	void Start () {
+	public override void Start () {
+        base.Start();
         uim = GameObject.FindObjectOfType<UIManager>();
 	}
 	
@@ -18,12 +19,17 @@ public class InteractMask : InteractParent
 
     public override void Interact()
     {
+        GameManager.gameState = GameManager.GameState.Interacting;
         base.Interact();
+        StartCoroutine(FadetoBlack());
     }
 
     IEnumerator FadetoBlack()
     {
+        Debug.Log("Put screen fade logic here");
         yield return new WaitForSeconds(10);
         GameManager.gameState = GameManager.GameState.Win;
+        uim.WinMenu();
+        Destroy(this.gameObject);
     }
 }
