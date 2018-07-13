@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour {
     public static int step = 0;
     public static int objectiveCount = 0;
     public static int weaponCount = 0;
-    public static float objectiveScale = 1;
+    public static float objectiveScale;
     public static bool foundKey = false;
     bool gameOver = false;
 

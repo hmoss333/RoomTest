@@ -26,9 +26,7 @@ public class InteractObjective : InteractParent {
             GameManager.UpdateStep();
         }
 
-        //Disabling object for now, but probably want to add this to a list or something
-        //Destroy(this.gameObject);
-        //GetComponentInParent<HideRoom>().UpdateMeshes();
+        //Disabling object for now, but probably want to add this to a list or destroy it later
         this.gameObject.SetActive(false);
     }
 }

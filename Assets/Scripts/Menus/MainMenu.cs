@@ -21,7 +21,12 @@ public class MainMenu : MonoBehaviour {
         mainMenu.SetActive(true);
         characterSelectMenu.SetActive(false);
         levelSelectMenu.SetActive(false);
-	}
+
+        GameManager.step = 0;
+        GameManager.objectiveCount = 0;
+        GameManager.weaponCount = 0;
+        GameManager.foundKey = false;
+    }
 	
 	// Update is called once per frame
 	void Update () {
