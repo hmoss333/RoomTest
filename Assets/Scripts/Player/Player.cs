@@ -10,9 +10,12 @@ public class Player : MonoBehaviour {
     public float dashSpeed;
     float dashTime;
     bool tired = false;
-    public float xInput;
-    public float yInput;
+    float xInput;
+    float yInput;
+    float xInputMove;
+    float yInputMove;
     Vector3 dir;
+    Vector3 moveDir;
     //[HideInInspector]
     public Vector3 lastDir;
     bool updatelastDir = false;
@@ -48,7 +51,7 @@ public class Player : MonoBehaviour {
         animator = gameObject.GetComponentInChildren<Animator>();
 
         speed = walkSpeed;
-        flashlightOn = false;
+        flashlightOn = true;
         flashlightPrefab.GetComponent<Light>().enabled = flashlightOn;
 
         direction = Direction.Down;
@@ -65,12 +68,21 @@ public class Player : MonoBehaviour {
             //Control logic
             xInput = Input.GetAxisRaw("Horizontal");
             yInput = Input.GetAxisRaw("Vertical");
+            xInputMove = Input.GetAxisRaw("HorizontalMove");
+            yInputMove = Input.GetAxisRaw("VerticalMove");
 
+            //Look direction controls
             dir = new Vector3(xInput, 0, yInput);
             dir = transform.TransformDirection(dir);
             dir *= speed;
 
-            rb.velocity = dir;
+            //Move direction controls
+            moveDir = new Vector3(xInputMove, 0, yInputMove);
+            moveDir = transform.TransformDirection(moveDir);
+            moveDir *= speed;
+
+            //rb.velocity = dir;
+            rb.velocity = moveDir;
 
             //Store last input direction; may not be necessary
             if ((xInput != 0 || yInput != 0) && !updatelastDir)

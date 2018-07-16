@@ -24,14 +24,18 @@ public class InteractAltar : InteractParent {
     {
         if (!killerTeleported)
         {
-            killer = GameObject.FindObjectOfType<Gregg>();
+            if (GameManager.step != 6)
+            {
+                killer = GameObject.FindObjectOfType<Gregg>();
 
-            player.weaponPrefab = weapon;
-            GameManager.UpdateStep();
+                player.weaponPrefab = weapon;
+                GameManager.UpdateStep();
+            }
 
             base.Interact();
             //TO DO: killer fight logic here
             Debug.Log("Do secret ending here");
+            killerTeleported = true;
             StartCoroutine(TeleportKiller(killerSpawnTime));
         }
     }
@@ -40,6 +44,5 @@ public class InteractAltar : InteractParent {
     {
         yield return new WaitForSeconds(teleportTime);
         killer.transform.position = new Vector3(basementExit.position.x, basementExit.position.y - (WaypointManager.scale / 8), basementExit.position.z);
-        killerTeleported = true;
     }
 }

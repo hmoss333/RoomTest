@@ -81,14 +81,14 @@ public class GameManager : MonoBehaviour {
         }
         else if (gameState == GameState.Win)
         {
-            //if (!gameOver)
-            //{
-            //    uim.WinMenu();
-            //    gameOver = true;
-            //}
+            if (!gameOver)
+            {
+                uim.WinMenu();
+                gameOver = true;
+            }
 
-            //if (Input.GetButtonDown("Interact"))
-            //    SceneManager.LoadSceneAsync("MainMenu");
+            if (Input.GetButtonDown("Interact"))
+                SceneManager.LoadSceneAsync("MainMenu");
         }
         else if (gameState == GameState.Lose)
         {
