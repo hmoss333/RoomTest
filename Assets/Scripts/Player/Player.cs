@@ -53,9 +53,11 @@ public class Player : MonoBehaviour {
         speed = walkSpeed;
         flashlightOn = true;
         flashlightPrefab.GetComponent<Light>().enabled = flashlightOn;
+        updatelastDir = false;
 
-        direction = Direction.Down;
         state = State.Move;
+        direction = Direction.Down;
+        lastDir = new Vector3(0, 0, -1.0f); //manually sets the last direction to match the player's default look direction; should make a function to handle this that takes the direction
     }
 
     //

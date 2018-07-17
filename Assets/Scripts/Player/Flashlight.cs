@@ -22,13 +22,13 @@ public class Flashlight : MonoBehaviour {
 	void Update () {
         StopLookAtRoom();
 
-        if (Player.flashlightOn)
-        {
+        //if (Player.flashlightOn)
+        //{
             Quaternion rot = Quaternion.LookRotation(player.lastDir, player.transform.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, rot, rotationSpeed * Time.deltaTime);
 
             LookAtRoom();
-        }
+        //}
     }
 
     void LookAtRoom()

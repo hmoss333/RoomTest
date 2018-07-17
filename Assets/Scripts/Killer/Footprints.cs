@@ -72,7 +72,7 @@ public class Footprints : MonoBehaviour {
         RaycastHit hit = new RaycastHit();
 
         for (int i = 0; i < 4; i++ )
-     {
+        {
             Vector3 rayPos = corners[i];
             rayPos.y = 1000.0f;
 

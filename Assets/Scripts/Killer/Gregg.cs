@@ -79,8 +79,8 @@ public class Gregg : MonoBehaviour {
                 lastPos = transform.position;
             }
 
-            if (footprints.transform.position.y != transform.position.y)
-                footprints.transform.position = new Vector3(0, transform.position.y - 10, 0);
+            if (footprints.transform.position.y != currentRoom.transform.position.y - WaypointManager.scale)
+                footprints.transform.position = new Vector3(0, currentRoom.transform.position.y - WaypointManager.scale, 0);
         }
 
         if (health <= 0)
