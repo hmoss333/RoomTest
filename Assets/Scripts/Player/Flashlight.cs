@@ -45,8 +45,6 @@ public class Flashlight : MonoBehaviour {
 
     public void StopLookAtRoom()
     {
-        //Player playerClass = GameObject.FindObjectOfType<Player>();
-
         foreach (Transform node in wpm.waypointNodes)
         {
             RoomManager room = node.GetComponentInChildren<RoomManager>();

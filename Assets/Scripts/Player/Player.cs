@@ -57,7 +57,7 @@ public class Player : MonoBehaviour {
 
         state = State.Move;
         direction = Direction.Down;
-        lastDir = new Vector3(0, 0, -1.0f); //manually sets the last direction to match the player's default look direction; should make a function to handle this that takes the direction
+        lastDir = new Vector3(0, 0, -1.0f);
     }
 
     //
