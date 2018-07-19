@@ -17,6 +17,8 @@ public class Gregg : MonoBehaviour {
     public float checkDist;
     public float checkTime;
     RaycastHit foundHit;
+    public LayerMask layerMask;
+    bool playerHiding = false;
 
     [Header("Controls References")]
     Rigidbody rb;
@@ -35,6 +37,7 @@ public class Gregg : MonoBehaviour {
     Player player;
     Footprints footprints;
     public RoomManager currentRoom;
+    Vector3 targetRoomPos;
     public GameObject maskPrefab;
 
     // Use this for initialization
@@ -59,16 +62,24 @@ public class Gregg : MonoBehaviour {
 	void FixedUpdate () {
         if (GameManager.gameState == GameManager.GameState.Playing && health > 0)
         {
-            if (!stunned && !attacking)
+            if (!playerHiding)
             {
-                if (currentRoom && currentRoom.hasActiveInteracts && (!currentRoom.meshesEnabled || !currentRoom.litByFlashlight))
-                    transform.position = Vector3.MoveTowards(transform.position, new Vector3(currentRoom.interacts[Random.Range(0, currentRoom.interacts.Length)].transform.position.x, transform.position.y, currentRoom.interacts[Random.Range(0, currentRoom.interacts.Length)].transform.position.z), speed * Time.deltaTime);
-                else
-                    transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z), speed * Time.deltaTime);
-            }
+                if (!stunned && !attacking)
+                {
+                    if (currentRoom && currentRoom.hasActiveInteracts && (!currentRoom.meshesEnabled || !currentRoom.litByFlashlight))
+                        transform.position = Vector3.MoveTowards(transform.position, new Vector3(currentRoom.interacts[Random.Range(0, currentRoom.interacts.Length)].transform.position.x, transform.position.y, currentRoom.interacts[Random.Range(0, currentRoom.interacts.Length)].transform.position.z), speed * Time.deltaTime);
+                    else
+                        transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z), speed * Time.deltaTime);
+                }
 
-            if (!attacking && Vector3.Distance(transform.position, player.transform.position) <= attackDist)
-                StartCoroutine(Attack(attackTime));
+                if (!attacking && Vector3.Distance(transform.position, player.transform.position) <= attackDist)
+                    StartCoroutine(Attack(attackTime));
+            }
+            else
+            {
+                if (!stunned && !attacking)
+                    transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetRoomPos.x, transform.position.y, targetRoomPos.z), speed * Time.deltaTime);
+            }
 
             //Footprint logic
             float distFromLastFootprint = (lastPos - transform.position).sqrMagnitude;
@@ -81,6 +92,18 @@ public class Gregg : MonoBehaviour {
 
             if (footprints.transform.position.y != currentRoom.transform.position.y - WaypointManager.scale)
                 footprints.transform.position = new Vector3(0, currentRoom.transform.position.y - WaypointManager.scale, 0);
+
+            //Hiding logic
+            if (Physics.Linecast(transform.position, player.transform.position, layerMask) && player.state == Player.State.Hide) //if there is something between the killer and the player
+            {
+                if (!playerHiding)
+                {
+                    playerHiding = true;
+                    targetRoomPos = FindNewRoom(currentRoom); //should only be called once here
+                }
+            }
+            else
+                playerHiding = false;
         }
 
         if (health <= 0)
@@ -218,5 +241,13 @@ public class Gregg : MonoBehaviour {
             Debug.Log("Missed player");
         }
         attacking = false;
+    }
+
+    Vector3 FindNewRoom(RoomManager currentRoomPos)
+    {
+        Vector3 tempPos;
+        tempPos = currentRoomPos.GetComponentInParent<WaypointScript>().adjactentNodes[Random.Range(0, currentRoomPos.GetComponentInParent<WaypointScript>().adjactentNodes.Count)].transform.position;
+
+        return tempPos;
     }
 }
