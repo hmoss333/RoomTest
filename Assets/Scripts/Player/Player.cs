@@ -86,7 +86,7 @@ public class Player : MonoBehaviour {
             //rb.velocity = dir;
             rb.velocity = moveDir;
 
-            //Store last input direction; may not be necessary
+            //Store last input direction
             if ((xInput != 0 || yInput != 0) && !updatelastDir)
             {
                 lastDir = dir;
@@ -97,7 +97,7 @@ public class Player : MonoBehaviour {
                 updatelastDir = false;
             }
 
-            //Set direction animations
+            //Set look direction animations
             if (xInput > 0)
             {
                 direction = Direction.Right;
@@ -183,15 +183,13 @@ public class Player : MonoBehaviour {
             {
                 rb.velocity = Vector3.zero;
 
-                if (Input.GetButtonDown("Hide"))
+                //Must hold down hide button in order to stay hidden
+                if (Input.GetButtonUp("Hide"))
                 {
-                    Hide();
-                }
+                    flashlightOn = true;
+                    flashlightPrefab.GetComponent<Light>().enabled = flashlightOn;
 
-                if (Input.GetButtonDown("Attack") && weaponPrefab != null) //Attack out of hiding
-                {
-                    state = State.Attack;
-                    StartCoroutine(Attack(weaponPrefab, lastDir, attackTime));
+                    Hide();
                 }
             }
 
@@ -204,7 +202,7 @@ public class Player : MonoBehaviour {
                 RotateCamRight(direction);
             }
 
-            SetAnimation(direction); //Will cause issues with memory usage down the line
+            SetAnimation(direction); //Should really not be calling this from Update
         }
     }
 
