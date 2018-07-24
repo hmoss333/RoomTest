@@ -5,6 +5,7 @@ using UnityEngine;
 public class Gregg : MonoBehaviour {
 
     [Header("Movement Settings")]
+    public float testNum;
     public float speed;
     float teleportTime;
     public float footprintSpacing = 2.0f; // distance between each footprint
@@ -45,6 +46,7 @@ public class Gregg : MonoBehaviour {
         wpm = GameObject.FindObjectOfType<WaypointManager>();
         gm = GameObject.FindObjectOfType<GameManager>();
         player = GameObject.FindObjectOfType<Player>();
+        animator = gameObject.GetComponentInChildren<Animator>();
 
         attackDist = WaypointManager.scale / 8;
         lastPos = transform.position;
@@ -104,6 +106,28 @@ public class Gregg : MonoBehaviour {
             }
             else
                 playerHiding = false;
+
+            //Animating Logic
+            //if (transform.position.z - player.transform.position.z > 0)
+            //{
+            //    animator.SetTrigger("Down");
+            //    Debug.Log("Down");
+            //}
+            //else if (transform.position.z - player.transform.position.z < 0)
+            //{
+            //    animator.SetTrigger("Up");
+            //    Debug.Log("Up");
+            //}
+            //else if (transform.position.x - testNum < player.transform.position.x)
+            //{
+            //    animator.SetTrigger("Right");
+            //    Debug.Log("Right");
+            //}
+            //else if (transform.position.x - testNum > player.transform.position.x)
+            //{
+            //    animator.SetTrigger("Left");
+            //    Debug.Log("Left");
+            //}
         }
 
         if (health <= 0)
@@ -129,7 +153,7 @@ public class Gregg : MonoBehaviour {
 
     void MoveToNewRoom(List<Transform> roomList)
     {
-        if (!GetComponent<MeshRenderer>().enabled) //If killer is currently not visible
+        if (!GetComponentInChildren<SpriteRenderer>().enabled) //!GetComponent<MeshRenderer>().enabled) //If killer is currently not visible
         {
             List<Transform> tempList = new List<Transform>();
             tempList.AddRange(roomList);
@@ -202,7 +226,8 @@ public class Gregg : MonoBehaviour {
         }
         else
         {
-            GetComponent<MeshRenderer>().enabled = true;
+            //GetComponent<MeshRenderer>().enabled = true;
+            GetComponentInChildren<SpriteRenderer>().enabled = true;
 
             footprints.TurnOnMesh();
         }
@@ -210,7 +235,8 @@ public class Gregg : MonoBehaviour {
 
     public void TurnOffMesh()
     {
-        GetComponent<MeshRenderer>().enabled = false;
+        //GetComponent<MeshRenderer>().enabled = false;
+        GetComponentInChildren<SpriteRenderer>().enabled = false;
 
         footprints.TurnOffMesh();
     }
