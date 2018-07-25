@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour {
 
@@ -15,12 +16,18 @@ public class MainMenu : MonoBehaviour {
     public GameObject mainMenu;
     public GameObject characterSelectMenu;
     public GameObject levelSelectMenu;
+
+    public Button playButton;
+    public Button confirmCharacterButton;
+    public Button confirmLevelButton;
     
     // Use this for initialization
 	void Start () {
         mainMenu.SetActive(true);
         characterSelectMenu.SetActive(false);
         levelSelectMenu.SetActive(false);
+
+        playButton.Select();
 
         GameManager.step = 0;
         GameManager.objectiveCount = 0;
@@ -41,6 +48,8 @@ public class MainMenu : MonoBehaviour {
 
         mainMenu.SetActive(false);
         characterSelectMenu.SetActive(true);
+
+        confirmCharacterButton.Select();
     }
 
 
@@ -67,12 +76,16 @@ public class MainMenu : MonoBehaviour {
 
         characterSelectMenu.SetActive(false);
         levelSelectMenu.SetActive(true);
+
+        confirmLevelButton.Select();
     }
 
     public void CharacterSelectBackButton()
     {
         mainMenu.SetActive(true);
         characterSelectMenu.SetActive(false);
+
+        playButton.Select();
     }
 
 
@@ -104,6 +117,8 @@ public class MainMenu : MonoBehaviour {
     {
         characterSelectMenu.SetActive(true);
         levelSelectMenu.SetActive(false);
+
+        confirmCharacterButton.Select();
     }
 
 
