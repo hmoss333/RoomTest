@@ -13,6 +13,10 @@ public class Gregg : MonoBehaviour {
     public bool stunned = false;
     public float stunTimer;
     public int health = 3;
+    public enum Direction { Up, Down, Left, Right }
+    public Direction direction;
+    public float XOff;
+    public float YOff;
 
     [Header("Interact Settings")]
     public float checkDist;
@@ -108,26 +112,26 @@ public class Gregg : MonoBehaviour {
                 playerHiding = false;
 
             //Animating Logic
-            //if (transform.position.z - player.transform.position.z > 0)
-            //{
-            //    animator.SetTrigger("Down");
-            //    Debug.Log("Down");
-            //}
-            //else if (transform.position.z - player.transform.position.z < 0)
-            //{
-            //    animator.SetTrigger("Up");
-            //    Debug.Log("Up");
-            //}
-            //else if (transform.position.x - testNum < player.transform.position.x)
-            //{
-            //    animator.SetTrigger("Right");
-            //    Debug.Log("Right");
-            //}
-            //else if (transform.position.x - testNum > player.transform.position.x)
-            //{
-            //    animator.SetTrigger("Left");
-            //    Debug.Log("Left");
-            //}
+            float horizOff = Mathf.Abs(player.transform.position.x - transform.position.x);
+            float vertOff = Mathf.Abs(player.transform.position.z - transform.position.z);
+
+            if (vertOff < Mathf.Abs(XOff) && horizOff > Mathf.Abs(YOff))
+            {
+                if (transform.position.x > player.transform.position.x)
+                    direction = Direction.Left;
+                if (transform.position.x < player.transform.position.x)
+                    direction = Direction.Right;
+            }
+            else if (vertOff > Mathf.Abs(XOff) && horizOff < Mathf.Abs(YOff))
+            {
+                if (transform.position.z < player.transform.position.z)
+                    direction = Direction.Up;
+                if (transform.position.z > player.transform.position.z)
+                    direction = Direction.Down;
+            }
+
+            CheckRotation(direction, player.transform.rotation.eulerAngles);
+            animator.SetTrigger(direction.ToString());
         }
 
         if (health <= 0)
@@ -139,6 +143,50 @@ public class Gregg : MonoBehaviour {
                 maskPrefab = Instantiate(maskPrefab, transform.position, Quaternion.identity);
             }
             Destroy(this.gameObject);
+        }
+    }
+
+    void CheckRotation(Direction currentDirection, Vector3 playerRotation)
+    {
+        if (playerRotation.y != 0)
+        {
+            switch (currentDirection)
+            {
+                case Direction.Up:
+                    if (playerRotation.y == 90)
+                        direction = Direction.Left;
+                    else if (playerRotation.y == -90 || playerRotation.y == 270)
+                        direction = Direction.Right;
+                    else
+                        direction = Direction.Down;
+                    break;
+                case Direction.Right:
+                    if (playerRotation.y == 90)
+                        direction = Direction.Up;
+                    else if (playerRotation.y == -90 || playerRotation.y == 270)
+                        direction = Direction.Down;
+                    else
+                        direction = Direction.Left;
+                    break;
+                case Direction.Down:
+                    if (playerRotation.y == 90)
+                        direction = Direction.Right;
+                    else if (playerRotation.y == -90 || playerRotation.y == 270)
+                        direction = Direction.Left;
+                    else
+                        direction = Direction.Up;
+                    break;
+                case Direction.Left:
+                    if (playerRotation.y == 90)
+                        direction = Direction.Down;
+                    else if (playerRotation.y == -90 || playerRotation.y == 270)
+                        direction = Direction.Up;
+                    else
+                        direction = Direction.Right;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -208,26 +256,29 @@ public class Gregg : MonoBehaviour {
     public void TurnOnMesh()
     {
         DoorManager dm = currentRoom.GetComponent<DoorManager>();
+        SpriteRenderer[] sprites = GetComponentsInChildren<SpriteRenderer>();
 
         if (dm)
         {
             if (!dm.roomLocked)
             {
-                GetComponent<MeshRenderer>().enabled = true;
+                foreach (SpriteRenderer sprite in sprites)
+                    sprite.enabled = true;
 
                 footprints.TurnOnMesh();
             }
             else
             {
-                GetComponent<MeshRenderer>().enabled = false;
+                foreach (SpriteRenderer sprite in sprites)
+                    sprite.enabled = false;
 
                 footprints.TurnOffMesh();
             }
         }
         else
         {
-            //GetComponent<MeshRenderer>().enabled = true;
-            GetComponentInChildren<SpriteRenderer>().enabled = true;
+            foreach (SpriteRenderer sprite in sprites)
+                sprite.enabled = true;
 
             footprints.TurnOnMesh();
         }
@@ -235,8 +286,9 @@ public class Gregg : MonoBehaviour {
 
     public void TurnOffMesh()
     {
-        //GetComponent<MeshRenderer>().enabled = false;
-        GetComponentInChildren<SpriteRenderer>().enabled = false;
+        SpriteRenderer[] sprites = GetComponentsInChildren<SpriteRenderer>();
+        foreach (SpriteRenderer sprite in sprites)
+            sprite.enabled = false;
 
         footprints.TurnOffMesh();
     }

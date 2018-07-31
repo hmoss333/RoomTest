@@ -282,19 +282,15 @@ public class Player : MonoBehaviour {
         {
             case Direction.Up:
                 direction = Direction.Right;
-                //animator.SetTrigger("Right");
                 break;
             case Direction.Left:
                 direction = Direction.Up;
-                //animator.SetTrigger("Up");
                 break;
             case Direction.Down:
                 direction = Direction.Left;
-                //animator.SetTrigger("Left");
                 break;
             case Direction.Right:
                 direction = Direction.Down;
-                //animator.SetTrigger("Down");
                 break;
             default:
                 break;
