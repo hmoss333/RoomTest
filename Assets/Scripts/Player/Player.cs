@@ -224,7 +224,7 @@ public class Player : MonoBehaviour {
     IEnumerator Attack(GameObject prefab, Vector3 direction, float attackTime)
     {
         GameObject attackPrefab = null;
-        Vector3 attackDir = transform.position + (direction / (WaypointManager.scale/2));
+        Vector3 attackDir = transform.position + (direction / (WaypointManager.scale / 3));
 
         attackPrefab = Instantiate(prefab, attackDir, Quaternion.identity);
 
