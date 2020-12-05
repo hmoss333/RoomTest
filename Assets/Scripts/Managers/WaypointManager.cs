@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class WaypointManager : MonoBehaviour
 {
-
     [Header("Map Settings")]
     public int xMax;
     public int yMax;
@@ -31,7 +30,7 @@ public class WaypointManager : MonoBehaviour
     public GameObject[] emptyRoomTypes;
     public GameObject[] eventRoomTypes;
     public GameObject[] stairRoomTypes;
-    public GameObject basementRoom;
+    //public GameObject basementRoom;
 
     GameManager gm;
 
@@ -55,7 +54,7 @@ public class WaypointManager : MonoBehaviour
 
         //Check available walls to generate a starting node
         GenerateStartNode(Random.Range(0, wallNodes.Count), wallNodes);
-        basementRoom = Instantiate(basementRoom, new Vector3(0, -scale, 0), Quaternion.identity, this.transform);
+        //basementRoom = Instantiate(basementRoom, new Vector3(0, -scale, 0), Quaternion.identity, this.transform);
 
         //If there are multiple levels to a map, generate entrance and exit staircase nodes
         if (levels > 1)
@@ -73,7 +72,7 @@ public class WaypointManager : MonoBehaviour
         totalWaypoints = waypointNodes.Count;
 
         //Start the game
-        GameManager.UpdateStep();
+        GameManager.StartGame(waypointNodes);
     }
 
     //After the list is created this method is called by each waypoint and this script does all the leg work.

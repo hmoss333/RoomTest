@@ -29,7 +29,7 @@ public class InteractAltar : InteractParent {
                 killer = GameObject.FindObjectOfType<Gregg>();
 
                 player.weaponPrefab = weapon;
-                GameManager.UpdateStep();
+                //GameManager.UpdateStep();
             }
 
             base.Interact();

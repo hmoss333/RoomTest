@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
+    public static GameManager instance;
+
     public static int step = 0;
     public static int objectiveCount = 0;
     public static int weaponCount = 0;
@@ -18,7 +20,7 @@ public class GameManager : MonoBehaviour {
     UIManager uim;
 
     [Header("Actors")]
-    public GameObject[] players;
+    public GameObject player;
     public GameObject killer;
     public float timeToWaitForKiller;
 
@@ -29,39 +31,50 @@ public class GameManager : MonoBehaviour {
     public int weaponItemCount;
     public GameObject[] journalItems;
     public float objectiveItemScale;
-    public GameObject basementDoor;
-    static bool spawnedBasementDoor = false;
+    //public GameObject basementDoor;
+    //static bool spawnedBasementDoor = false;
 
-    [Header("Game Messages")]
-    public string startGameMessage;
-    public string spawnKillerMessage;
-    public string foundAllObjectiveItemsMessage;
-    public string escapeMessage;
-    public string somethingChangedMessage;
-    public string hiddenEndingMessage;
+    //[Header("Game Messages")]
+    //public string startGameMessage;
+    //public string spawnKillerMessage;
+    //public string foundAllObjectiveItemsMessage;
+    //public string escapeMessage;
+    //public string somethingChangedMessage;
+    //public string hiddenEndingMessage;
+
+    static WaypointManager wpm;
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(this.gameObject);
+        Debug.Log(instance);
+    }
 
     private void Start()
     {
         uim = GameObject.FindObjectOfType<UIManager>();
-
-        gameState = GameState.Playing;
+        wpm = GameObject.FindObjectOfType<WaypointManager>();
+        //gameState = GameState.Playing;
     }
 
     // Update is called once per frame
     void Update () {
         if (gameState == GameState.Playing)
         {
-            if (step == 1 && Time.timeSinceLevelLoad > timeToWaitForKiller)
-            {
-                Debug.Log("Took too long");
-                UpdateStep();
-            }
+            //if (step == 1 && Time.timeSinceLevelLoad > timeToWaitForKiller)
+            //{
+            //    Debug.Log("Took too long");
+            //    UpdateStep();
+            //}
 
-            if (step == 3 && foundKey && JournalController.foundAllJournals && !spawnedBasementDoor)
-            {
-                Debug.Log("Found all the secrets");
-                StartCoroutine(SomethingChanged());
-            }
+            //if (step == 3 && foundKey && JournalController.foundAllJournals && !spawnedBasementDoor)
+            //{
+            //    Debug.Log("Found all the secrets");
+            //    StartCoroutine(SomethingChanged());
+            //}
 
             if (Input.GetButtonDown("Pause"))
             {
@@ -103,91 +116,102 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public static void UpdateStep()
+    public static void StartGame(List<Transform> nodes)
     {
-        WaypointManager wpm = FindObjectOfType<WaypointManager>();
-        GameManager gm = FindObjectOfType<GameManager>();
+        Debug.Log("Spawn Player & Objectives");
+        GameManager gm = GameObject.FindObjectOfType<GameManager>();
 
-        step++;
-        Debug.Log("Step#: " + step);
+        gm.SpawnPlayers(gm.player, nodes);
+        gm.SpawnObjectives(gm.journalItems, nodes, gm.GetEventRooms(nodes), gm.objectiveItemScale); //spawning journal objects
 
-        switch (step)
-        {
-            case 1:
-                Debug.Log("Spawn Player & Objectives");
-                GameObject[] objectiveItems = gm.objectiveItems;
-                GameObject[] players = gm.players;
-
-                Step1(players, objectiveItems, gm.objectiveItemCount, gm.objectiveItemScale, wpm.waypointNodes);
-                SpawnObjectives(gm.weaponItems, wpm.waypointNodes, gm.weaponItemCount, gm.objectiveItemScale); //Just testing for now; we can use this as a way to initialize all objects as needed
-                SpawnObjectives(gm.journalItems, wpm.waypointNodes, GetEventRooms(wpm.waypointNodes), gm.objectiveItemScale); //spawning journal objects
-                break;
-            case 2:
-                Debug.Log("Spawn killer");
-                //Once the players have found the first objectives, killer will spawn and start wandering the house
-                GameObject killer = gm.killer;   
-                
-                Step2(gm.killer, wpm.waypointNodes);
-                break;
-            case 3:
-                Debug.Log("Get to the exit");
-                //Step3(gm.killer, wpm.waypointNodes);
-                //Player can now leave the house/fix the Van in order to escape
-                //Key is now optional; add an outdoors area where the player has to "fix" the car (minigame)
-                break;
-            case 4:
-                //Player has used the main door to escape
-                gameState = GameState.Win;
-                break;
-            case 5:
-                //Player has spawned door to basement somewhere on the first floor
-                break;
-            case 6:
-                //Secret ending; become the killer
-                break;
-            default:
-                Debug.Log("Something broke here");
-                break;
-        }
-
-        UpdateText();
-        Resources.UnloadUnusedAssets();
+        gameState = GameState.Playing;
     }
 
-    static void UpdateText()
-    {
-        GameManager gm = FindObjectOfType<GameManager>();
-        TextController tc = GameObject.FindObjectOfType<TextController>();
-        string currentMessage = null;
+    //public static void UpdateStep()
+    //{
+    //    WaypointManager wpm = FindObjectOfType<WaypointManager>();
+    //    GameManager gm = FindObjectOfType<GameManager>();
 
-        switch (step)
-        {
-            case 1:
-                currentMessage = gm.startGameMessage;
-                break;
-            case 2:
-                currentMessage = gm.spawnKillerMessage;
-                break;
-            case 3:
-                currentMessage = gm.foundAllObjectiveItemsMessage;
-                break;
-            case 4:
-                currentMessage = gm.escapeMessage;
-                break;
-            case 5:
-                //currentMessage = gm.somethingChangedMessage;
-                break;
-            case 6:
-                currentMessage = gm.hiddenEndingMessage;
-                break;
-            default:
-                break;
-        }
+    //    step++;
+    //    Debug.Log("Step#: " + step);
 
-        tc.DisplayText(currentMessage);
-    }
+    //    switch (step)
+    //    {
+    //        case 1:
+    //            Debug.Log("Spawn Player & Objectives");
+    //            GameObject[] objectiveItems = gm.objectiveItems;
+    //            GameObject[] players = gm.players;
 
-    static int GetEventRooms(List<Transform> roomList)
+    //            Step1(players, objectiveItems, gm.objectiveItemCount, gm.objectiveItemScale, wpm.waypointNodes);
+    //            SpawnObjectives(gm.weaponItems, wpm.waypointNodes, gm.weaponItemCount, gm.objectiveItemScale); //Just testing for now; we can use this as a way to initialize all objects as needed
+    //            SpawnObjectives(gm.journalItems, wpm.waypointNodes, GetEventRooms(wpm.waypointNodes), gm.objectiveItemScale); //spawning journal objects
+    //            break;
+    //        case 2:
+    //            Debug.Log("Spawn killer");
+    //            //Once the players have found the first objectives, killer will spawn and start wandering the house
+    //            GameObject killer = gm.killer;   
+
+    //            Step2(gm.killer, wpm.waypointNodes);
+    //            break;
+    //        case 3:
+    //            Debug.Log("Get to the exit");
+    //            //Step3(gm.killer, wpm.waypointNodes);
+    //            //Player can now leave the house/fix the Van in order to escape
+    //            //Key is now optional; add an outdoors area where the player has to "fix" the car (minigame)
+    //            break;
+    //        case 4:
+    //            //Player has used the main door to escape
+    //            gameState = GameState.Win;
+    //            break;
+    //        case 5:
+    //            //Player has spawned door to basement somewhere on the first floor
+    //            break;
+    //        case 6:
+    //            //Secret ending; become the killer
+    //            break;
+    //        default:
+    //            Debug.Log("Something broke here");
+    //            break;
+    //    }
+
+    //    UpdateText();
+    //    Resources.UnloadUnusedAssets();
+    //}
+
+    //static void UpdateText()
+    //{
+    //    GameManager gm = FindObjectOfType<GameManager>();
+    //    TextController tc = GameObject.FindObjectOfType<TextController>();
+    //    string currentMessage = null;
+
+    //    switch (step)
+    //    {
+    //        case 1:
+    //            currentMessage = gm.startGameMessage;
+    //            break;
+    //        case 2:
+    //            currentMessage = gm.spawnKillerMessage;
+    //            break;
+    //        case 3:
+    //            currentMessage = gm.foundAllObjectiveItemsMessage;
+    //            break;
+    //        case 4:
+    //            currentMessage = gm.escapeMessage;
+    //            break;
+    //        case 5:
+    //            //currentMessage = gm.somethingChangedMessage;
+    //            break;
+    //        case 6:
+    //            currentMessage = gm.hiddenEndingMessage;
+    //            break;
+    //        default:
+    //            break;
+    //    }
+
+    //    tc.DisplayText(currentMessage);
+    //}
+
+    int GetEventRooms(List<Transform> roomList)
     {
         int lockedRooms = 0;
 
@@ -200,7 +224,7 @@ public class GameManager : MonoBehaviour {
         return lockedRooms;
     }
 
-    static void SpawnObjectives(GameObject[] objItem, List<Transform> roomList, int count, float scale)
+    void SpawnObjectives(GameObject[] objItem, List<Transform> roomList, int count, float scale)
     {
         WaypointManager wpm = GameObject.FindObjectOfType<WaypointManager>();
         List<Transform> tempList = new List<Transform>();
@@ -256,7 +280,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    static void SpawnPlayers(GameObject[] players, List<Transform> roomList)
+    void SpawnPlayers(GameObject player, List<Transform> roomList)
     {
         List<Transform> tempList = new List<Transform>();
         tempList.AddRange(roomList);
@@ -273,13 +297,10 @@ public class GameManager : MonoBehaviour {
             }
         }
 
-        for (int i = 0; i < players.Length; i++)
-        {
-            players[i] = Instantiate(players[i], new Vector3(startPos.position.x, 1 - (WaypointManager.scale / 4), startPos.position.z), Quaternion.identity);
-        }
+        player = Instantiate(player, new Vector3(startPos.position.x, 1 - (WaypointManager.scale / 4), startPos.position.z), Quaternion.identity);
     }
 
-    static void SpawnKiller(GameObject killer, List<Transform> roomList)
+    void SpawnKiller(GameObject killer, List<Transform> roomList)
     {
         List<Transform> tempList = new List<Transform>();
         tempList.AddRange(roomList);
@@ -311,87 +332,87 @@ public class GameManager : MonoBehaviour {
         //}
     }
 
-    static void MoveKillerToStart(GameObject killer, List<Transform> roomList)
+    //static void MoveKillerToStart(GameObject killer, List<Transform> roomList)
+    //{
+    //    List<Transform> tempList = new List<Transform>();
+    //    tempList.AddRange(roomList);
+
+    //    Transform startPos = null;
+    //    foreach (Transform currentNode in tempList)
+    //    {
+    //        WaypointScript nodeData = currentNode.GetComponentInChildren<WaypointScript>();
+
+    //        if (nodeData.type == WaypointScript.Type.start)
+    //        {
+    //            startPos = nodeData.transform;
+    //            //Debug.Log(nodeData.name);
+    //        }
+    //    }
+
+    //    killer.transform.position = new Vector3(startPos.position.x, 1 - (WaypointManager.scale / 4), startPos.position.z);
+    //}
+
+    //static void SpawnBasementDoor(GameObject basementDoor, List<Transform> roomList)
+    //{
+    //    List<Transform> tempRooms = new List<Transform>();
+    //    tempRooms = roomList;
+
+    //    int randNum = Random.Range(0, roomList.Count);
+    //    RoomManager rm = roomList[randNum].GetComponentInChildren<RoomManager>();
+    //    WaypointScript ws = roomList[randNum].GetComponent<WaypointScript>();
+
+    //    if (ws.zPos == 0)
+    //    {
+    //        if (ws.type == WaypointScript.Type.empty || ws.type == WaypointScript.Type.wall || ws.type == WaypointScript.Type.corner)
+    //        {
+    //            basementDoor = Instantiate(basementDoor, new Vector3(roomList[randNum].position.x, roomList[randNum].position.y + 1 - (WaypointManager.scale / 4), roomList[randNum].position.z), Quaternion.identity) as GameObject;
+    //            basementDoor.transform.localScale = Vector3.one * WaypointManager.scale / 3;
+    //            basementDoor.transform.parent = rm.gameObject.transform;
+    //            rm.UpdateMeshes();
+    //        }
+    //        else
+    //        {
+    //            tempRooms.Remove(roomList[randNum]);
+    //            SpawnBasementDoor(basementDoor, tempRooms);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        tempRooms.Remove(roomList[randNum]);
+    //        SpawnBasementDoor(basementDoor, tempRooms);
+    //    }
+    //}
+
+    void Step1(GameObject player, GameObject[] objItems, int objCount, float objScale, List<Transform> roomList)
     {
-        List<Transform> tempList = new List<Transform>();
-        tempList.AddRange(roomList);
-
-        Transform startPos = null;
-        foreach (Transform currentNode in tempList)
-        {
-            WaypointScript nodeData = currentNode.GetComponentInChildren<WaypointScript>();
-
-            if (nodeData.type == WaypointScript.Type.start)
-            {
-                startPos = nodeData.transform;
-                //Debug.Log(nodeData.name);
-            }
-        }
-
-        killer.transform.position = new Vector3(startPos.position.x, 1 - (WaypointManager.scale / 4), startPos.position.z);
-    }
-
-    static void SpawnBasementDoor(GameObject basementDoor, List<Transform> roomList)
-    {
-        List<Transform> tempRooms = new List<Transform>();
-        tempRooms = roomList;
-
-        int randNum = Random.Range(0, roomList.Count);
-        RoomManager rm = roomList[randNum].GetComponentInChildren<RoomManager>();
-        WaypointScript ws = roomList[randNum].GetComponent<WaypointScript>();
-
-        if (ws.zPos == 0)
-        {
-            if (ws.type == WaypointScript.Type.empty || ws.type == WaypointScript.Type.wall || ws.type == WaypointScript.Type.corner)
-            {
-                basementDoor = Instantiate(basementDoor, new Vector3(roomList[randNum].position.x, roomList[randNum].position.y + 1 - (WaypointManager.scale / 4), roomList[randNum].position.z), Quaternion.identity) as GameObject;
-                basementDoor.transform.localScale = Vector3.one * WaypointManager.scale / 3;
-                basementDoor.transform.parent = rm.gameObject.transform;
-                rm.UpdateMeshes();
-            }
-            else
-            {
-                tempRooms.Remove(roomList[randNum]);
-                SpawnBasementDoor(basementDoor, tempRooms);
-            }
-        }
-        else
-        {
-            tempRooms.Remove(roomList[randNum]);
-            SpawnBasementDoor(basementDoor, tempRooms);
-        }
-    }
-
-    static void Step1(GameObject[] players, GameObject[] objItems, int objCount, float objScale, List<Transform> roomList)
-    {
-        SpawnPlayers(players, roomList);
+        SpawnPlayers(player, roomList);
         SpawnObjectives(objItems, roomList, objCount, objScale);
     }
 
-    static void Step2(GameObject killer, List<Transform> roomList)
+    void Step2(GameObject killer, List<Transform> roomList)
     {
         SpawnKiller(killer, roomList);
     }
 
-    static void Step3(GameObject killer, List<Transform> roomList)
-    {
-        MoveKillerToStart(killer, roomList);
-    }
+    //static void Step3(GameObject killer, List<Transform> roomList)
+    //{
+    //    MoveKillerToStart(killer, roomList);
+    //}
 
-    static void Step4(GameObject basementDoor, List<Transform> roomList)
-    {
-        SpawnBasementDoor(basementDoor, roomList);
-    }
+    //static void Step4(GameObject basementDoor, List<Transform> roomList)
+    //{
+    //    SpawnBasementDoor(basementDoor, roomList);
+    //}
 
-    IEnumerator SomethingChanged()
-    {
-        WaypointManager wpm = FindObjectOfType<WaypointManager>();
-        TextController tc = GameObject.FindObjectOfType<TextController>();
+    //IEnumerator SomethingChanged()
+    //{
+    //    WaypointManager wpm = FindObjectOfType<WaypointManager>();
+    //    TextController tc = GameObject.FindObjectOfType<TextController>();
 
-        spawnedBasementDoor = true;
-        Step4(basementDoor, wpm.waypointNodes);
-        yield return new WaitForSeconds(10);
-        //Step4(basementDoor, wpm.waypointNodes);
-        tc.DisplayText(somethingChangedMessage);
-    }
+    //    spawnedBasementDoor = true;
+    //    Step4(basementDoor, wpm.waypointNodes);
+    //    yield return new WaitForSeconds(10);
+    //    //Step4(basementDoor, wpm.waypointNodes);
+    //    tc.DisplayText(somethingChangedMessage);
+    //}
 }

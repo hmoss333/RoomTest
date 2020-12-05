@@ -1,0 +1,45 @@
+﻿<Properties StartupConfiguration="{3AF548E2-FEB2-48BF-D026-FD446B3BB24B}|Unit Tests">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Player/Player.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Managers/GameManager.cs" Line="53" Column="28" />
+      <File FileName="Assets/Scripts/Managers/WaypointManager.cs" />
+      <File FileName="Assets/Scripts/Interacts/Objective/InteractAltar.cs" />
+      <File FileName="Assets/Scripts/Interacts/Objective/InteractObjective.cs" />
+      <File FileName="Assets/Scripts/Interacts/Objective/MainDoor.cs" />
+      <File FileName="Assets/Scripts/Player/Player.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Player/CameraFollow.cs" />
+      <File FileName="Assets/Scripts/Journal/JournalInteract.cs" />
+      <File FileName="Assets/Scripts/Interacts/WorldObjects/InteractParent.cs" />
+      <File FileName="Assets/Scripts/Interacts/Objective/InteractDoor.cs" Line="50" Column="1" />
+      <File FileName="Assets/Scripts/Journal/JournalController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Journal/JournalController.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="RoomTest" expanded="True">
+            <Node name="Assembly-CSharp" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="Interacts" expanded="True">
+                  <Node name="Objective" expanded="True" />
+                </Node>
+                <Node name="Journal" expanded="True" />
+                <Node name="Player" expanded="True">
+                  <Node name="Player.cs" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.RoomTest PreferredExecutionTarget="f2d49c50-38b6-4bb2-9a7f-53f52ce039d7" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

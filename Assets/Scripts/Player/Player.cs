@@ -169,28 +169,6 @@ public class Player : MonoBehaviour {
                 {
                     Flashlight(flashlightPrefab);
                 }
-
-                //Enter Hide mode
-                if (Input.GetButtonDown("Hide"))
-                {
-                    flashlightOn = false;
-                    flashlightPrefab.GetComponent<Light>().enabled = flashlightOn;
-
-                    Hide();
-                }
-            }
-            else if (state == State.Hide)
-            {
-                rb.velocity = Vector3.zero;
-
-                //Must hold down hide button in order to stay hidden
-                if (Input.GetButtonUp("Hide"))
-                {
-                    flashlightOn = true;
-                    flashlightPrefab.GetComponent<Light>().enabled = flashlightOn;
-
-                    Hide();
-                }
             }
 
             if (Input.GetButtonDown("CamLeft"))
@@ -243,13 +221,13 @@ public class Player : MonoBehaviour {
         prefab.GetComponent<Light>().enabled = flashlightOn;
     }
 
-    void Hide()
-    {
-        if (state != State.Hide)
-            state = State.Hide;
-        else
-            state = State.Move;
-    }
+    //void Hide()
+    //{
+    //    if (state != State.Hide)
+    //        state = State.Hide;
+    //    else
+    //        state = State.Move;
+    //}
 
     void RotateCamLeft(Direction currentDirection)
     {

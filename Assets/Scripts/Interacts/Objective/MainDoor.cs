@@ -13,27 +13,27 @@ public class MainDoor : InteractParent{
     public override void Interact()
     {
         //Placeholder; interacting with the main door should load the outdoors area
-        switch (GameManager.step)
-        {
-            case 1:
-                tc.DisplayText(step0);
-                break;
-            case 2:
-                tc.DisplayText(step1);
-                break;
-            case 3:
-                GameManager.UpdateStep();
-                //tc.DisplayText(step2);
-                break;
-            case 4:
-                //tc.DisplayText(step3);
-                break;
-            case 5:
-                //tc.DisplayText(step4);
-                break;
-            default:
-                Debug.Log("Something went wrong");
-                break;
-        }
+        //switch (GameManager.step)
+        //{
+        //    case 1:
+        //        tc.DisplayText(step0);
+        //        break;
+        //    case 2:
+        //        tc.DisplayText(step1);
+        //        break;
+        //    case 3:
+        //        GameManager.UpdateStep();
+        //        //tc.DisplayText(step2);
+        //        break;
+        //    case 4:
+        //        //tc.DisplayText(step3);
+        //        break;
+        //    case 5:
+        //        //tc.DisplayText(step4);
+        //        break;
+        //    default:
+        //        Debug.Log("Something went wrong");
+        //        break;
+        //}
     }
 }

@@ -10,14 +10,14 @@ public class InteractParent : MonoBehaviour {
     //public int durability;
 
     [HideInInspector]
-    public TextController tc;
+    //public TextController tc;
     public string text;
 
     
     // Use this for initialization
 	public virtual void Start () {
         state = State.Off;
-        tc = GameObject.FindObjectOfType<TextController>();
+        //tc = GameObject.FindObjectOfType<TextController>();
     }
 	
 	// Update is called once per frame
@@ -29,7 +29,7 @@ public class InteractParent : MonoBehaviour {
     {
         //TO DO: general interact logic can go here
 
-        tc.DisplayText(text);
+        //tc.DisplayText(text);
     }
 
     //public virtual void Hit()

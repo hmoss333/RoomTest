@@ -35,7 +35,7 @@ public class JournalInteract : InteractParent {
 
     public override void Interact()
     {
-        tc.textBoxBackground.GetComponent<CanvasGroup>().alpha = 0f;
+        //tc.textBoxBackground.GetComponent<CanvasGroup>().alpha = 0f;
 
         sigilUI.sprite = sigilImage;
         journalUI.sprite = journalBackground;
@@ -59,8 +59,8 @@ public class JournalInteract : InteractParent {
                 interacting = false;
                 JournalController.IncrementJournal(sigilWord);
 
-                tc.textBoxBackground.GetComponent<CanvasGroup>().alpha = 1f;
-                tc.StartCoroutine(tc.FadeOutText(tc.textBoxBackground, tc.textDelay));
+                //tc.textBoxBackground.GetComponent<CanvasGroup>().alpha = 1f;
+                //tc.StartCoroutine(tc.FadeOutText(tc.textBoxBackground, tc.textDelay));
 
                 base.Interact();
                 this.gameObject.SetActive(false);

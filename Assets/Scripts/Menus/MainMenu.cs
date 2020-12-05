@@ -14,8 +14,8 @@ public class MainMenu : MonoBehaviour {
     public static Level selectedLevel;
 
     public GameObject mainMenu;
-    public GameObject characterSelectMenu;
-    public GameObject levelSelectMenu;
+    //public GameObject characterSelectMenu;
+    //public GameObject levelSelectMenu;
 
     public Button playButton;
     public Button confirmCharacterButton;
@@ -24,8 +24,8 @@ public class MainMenu : MonoBehaviour {
     // Use this for initialization
 	void Start () {
         mainMenu.SetActive(true);
-        characterSelectMenu.SetActive(false);
-        levelSelectMenu.SetActive(false);
+        //characterSelectMenu.SetActive(false);
+        //levelSelectMenu.SetActive(false);
 
         playButton.Select();
 
@@ -47,9 +47,9 @@ public class MainMenu : MonoBehaviour {
         //
 
         mainMenu.SetActive(false);
-        characterSelectMenu.SetActive(true);
+        //characterSelectMenu.SetActive(true);
 
-        confirmCharacterButton.Select();
+        //confirmCharacterButton.Select();
     }
 
 
@@ -74,8 +74,8 @@ public class MainMenu : MonoBehaviour {
     {
         selectedCharacter = currentCharacter;
 
-        characterSelectMenu.SetActive(false);
-        levelSelectMenu.SetActive(true);
+        //characterSelectMenu.SetActive(false);
+        //levelSelectMenu.SetActive(true);
 
         confirmLevelButton.Select();
     }
@@ -83,7 +83,7 @@ public class MainMenu : MonoBehaviour {
     public void CharacterSelectBackButton()
     {
         mainMenu.SetActive(true);
-        characterSelectMenu.SetActive(false);
+        //characterSelectMenu.SetActive(false);
 
         playButton.Select();
     }
@@ -115,8 +115,8 @@ public class MainMenu : MonoBehaviour {
 
     public void LevelSelectBackButton()
     {
-        characterSelectMenu.SetActive(true);
-        levelSelectMenu.SetActive(false);
+        //characterSelectMenu.SetActive(true);
+        //levelSelectMenu.SetActive(false);
 
         confirmCharacterButton.Select();
     }
