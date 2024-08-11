@@ -109,11 +109,15 @@ public class JournalController : MonoBehaviour {
             }
         }
 
-        foreach (JournalInteract journal in tempJournals)
+        try
         {
-            if (journal.sigilWord == "") //if any sigils are left unnassigned after first-pass, run again
-                AssignJournalSigils(tempJournals, tempSigils);
+            foreach (JournalInteract journal in tempJournals)
+            {
+                if (journal.sigilWord == "") //if any sigils are left unnassigned after first-pass, run again
+                    AssignJournalSigils(tempJournals, tempSigils);
+            }
         }
+        catch { }
     }
 
     void AssignSigilImages(List<Transform> objectList, List<Object> sigilList)

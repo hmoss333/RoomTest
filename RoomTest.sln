@@ -1,9 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomTest", "Assembly-CSharp.csproj", "{3AF548E2-FEB2-48BF-D026-FD446B3BB24B}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityEngine.UI", "UnityEngine.UI.csproj", "{DF6B6456-906D-C444-87BE-9AC25C09F501}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomTest", "Assembly-CSharp-Editor.csproj", "{5DA90C68-2613-F943-BB9E-CA82269D9905}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{3AF548E2-FEB2-48BF-D026-FD446B3BB24B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{5DA90C68-2613-F943-BB9E-CA82269D9905}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityEditor.UI", "UnityEditor.UI.csproj", "{AE70774B-AB26-DC9D-2794-3F56D5FC3DEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,6 +15,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF6B6456-906D-C444-87BE-9AC25C09F501}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF6B6456-906D-C444-87BE-9AC25C09F501}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF6B6456-906D-C444-87BE-9AC25C09F501}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF6B6456-906D-C444-87BE-9AC25C09F501}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3AF548E2-FEB2-48BF-D026-FD446B3BB24B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3AF548E2-FEB2-48BF-D026-FD446B3BB24B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AF548E2-FEB2-48BF-D026-FD446B3BB24B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -19,6 +27,10 @@ Global
 		{5DA90C68-2613-F943-BB9E-CA82269D9905}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DA90C68-2613-F943-BB9E-CA82269D9905}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DA90C68-2613-F943-BB9E-CA82269D9905}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE70774B-AB26-DC9D-2794-3F56D5FC3DEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE70774B-AB26-DC9D-2794-3F56D5FC3DEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE70774B-AB26-DC9D-2794-3F56D5FC3DEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE70774B-AB26-DC9D-2794-3F56D5FC3DEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
