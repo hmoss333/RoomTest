@@ -48,7 +48,7 @@ public class InteractDoor : InteractParent {
 
             player.state = Player.State.Interact; //sloppy, but it works for now
 
-            if (Input.GetButtonDown("Interact"))
+            if (InputManager.instance.inputController.Player.Interact.triggered)
             {
                 if (jc.foundSigils.Contains(sigilWord))
                 {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour {
 
@@ -10,10 +11,10 @@ public class Player : MonoBehaviour {
     public float dashSpeed;
     float dashTime;
     bool tired = false;
-    float xInput;
-    float yInput;
-    float xInputMove;
-    float yInputMove;
+    //float xInput;
+    //float yInput;
+    //float xInputMove;
+    //float yInputMove;
     Vector3 dir;
     Vector3 moveDir;
     //[HideInInspector]
@@ -67,19 +68,22 @@ public class Player : MonoBehaviour {
     void FixedUpdate () {
         if (GameManager.gameState == GameManager.GameState.Playing && state == State.Move)
         {
+            Vector2 moveInput = InputManager.instance.inputController.Player.Move.ReadValue<Vector2>();
+            Vector2 flashlightInput = InputManager.instance.inputController.Player.Flashlight.ReadValue<Vector2>();
+
             //Control logic
-            xInput = Input.GetAxisRaw("Horizontal");
-            yInput = Input.GetAxisRaw("Vertical");
-            xInputMove = Input.GetAxisRaw("HorizontalMove");
-            yInputMove = Input.GetAxisRaw("VerticalMove");
+            //xInput = flashlightInput.x;//Input.GetAxisRaw("Horizontal");
+            //yInput = flashlightInput.y;//Input.GetAxisRaw("Vertical");
+            //xInputMove = playerInput.x;//Input.GetAxisRaw("HorizontalMove");
+            //yInputMove = playerInput.y;//Input.GetAxisRaw("VerticalMove");
 
             //Look direction controls
-            dir = new Vector3(xInput, 0, yInput);
+            dir = new Vector3(flashlightInput.x, 0, flashlightInput.y);
             dir = transform.TransformDirection(dir);
             dir *= speed;
 
             //Move direction controls
-            moveDir = new Vector3(xInputMove, 0, yInputMove);
+            moveDir = new Vector3(moveInput.x, 0, moveInput.y);
             moveDir = transform.TransformDirection(moveDir);
             moveDir *= speed;
 
@@ -87,7 +91,7 @@ public class Player : MonoBehaviour {
             rb.velocity = moveDir;
 
             //Store last input direction
-            if ((xInput != 0 || yInput != 0) && !updatelastDir)
+            if ((flashlightInput.x != 0 || flashlightInput.y != 0) && !updatelastDir)
             {
                 lastDir = dir;
                 updatelastDir = true;
@@ -98,25 +102,25 @@ public class Player : MonoBehaviour {
             }
 
             //Set look direction animations
-            if (xInput > 0)
+            if (flashlightInput.x > 0)
             {
                 direction = Direction.Right;
             }
-            else if (xInput < 0)
+            else if (flashlightInput.x < 0)
             {
                 direction = Direction.Left;
             }
-            else if (yInput > 0)
+            else if (flashlightInput.y > 0)
             {
                 direction = Direction.Up;
             }
-            else if (yInput < 0)
+            else if (flashlightInput.y < 0)
             {
                 direction = Direction.Down;
             }
 
             //Speed controls [Left trigger?]
-            if (Input.GetButton("Dash") && !tired)
+            if (InputManager.instance.inputController.Player.Dash.IsPressed() && !tired)
             {
                 speed = dashSpeed;
                 if (dashTime > 0.0f)
@@ -129,7 +133,7 @@ public class Player : MonoBehaviour {
             else
             {
                 speed = walkSpeed;
-                if (!Input.GetButton("Dash") && dashTime < 1.0f)
+                if (!InputManager.instance.inputController.Player.Dash.IsPressed() && dashTime < 1.0f)
                 {
                     dashTime += Time.deltaTime;
                     tired = false;
@@ -151,31 +155,31 @@ public class Player : MonoBehaviour {
             if (state == State.Move)
             {
                 //Interact with objects [A button]
-                if (Input.GetButtonDown("Interact"))
+                if (InputManager.instance.inputController.Player.Interact.triggered)
                 {
                     state = State.Interact;
                     StartCoroutine(Interact(checkDist, checkTime));
                 }
 
                 //Attack with current weapon [B button]
-                if (Input.GetButtonDown("Attack") && weaponPrefab != null)
+                if (InputManager.instance.inputController.Player.Melee.triggered && weaponPrefab != null)
                 {
                     state = State.Attack;
                     StartCoroutine(Attack(weaponPrefab, lastDir, attackTime));
                 }
 
                 //Turn On/Off Flashlight [Right trigger]
-                if (Input.GetButtonDown("Flashlight"))
+                if (InputManager.instance.inputController.Player.FlashlightToggle.triggered)
                 {
                     Flashlight(flashlightPrefab);
                 }
             }
 
-            if (Input.GetButtonDown("CamLeft"))
+            if (InputManager.instance.inputController.Player.CamLeft.triggered)
             {
                 RotateCamLeft(direction);
             }
-            else if (Input.GetButtonDown("CamRight"))
+            else if (InputManager.instance.inputController.Player.CamRight.triggered)
             {
                 RotateCamRight(direction);
             }

@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour {
 
     static WaypointManager wpm;
 
+
     private void Awake()
     {
         if (instance == null)
@@ -76,7 +77,7 @@ public class GameManager : MonoBehaviour {
             //    StartCoroutine(SomethingChanged());
             //}
 
-            if (Input.GetButtonDown("Pause"))
+            if (InputManager.instance.inputController.UI.Pause.triggered)
             {
                 Time.timeScale = 0f;
                 gameState = GameState.Paused;
@@ -85,7 +86,7 @@ public class GameManager : MonoBehaviour {
         }
         else if (gameState == GameState.Paused)
         {
-            if (Input.GetButtonDown("Pause"))
+            if (InputManager.instance.inputController.UI.Pause.triggered)
             {
                 Time.timeScale = 1f;
                 gameState = GameState.Playing;
@@ -100,7 +101,7 @@ public class GameManager : MonoBehaviour {
                 gameOver = true;
             }
 
-            if (Input.GetButtonDown("Interact"))
+            if (InputManager.instance.inputController.Player.Interact.triggered)
                 SceneManager.LoadSceneAsync("MainMenu");
         }
         else if (gameState == GameState.Lose)
@@ -111,7 +112,7 @@ public class GameManager : MonoBehaviour {
                 gameOver = true;
             }
 
-            if (Input.GetButtonDown("Interact"))
+            if (InputManager.instance.inputController.Player.Interact.triggered)
                 SceneManager.LoadSceneAsync("MainMenu");
         }
     }

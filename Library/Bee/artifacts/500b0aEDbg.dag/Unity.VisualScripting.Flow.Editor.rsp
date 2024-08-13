@@ -110,7 +110,8 @@
 -define:ENABLE_TERRAIN
 -define:ENABLE_TILEMAP
 -define:ENABLE_TIMELINE
--define:ENABLE_LEGACY_INPUT_MANAGER
+-define:ENABLE_INPUT_SYSTEM
+-define:PACKAGE_INPUT_SYSTEM_EXISTS
 -define:CSHARP_7_OR_LATER
 -define:CSHARP_7_3_OR_NEWER
 -r:"/Applications/Unity/Hub/Editor/2021.2.10f1/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll"
@@ -334,6 +335,7 @@
 -r:"Assets/ProCore/ProBuilder/Classes/ProBuilderCore-Unity5.dll"
 -r:"Assets/ProCore/ProBuilder/Classes/ProBuilderMeshOps-Unity5.dll"
 -r:"Assets/ProCore/ProBuilder/Editor/ProBuilderEditor-Unity5.dll"
+-r:"Library/Bee/artifacts/500b0aEDbg.dag/Unity.InputSystem.ref.dll"
 -r:"Library/Bee/artifacts/500b0aEDbg.dag/Unity.VisualScripting.Core.Editor.ref.dll"
 -r:"Library/Bee/artifacts/500b0aEDbg.dag/Unity.VisualScripting.Core.ref.dll"
 -r:"Library/Bee/artifacts/500b0aEDbg.dag/Unity.VisualScripting.Flow.ref.dll"

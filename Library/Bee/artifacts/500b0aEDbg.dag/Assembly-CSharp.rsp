@@ -110,7 +110,7 @@
 -define:ENABLE_TERRAIN
 -define:ENABLE_TILEMAP
 -define:ENABLE_TIMELINE
--define:ENABLE_LEGACY_INPUT_MANAGER
+-define:ENABLE_INPUT_SYSTEM
 -define:CSHARP_7_OR_LATER
 -define:CSHARP_7_3_OR_NEWER
 -r:"/Applications/Unity/Hub/Editor/2021.2.10f1/Unity.app/Contents/Managed/UnityEngine/UnityEditor.CoreModule.dll"
@@ -323,6 +323,7 @@
 -r:"Assets/ProCore/ProBuilder/Classes/ClassesLib/Poly2Tri.dll"
 -r:"Assets/ProCore/ProBuilder/Classes/ProBuilderCore-Unity5.dll"
 -r:"Assets/ProCore/ProBuilder/Classes/ProBuilderMeshOps-Unity5.dll"
+-r:"Library/Bee/artifacts/500b0aEDbg.dag/Unity.InputSystem.ref.dll"
 -r:"Library/Bee/artifacts/500b0aEDbg.dag/Unity.PlasticSCM.Editor.ref.dll"
 -r:"Library/Bee/artifacts/500b0aEDbg.dag/Unity.Rider.Editor.ref.dll"
 -r:"Library/Bee/artifacts/500b0aEDbg.dag/Unity.TextMeshPro.Editor.ref.dll"
@@ -341,6 +342,7 @@
 -r:"Library/Bee/artifacts/500b0aEDbg.dag/Unity.VSCode.Editor.ref.dll"
 -r:"Library/Bee/artifacts/500b0aEDbg.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/500b0aEDbg.dag/UnityEngine.UI.ref.dll"
+"Assets/InputController.cs"
 "Assets/ProCore/ProBuilder/API Examples/Icosphere FFT/Scripts/CameraControls.cs"
 "Assets/ProCore/ProBuilder/API Examples/Icosphere FFT/Scripts/IcoBumpin.cs"
 "Assets/ProCore/ProBuilder/API Examples/Misc/HueCube.cs"
@@ -366,6 +368,7 @@
 "Assets/Scripts/Managers/BasementDoor.cs"
 "Assets/Scripts/Managers/DoorManager.cs"
 "Assets/Scripts/Managers/GameManager.cs"
+"Assets/Scripts/Managers/InputManager.cs"
 "Assets/Scripts/Managers/RoomManager.cs"
 "Assets/Scripts/Managers/RotateSprite.cs"
 "Assets/Scripts/Managers/Stairs.cs"
