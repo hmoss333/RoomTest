@@ -1,25 +1,28 @@
 ﻿<Properties StartupConfiguration="{3AF548E2-FEB2-48BF-D026-FD446B3BB24B}|">
+  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.ItemProperties.RoomTest PreferredExecutionTarget="f2d49c50-38b6-4bb2-9a7f-53f52ce039d7" />
-  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Managers/GameManager.cs">
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="baf411b3-0894-4b04-9b4c-4069207ad8be" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Menus/MainMenu.cs">
     <Files>
-      <File FileName="Assets/Scripts/Managers/GameManager.cs" Line="243" Column="62" />
-      <File FileName="Assets/Scripts/Managers/WaypointManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Managers/GameManager.cs" Line="300" Column="23" />
+      <File FileName="Assets/Scripts/Managers/WaypointManager.cs" Line="79" Column="18" />
       <File FileName="Assets/Scripts/Interacts/Objective/InteractAltar.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Interacts/Objective/InteractObjective.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Interacts/Objective/MainDoor.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Player/Player.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Player/CameraFollow.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Player/Player.cs" Line="139" Column="44" />
+      <File FileName="Assets/Scripts/Player/CameraFollow.cs" Line="50" Column="48" />
       <File FileName="Assets/Scripts/Journal/JournalInteract.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Interacts/WorldObjects/InteractParent.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Interacts/Objective/InteractDoor.cs" Line="50" Column="1" />
+      <File FileName="Assets/Scripts/Interacts/WorldObjects/InteractParent.cs" Line="8" Column="24" />
+      <File FileName="Assets/Scripts/Interacts/Objective/InteractDoor.cs" Line="6" Column="37" />
       <File FileName="Assets/Scripts/Journal/JournalController.cs" Line="120" Column="17" />
-      <File FileName="Library/PackageCache/com.unity.textmeshpro@3.0.6/Scripts/Runtime/TMP_FontAsset.cs" Line="2883" Column="59" />
+      <File FileName="Assets/Scripts/Interacts/FrontDoor.cs" Line="26" Column="41" />
+      <File FileName="Assets/Scripts/Player/Flashlight.cs" Line="35" Column="18" />
+      <File FileName="Assets/Scripts/Menus/MainMenu.cs" Line="134" Column="6" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -37,5 +40,4 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="a16fa7cf-c599-4bb3-92b1-1392958a399f" />
 </Properties>

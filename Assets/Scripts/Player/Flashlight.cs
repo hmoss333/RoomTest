@@ -20,15 +20,19 @@ public class Flashlight : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        StopLookAtRoom();
+        try
+        {
+            StopLookAtRoom();
 
-        //if (Player.flashlightOn)
-        //{
+            //if (Player.flashlightOn)
+            //{
             Quaternion rot = Quaternion.LookRotation(player.lastDir, player.transform.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, rot, rotationSpeed * Time.deltaTime);
 
             LookAtRoom();
-        //}
+            //}
+        }
+        catch { }
     }
 
     void LookAtRoom()

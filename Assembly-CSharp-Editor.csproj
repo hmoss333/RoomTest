@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -52,6 +52,9 @@
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>2021.2.10f1</UnityVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <Analyzer Include="/Applications/Visual Studio.app/Contents/MonoBundle/Addins/MonoDevelop.Unity/Analyzers/Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/ProCore/ProBuilder/Editor/MenuItems/Geometry/pb_FreezeTransform.cs" />
     <Compile Include="Assets/ProCore/ProBuilder/Editor/MenuItems/Repair/pb_ForceSceneRefresh.cs" />
@@ -380,12 +383,6 @@
     </Reference>
     <Reference Include="unityplastic">
       <HintPath>Library/PackageCache/com.unity.collab-proxy@1.15.7/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
-    </Reference>
-    <Reference Include="TextMeshPro-5.6-Editor">
-      <HintPath>Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-5.6-Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="TextMeshPro-5.6-Runtime">
-      <HintPath>Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-5.6-Runtime.dll</HintPath>
     </Reference>
     <Reference Include="pb_Stl">
       <HintPath>Assets/ProCore/ProBuilder/Classes/ClassesLib/pb_Stl.dll</HintPath>

@@ -41,38 +41,42 @@ public class WaypointManager : MonoBehaviour
         scale = scaleNum;
         spawnedStart = false;
 
-        GenerateNodes(node, xMax, yMax, levels, scale);
-
-        //Start checking for the waypoints as children in gameobject and add them to the list. Also add the WayPointScript to each.
-        foreach (Transform waypoint in GetComponentsInChildren<Transform>())
+        try
         {
-            if (waypoint != this.transform)
+            GenerateNodes(node, xMax, yMax, levels, scale);
+
+            //Start checking for the waypoints as children in gameobject and add them to the list. Also add the WayPointScript to each.
+            foreach (Transform waypoint in GetComponentsInChildren<Transform>())
             {
-                waypointNodes.Add(waypoint);
+                if (waypoint != this.transform)
+                {
+                    waypointNodes.Add(waypoint);
+                }
             }
+
+            //Check available walls to generate a starting node
+            GenerateStartNode(Random.Range(0, wallNodes.Count), wallNodes);
+            //basementRoom = Instantiate(basementRoom, new Vector3(0, -scale, 0), Quaternion.identity, this.transform);
+
+            //If there are multiple levels to a map, generate entrance and exit staircase nodes
+            if (levels > 1)
+                GenerateStairNode(levels, waypointNodes);
+
+            //Once the creation of the list above is complete then have each waypoint check for other waypoints. Also make a reference to this manager
+            //on each waypoint.
+            foreach (Transform waypoints in waypointNodes)
+            {
+                //We pass this script to each waypoint so we can interact with it.
+                waypoints.GetComponent<WaypointScript>().StartLooking(this);
+            }
+
+            //Just gets the total count of Transforms in the waypoint list.
+            totalWaypoints = waypointNodes.Count;
+
+            //Start the game
+            GameManager.StartGame(waypointNodes);
         }
-
-        //Check available walls to generate a starting node
-        GenerateStartNode(Random.Range(0, wallNodes.Count), wallNodes);
-        //basementRoom = Instantiate(basementRoom, new Vector3(0, -scale, 0), Quaternion.identity, this.transform);
-
-        //If there are multiple levels to a map, generate entrance and exit staircase nodes
-        if (levels > 1)
-            GenerateStairNode(levels, waypointNodes);
-
-        //Once the creation of the list above is complete then have each waypoint check for other waypoints. Also make a reference to this manager
-        //on each waypoint.
-        foreach (Transform waypoints in waypointNodes)
-        {
-            //We pass this script to each waypoint so we can interact with it.
-            waypoints.GetComponent<WaypointScript>().StartLooking(this);
-        }
-
-        //Just gets the total count of Transforms in the waypoint list.
-        totalWaypoints = waypointNodes.Count;
-
-        //Start the game
-        GameManager.StartGame(waypointNodes);
+        catch { }
     }
 
     //After the list is created this method is called by each waypoint and this script does all the leg work.

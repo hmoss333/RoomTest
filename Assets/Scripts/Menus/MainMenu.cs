@@ -125,7 +125,7 @@ public class MainMenu : MonoBehaviour {
     //Load Game Scene
     public void PlayGame()
     {
-        SceneManager.LoadSceneAsync("House");
+        SceneManager.LoadSceneAsync("Outside");
     }
 
 

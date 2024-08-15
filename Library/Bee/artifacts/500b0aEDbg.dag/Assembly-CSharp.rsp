@@ -348,6 +348,7 @@
 "Assets/ProCore/ProBuilder/API Examples/Runtime Editing/RuntimeEdit.cs"
 "Assets/ProCore/ProBuilder/API Examples/Vertex Colors/HighlightNearestFace.cs"
 "Assets/Scripts/Interacts/FlickerLight.cs"
+"Assets/Scripts/Interacts/FrontDoor.cs"
 "Assets/Scripts/Interacts/InventoryItem.cs"
 "Assets/Scripts/Interacts/Objective/InteractAltar.cs"
 "Assets/Scripts/Interacts/Objective/InteractDoor.cs"
